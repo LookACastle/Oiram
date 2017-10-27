@@ -1,11 +1,11 @@
 import pygame
 import math
 from constants import *
-
+from gfx.screen import Screen
 class Game:
     def __init__ (self):
         self.running = True
-        #self.screen = Screen(self)
+        self.screen = Screen()
         """
         self.level = Level(identifier)
         self.inputHandler = InputHandler()

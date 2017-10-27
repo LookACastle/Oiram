@@ -5,7 +5,9 @@ from gfx.screen import Screen
 class Game:
     def __init__ (self):
         self.running = True
-        self.screen = Screen()
+        pygame.init()
+        self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+        self.screen = Screen(self.display)
         """
         self.level = Level(identifier)
         self.inputHandler = InputHandler()
@@ -56,12 +58,14 @@ class Game:
 
     
     def tick(self):
-        pass
-        print("tick")
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
         #self.level.tick()
 
     def render (self,dt):
-        print("render")
+        self.screen.drawSprite( 0, 1, 0, 0)
+        pygame.display.update()
         """
         self.level.drawTiles(self.screen, self.player.getPos())
         self.level.drawEntities(self.screen)

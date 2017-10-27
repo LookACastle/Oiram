@@ -123,6 +123,7 @@ def main():
                 changeBackgroundAnimation()
 
         pygame.display.update()
+        print(FPSCLOCK)
         FPSCLOCK.tick(FPS)
 
 

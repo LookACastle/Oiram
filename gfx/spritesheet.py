@@ -1,9 +1,10 @@
 import pygame
 import re
+from constants import *
 
 class SpriteSheet:
 	def __init__(self, path):
-		self.sheet = pygame.image.load(path)
+		self.sheet = pygame.image.load("Sprites/"+path)
 		size = self.sheet.get_rect().size
 		self.width = size[0]
 		self.height = size[1]
@@ -11,9 +12,13 @@ class SpriteSheet:
 		self.spritewidth = int(regex[0])
 		self.spriteheight = int(regex[1])
 		self.rowcount = int(self.width/self.spritewidth)
+		self.sprite = pygame.Surface((self.spritewidth, self.spriteheight))
 
 	def getSprite(self, index):
-		print(index,self.rowcount)
 		y = int(index/self.rowcount)
 		x = index-y*self.rowcount
-		print(x,y,x*self.spritewidth, y*self.spriteheight*self.width)
+		#print(x,y,x*self.spritewidth, y*self.spriteheight*self.width)
+		self.sprite.blit(self.sheet, (0,0), (x, y, self.spritewidth, self.spriteheight))
+		output = pygame.Surface((self.spritewidth*SCALE, self.spriteheight*SCALE))
+		pygame.transform.scale(self.sprite, (self.spritewidth*SCALE, self.spriteheight*SCALE), output)
+		return output

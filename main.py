@@ -2,12 +2,15 @@ import pygame
 import math
 from constants import *
 from gfx.screen import Screen
+from levels.level import *
+from tile.tilemanager import *
 class Game:
     def __init__ (self):
         self.running = True
         pygame.init()
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
+        self.x = 1
         """
         self.level = Level(identifier)
         self.inputHandler = InputHandler()
@@ -18,6 +21,8 @@ class Game:
         self.stop()
 
     def init(self):
+        self.tileManager = TileManager()
+        self.currentlevel = Level("level1.png", self.tileManager)
         #self.screen.set_caption("Oriam")
         pass
 
@@ -64,7 +69,8 @@ class Game:
         #self.level.tick()
 
     def render (self,dt):
-        self.screen.drawSprite( 0, 1, 0, 0)
+        #self.screen.drawSprite( 0, 4, 200, 80)
+        self.currentlevel.drawlevel(self.screen, 0, 0)
         pygame.display.update()
         """
         self.level.drawTiles(self.screen, self.player.getPos())

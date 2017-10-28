@@ -18,7 +18,8 @@ class SpriteSheet:
 		y = int(index/self.rowcount)
 		x = index-y*self.rowcount
 		#print(x,y,x*self.spritewidth, y*self.spriteheight*self.width)
-		self.sprite.blit(self.sheet, (0,0), (x, y, self.spritewidth, self.spriteheight))
+		self.sprite.fill((0,0,0,0))
+		self.sprite.blit(self.sheet, (0,0), (x*self.spritewidth, y*self.spriteheight, self.spritewidth, self.spriteheight))
 		output = pygame.Surface((self.spritewidth*SCALE, self.spriteheight*SCALE))
 		pygame.transform.scale(self.sprite, (self.spritewidth*SCALE, self.spriteheight*SCALE), output)
 		return output

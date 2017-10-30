@@ -1,10 +1,14 @@
 SCALE = 7
-SCREEN_WIDTH = 16*SCALE*16
-SCREEN_HEIGHT = 16*SCALE*8
+
+X_TILE_COUNT = 16
+Y_TILE_COUNT = 8
+
+SCREEN_WIDTH = 16*SCALE*X_TILE_COUNT
+SCREEN_HEIGHT = 16*SCALE*Y_TILE_COUNT
 
 
 OIRAM = 0
 
-SPRITE_LIST = ["smallMario_16_16.png", "textures_16_16.png"]
+SPRITE_LIST = ["smallMario_16_16.png", "basicTiles_16_16.png"]
 
 LEVEL_PATH = "../levels/level1.png"

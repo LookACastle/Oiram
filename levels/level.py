@@ -20,15 +20,24 @@ class Level:
 				if (tile != None):
 					temp.append(tile)
 				else:
-					temp.append(None)
+					temp.append(self.tileManager.getTile(0xFFFFFF))
 		return temp
 
-	def drawlevel(self, screen, x, y):
-		for x in range(0,self.width):
-			for y in range(0,self.height):
-				tile = self.map[x+y*self.width]
+	def drawlevel(self, screen, px, py):
+
+		xOffset = 0
+		xTile = 0
+		if (px >= X_TILE_COUNT*8*SCALE-8*SCALE):
+			xOffset = X_TILE_COUNT*8*SCALE-px-8*SCALE
+			xTile = int(-xOffset/(16*SCALE))
+		if (xTile + X_TILE_COUNT >= self.width ):
+			xOffset = X_TILE_COUNT*8*SCALE-(self.width*16 - X_TILE_COUNT*8)*SCALE
+			xTile = self.width - X_TILE_COUNT - 1
+		for x in range(0 , X_TILE_COUNT+1):
+			for y in range(0,Y_TILE_COUNT):
+				tile = self.map[xTile + x + y*self.width]
 				if (tile == None):
-					screen.drawSprite( 1, 0, x*16*SCALE, y*16*SCALE)
+					screen.drawSprite( 1, 0, xOffset+(x+xTile)*16*SCALE, y*16*SCALE)
 				else:
-					screen.drawSprite( 1, 1, x*16*SCALE, y*16*SCALE)
+					screen.drawSprite( 1, tile.id, xOffset+(x+xTile)*16*SCALE, y*16*SCALE)
 		

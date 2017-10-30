@@ -12,7 +12,7 @@ class SpriteSheet:
 		self.spritewidth = int(regex[0])
 		self.spriteheight = int(regex[1])
 		self.rowcount = int(self.width/self.spritewidth)
-		self.sprite = pygame.Surface((self.spritewidth, self.spriteheight))
+		self.sprite = pygame.Surface((self.spritewidth, self.spriteheight)).convert_alpha()
 
 	def getSprite(self, index):
 		y = int(index/self.rowcount)
@@ -20,6 +20,6 @@ class SpriteSheet:
 		#print(x,y,x*self.spritewidth, y*self.spriteheight*self.width)
 		self.sprite.fill((0,0,0,0))
 		self.sprite.blit(self.sheet, (0,0), (x*self.spritewidth, y*self.spriteheight, self.spritewidth, self.spriteheight))
-		output = pygame.Surface((self.spritewidth*SCALE, self.spriteheight*SCALE))
+		output = pygame.Surface((self.spritewidth*SCALE, self.spriteheight*SCALE)).convert_alpha()
 		pygame.transform.scale(self.sprite, (self.spritewidth*SCALE, self.spriteheight*SCALE), output)
 		return output

@@ -14,8 +14,8 @@ class Level:
 		self.height = size[1]
 		pixel = pygame.PixelArray(img)
 		temp = []
-		for x in range(0,len(pixel)):
-			for y in range(0,len(pixel[x])):
+		for y in range(0,self.height):
+			for x in range(0,self.width):
 				tile = self.tileManager.getTile(pixel[x][y])
 				if (tile != None):
 					temp.append(tile)
@@ -28,7 +28,7 @@ class Level:
 			for y in range(0,self.height):
 				tile = self.map[x+y*self.width]
 				if (tile == None):
-					screen.drawSprite( 0, 1, x*16*5, y*16*5)
+					screen.drawSprite( 1, 0, x*16*SCALE, y*16*SCALE)
 				else:
-					screen.drawSprite( 0, 10, x*16*5, y*16*5)
+					screen.drawSprite( 1, 1, x*16*SCALE, y*16*SCALE)
 		

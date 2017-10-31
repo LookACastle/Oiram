@@ -23,6 +23,10 @@ class Level:
 					temp.append(self.tileManager.getTile(0xFFFFFF))
 		return temp
 
+	def getTile(self, x, y):
+		if (x<0 or x>self.width): return tileManager.getNullTile()
+		if (y<0 or x>self.height): return tileManager.getNullTile()
+		return self.map[x + y*self.width]
 	def drawlevel(self, screen, px, py):
 
 		xOffset = 0
@@ -39,5 +43,5 @@ class Level:
 				if (tile == None):
 					screen.drawSprite( 1, 0, xOffset+(x+xTile)*16*SCALE, y*16*SCALE)
 				else:
-					screen.drawSprite( 1, tile.id, xOffset+(x+xTile)*16*SCALE, y*16*SCALE)
+					tile.render(screen, xOffset+(x+xTile)*16*SCALE, y*16*SCALE)
 		

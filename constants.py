@@ -12,3 +12,15 @@ OIRAM = 0
 SPRITE_LIST = ["smallMario_16_16.png", "basicTiles_16_16.png"]
 
 LEVEL_PATH = "../levels/level1.png"
+
+#textures
+
+GRASSDIRT = 0
+DIRT = 1
+GRASS = 2
+SKY = 3
+POWERUP = 4
+BLOCK = 5
+BRICK = 6
+STONE = 7
+COIN = 8

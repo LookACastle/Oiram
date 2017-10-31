@@ -77,7 +77,7 @@ class Game:
         self.currentlevel.drawlevel(self.screen, self.x, 0)
         if (self.x >= X_TILE_COUNT*8*SCALE-8*SCALE ):
             if (self.x >= (self.currentlevel.width*16 - X_TILE_COUNT*8)*SCALE):
-                self.screen.drawSprite( 0, 4,self.x-(self.currentlevel.width*16 - X_TILE_COUNT*8)*SCALE, 64)
+                self.screen.drawSprite( 0, 4,self.x-(self.currentlevel.width*16-X_TILE_COUNT*16)*SCALE-16*SCALE, 64)
             else:
                 self.screen.drawSprite( 0, 4, X_TILE_COUNT*8*SCALE-8*SCALE, 0)
         else:

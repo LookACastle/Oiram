@@ -6,6 +6,7 @@ class Level:
 	def __init__(self, path, tileManager):
 		self.tileManager = tileManager
 		self.map = self.getTileMap(path)
+		self.entities = []
 
 	def getTileMap (self, path):
 		img = pygame.image.load("levels/level1.png")
@@ -27,6 +28,7 @@ class Level:
 		if (x<0 or x>self.width): return tileManager.getNullTile()
 		if (y<0 or x>self.height): return tileManager.getNullTile()
 		return self.map[x + y*self.width]
+		
 	def drawlevel(self, screen, px, py):
 
 		xOffset = 0

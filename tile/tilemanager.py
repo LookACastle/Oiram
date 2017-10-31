@@ -1,5 +1,5 @@
 from tile.tile import *
-from tile.layeredTile import LayeredTile
+from tile.layeredtile import LayeredTile
 from constants import *
 
 class TileManager:
@@ -11,7 +11,7 @@ class TileManager:
 		self.tiles[0x105C96] = Tile(DIRT)
 		self.tiles[0x0FFF0F] = Tile(GRASSDIRT)
 		self.tiles[0xFF00FF] = Tile(POWERUP)
-		self.tiles[0x6F85B8] = Tile(BLOCK)
+		self.tiles[0x0C9AAF] = Tile(BLOCK)
 		self.tiles[0x0099FF] = Tile(BRICK)
 		self.tiles[0xDBDBDB] = Tile(STONE)
 

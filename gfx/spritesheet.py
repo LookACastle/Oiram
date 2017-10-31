@@ -23,3 +23,13 @@ class SpriteSheet:
 		output = pygame.Surface((self.spritewidth*SCALE, self.spriteheight*SCALE)).convert_alpha()
 		pygame.transform.scale(self.sprite, (self.spritewidth*SCALE, self.spriteheight*SCALE), output)
 		return output
+
+	def getScaledSprite(self, index, scale):
+		y = int(index/self.rowcount)
+		x = index-y*self.rowcount
+		#print(x,y,x*self.spritewidth, y*self.spriteheight*self.width)
+		self.sprite.fill((0,0,0,0))
+		self.sprite.blit(self.sheet, (0,0), (x*self.spritewidth, y*self.spriteheight, self.spritewidth, self.spriteheight))
+		output = pygame.Surface((self.spritewidth*scale, self.spriteheight*scale)).convert_alpha()
+		pygame.transform.scale(self.sprite, (self.spritewidth*scale, self.spriteheight*scale), output)
+		return output

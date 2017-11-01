@@ -8,19 +8,19 @@ class TileManager:
 		# til farve 0xBBGGRR
 		self.tiles = [None]*(0xFFFFFF+1)
 
-		self.tiles[0x105C96] = Tile(DIRT)
-		self.tiles[0x0FFF0F] = Tile(GRASSDIRT)
-		self.tiles[0xFF00FF] = Tile(POWERUP)
-		self.tiles[0x0C9AAF] = Tile(BLOCK)
-		self.tiles[0x0099FF] = Tile(BRICK)
-		self.tiles[0xDBDBDB] = Tile(STONE)
+		self.tiles[0x105C96] = Tile(DIRT, True)
+		self.tiles[0x0FFF0F] = Tile(GRASSDIRT, True)
+		self.tiles[0xFF00FF] = Tile(POWERUP, True)
+		self.tiles[0x0C9AAF] = Tile(BLOCK, True)
+		self.tiles[0x0099FF] = Tile(BRICK, True)
+		self.tiles[0xDBDBDB] = Tile(STONE, True)
 
 
 		self.tiles[0x139932] = LayeredTile(SKY, GRASS)
 		self.tiles[0x00FFFF] = LayeredTile(SKY, COIN)
 
-		self.tiles[0xFFFFFF] = Tile(SKY)
-		self.nullTile = Tile(SKY)
+		self.tiles[0xFFFFFF] = Tile(SKY, False)
+		self.nullTile = Tile(NULL_TILE, False)
 
 		GRASS_DIRT = 0
 

@@ -14,10 +14,6 @@ class Game:
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
         self.player = Oiram(100, SCREEN_HEIGHT-32*SCALE)
-        """
-        self.level = Level(identifier)
-        self.inputHandler = InputHandler()
-        """
 
     def start(self):
         self.run()
@@ -27,8 +23,6 @@ class Game:
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
         self.currentlevel = Level("level1.png", self.tileManager, self.entityManager)
-        #self.screen.set_caption("Oriam")
-        pass
 
     def run(self):
         last = pygame.time.get_ticks()
@@ -76,8 +70,9 @@ class Game:
                 if event.key == pygame.K_RIGHT:
                     self.player.vx +=1
                 if event.key == pygame.K_UP:
-                    self.player.jump = 30
-                    self.player.vy = -1
+                    if (not self.player.jump):
+                        self.player.jump = True
+                        self.player.vy = -2
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     self.player.vx +=1

@@ -7,27 +7,23 @@ class Oiram (Mob):
 		self.steps = False
 		self.lstep = x
 		self.cstep = 0
-		self.w1 = 2/16
-		self.w2 = 3/16
-		self.jump = 0
-		self.jumpAnimation = False
+		self.jump = False
+		self.push = False
 
 	def tick(self, level):
-		if (self.jump > 0):
-			self.jump -= 1
-			self.vy += 0.01
-			self.jumpAnimation = True
+		if (self.vy < 2):
+			self.vy += 0.05
 		else:
-			if(self.vy<1):
-				self.vy += 0.05
-			else:
-				self.vy = 1
+			self.vy = 2
 
 		col = self.movey(level)
 
-		if (self.jumpAnimation):
+		if (self.jump):
 			if (col == 1):
-				self.jumpAnimation = False
+				if (self.vy > 0):
+					self.jump = False
+				else:
+					self.vy = 0
 
 		if (self.vx != 0):
 			if (self.vx > 0):
@@ -41,17 +37,20 @@ class Oiram (Mob):
 				self.steps = True
 			else:
 				self.steps = False
-			if (col == 1):
-				self.id = 3
+				self.push = True
 		else:
 			self.steps = False
-			self.id = 5
 
 	def render (self, screen):
-		if (self.steps):
-			self.cstep += 1
-			self.id = int(self.cstep/1.5)%3
-		if (self.jumpAnimation):
-			self.id = 4
+		if (not self.jump):
+			if (self.steps):
+				self.cstep += 1
+				self.id = int(self.cstep/1.5)%3
+			elif (self.push):
+				self.id = 4
+				self.push = False
+			else:
+				self.id = 5
+		else:
+			self.id = 3
 		screen.drawFlippedSprite( self.sheet, self.id, self.x, self.y, self.flip)
-		

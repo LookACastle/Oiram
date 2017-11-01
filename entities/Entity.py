@@ -87,7 +87,7 @@ class Entity:
 			"""
 			ny = self.y + self.vy*self.speed*SCALE
 			nyh = self.y + self.vy*self.speed*SCALE+self.height*SCALE
-			if (ny > 0 and nyh <= level.height*SCALE*16):
+			if (nyh <= level.height*SCALE*16):
 
 				cx = self.x/(16*SCALE)
 				cy = ny/(16*SCALE)

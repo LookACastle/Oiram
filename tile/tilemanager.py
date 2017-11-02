@@ -14,8 +14,9 @@ class TileManager:
 		self.tiles[0x0C9AAF] = Tile(BLOCK, True)
 		self.tiles[0x0099FF] = Tile(BRICK, True)
 		self.tiles[0xDBDBDB] = Tile(STONE, True)
-
-
+		
+		self.tiles[0xb469ff] = Tile(SKY, False)
+		
 		self.tiles[0x139932] = LayeredTile(SKY, GRASS)
 		self.tiles[0x00FFFF] = LayeredTile(SKY, COIN)
 

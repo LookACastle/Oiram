@@ -117,7 +117,7 @@ class Entity:
 	def collide(self, victim):
 		pass
 
-	def tick(self):
+	def tick(self, level):
 		pass
 
 	def render (self, screen):

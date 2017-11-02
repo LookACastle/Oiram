@@ -72,7 +72,7 @@ class Game:
                 if event.key == pygame.K_UP:
                     if (not self.player.jump):
                         self.player.jump = True
-                        self.player.vy = -2
+                        self.player.vy = -4
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     self.player.vx +=1

@@ -1,4 +1,5 @@
 from constants import *
+import math
 
 class Entity:
 	def __init__(self, sheet, id, x, y):
@@ -12,106 +13,65 @@ class Entity:
 		self.collision = False
 		self.width = 1
 		self.height = 1
-		"""
-		hitbox offset
-			__________h1_________
-			|		  |	       |
-			|		  \/	   |
-			w1-->		    <--w2   
-			|		  /\	   |
-			|		  |		   |	
-			__________h2________
-
-		"""
-		self.h1 = 0
-		self.h2 = 0
-		self.w1 = 0
-		self.w2 = 0
+		self.xmovement = False
 
 	def clone(self, x, y):
 		return Entity(self.id, self.sheet, x, y, self.width, self.height, self.speed)
 
 	def movex(self, level):
 		if(self.vx != 0):
-
-			"""
-			cTile___________cwTile
-			|				   |
-			|				   |
-			|				   |
-			|				   |
-			|				   |	
-			chTile__________cwhTile
-
-			"""
-			nx = self.x + self.vx*self.speed*SCALE
-			nxw = self.x + self.vx*self.speed*SCALE+self.width*SCALE
-			if (nx >= -self.w1*16*SCALE and nxw <= level.width*SCALE*16):
-
-				cx = nx/(16*SCALE)
-				cy = self.y/(16*SCALE)
-				px = 1/(16*SCALE)
-
-				x = int(cx + px + self.w1)
-				y = int(cy + px + self.h1)
-				xw = int(cx + self.width - self.w2 - px )
-				yh = int(cy + self.height - self.h2 - px)
-
-
-				cTile = (x, y)
-				cwTile = (xw, y)
-
-				chTile = (x, yh)
-				cwhTile = (xw, yh)
-
-				#[cTile, cwTile, chTile, cwhTile]
-				col = level.tileCollision([cTile, cwTile, chTile, cwhTile], True)
-				if (not col):
-					self.x = nx
-				else:
-					return 1
+			cx = self.x/(16*SCALE)
+			cy = self.y/(16*SCALE)
+			movement = self.vx*self.speed*SCALE
+			if (self.vx > 0):
+				tileMovement = int(movement/16)
+				for tileoffset in range(0, tileMovement+1):
+					nx = int(cx) + tileoffset + self.width
+					col1 = level.isSolidTile(nx, int(cy + 0.1))
+					col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+					if (col1 or col2):
+						self.x = int(cx + tileoffset)*16*SCALE
+						return 1
+				self.x += movement
+			else:
+				tileMovement = math.floor(movement/16)
+				for tileoffset in range(0, tileMovement, -1):
+					nx = int(cx) + tileoffset
+					col1 = level.isSolidTile(nx, int(cy + 0.1))
+					col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+					if (col1 or col2):
+						self.x = int(cx + 1 + tileoffset)*16*SCALE -1
+						return 1
+				self.x += movement
 		return 0
 
 	def movey(self, level):
-		if(self.vy != 0):
-
-			"""
-			cTile___________cwTile
-			|				   |
-			|				   |
-			|				   |
-			|				   |
-			|				   |	
-			chTile__________cwhTile
-
-			"""
-			ny = self.y + self.vy*self.speed*SCALE
-			nyh = self.y + self.vy*self.speed*SCALE+self.height*SCALE
-			if (nyh <= level.height*SCALE*16):
-
-				cx = self.x/(16*SCALE)
-				cy = ny/(16*SCALE)
-				px = 1/(16*SCALE)
-
-				x = int(cx + px + self.w1)
-				y = int(cy + px + self.h1)
-				xw = int(cx + self.width - self.w2 - px )
-				yh = int(cy + self.height - self.h2 - px)
-
-
-				cTile = (x, y)
-				cwTile = (xw, y)
-
-				chTile = (x, yh)
-				cwhTile = (xw, yh)
-
-				#[cTile, cwTile, chTile, cwhTile]
-				col = level.tileCollision([cTile, cwTile, chTile, cwhTile], True)
-				if (not col):
-					self.y = ny
-				else:
-					return 1
+		if (self.vy != 0):
+			cx = self.x/(16*SCALE)
+			cy = self.y/(16*SCALE)
+			movement = self.vy*self.speed*SCALE
+			if (self.vy > 0):
+				tileMovement = int(movement/16)
+				for tileoffset in range(0, tileMovement+1):
+					ny = int(cy) + tileoffset + self.height
+					col1 = level.isSolidTile(int(cx + self.width - 0.1),ny)
+					col2 = level.isSolidTile(int(cx + 0.1),ny)
+					if (col1 or col2):
+						self.y = int(cy + tileoffset)*16*SCALE
+						return 1
+				self.y += movement
+			else:
+				tileMovement = math.floor(movement/16)
+				for tileoffset in range(0, tileMovement, -1):
+					ny = int(cy) + tileoffset
+					col1 = level.isSolidTile(int(cx + self.width - 0.1),ny)
+					col2 = level.isSolidTile(int(cx + 0.1),ny)
+					if (col1 or col2):
+						self.y = int(cy + 1 + tileoffset)*16*SCALE
+						return 1
+				self.y += movement	
 		return 0
+
 
 
 	def collide(self, victim):

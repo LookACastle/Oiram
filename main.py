@@ -6,10 +6,11 @@ from levels.level import *
 from tile.tilemanager import *
 from entities.entitymanager import *
 from entities.oiram import *
-
+import os
 class Game:
     def __init__ (self):
         self.running = True
+        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, SCREE_RES_HEIGHT*0.1)
         pygame.init()
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)

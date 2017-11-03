@@ -12,9 +12,9 @@ class Oiram (Mob):
 
 	def tick(self, level):
 		if (self.vy < 2):
-			self.vy += 0.05
+			self.vy += 0.25
 		else:
-			self.vy = 2
+			self.vy = 5
 
 		col = self.movey(level)
 

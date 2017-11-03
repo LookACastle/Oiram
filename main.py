@@ -22,7 +22,7 @@ class Game:
     def init(self):
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
-        self.currentlevel = Level("level1.png", self.tileManager, self.entityManager)
+        self.currentlevel = Level("level3.png", self.tileManager, self.entityManager)
 
     def run(self):
         last = pygame.time.get_ticks()
@@ -65,6 +65,9 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_a:
+                    self.player.x = 100
+                    self.player.y = SCREEN_HEIGHT-32*SCALE
                 if event.key == pygame.K_LEFT:
                     self.player.vx -=1
                 if event.key == pygame.K_RIGHT:

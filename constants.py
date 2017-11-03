@@ -1,7 +1,7 @@
-SCALE = 6
+SCALE = 5
 
-X_TILE_COUNT = 16
-Y_TILE_COUNT = 8
+X_TILE_COUNT = 24
+Y_TILE_COUNT = 10
 
 SCREEN_WIDTH = 16*SCALE*X_TILE_COUNT
 SCREEN_HEIGHT = 16*SCALE*Y_TILE_COUNT
@@ -10,8 +10,6 @@ TEXTURE = 0
 OIRAM = 1
 
 SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png"]
-
-LEVEL_PATH = "../levels/level1.png"
 
 #textures
 

@@ -21,6 +21,7 @@ class TileManager:
 		self.tiles[0x00FFFF] = LayeredTile(SKY, COIN_STILL)
 
 		self.tiles[0xFFFFFF] = Tile(SKY, False)
+		self.tiles[0xFFFF00] = Tile(STONE_UNDERWORLD, False)
 		self.nullTile = Tile(BLOCK, False)
 
 		GRASS_DIRT = 0

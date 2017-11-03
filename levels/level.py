@@ -11,7 +11,7 @@ class Level:
 		self.loadTileMap(path)
 
 	def loadTileMap (self, path):
-		img = pygame.image.load("levels/level1.png")
+		img = pygame.image.load("levels/" + path)
 		size = img.get_rect().size
 		self.width = size[0]
 		self.height = size[1]

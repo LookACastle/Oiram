@@ -65,6 +65,10 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
             if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_LSHIFT :
+                    self.player.speed = 1.5
+                else:
+                    self.player.speed = 1
                 if event.key == pygame.K_LEFT:
                     self.player.vx -=1
                 if event.key == pygame.K_RIGHT:
@@ -72,11 +76,7 @@ class Game:
                 if event.key == pygame.K_UP:
                     if (not self.player.jump):
                         self.player.jump = True
-<<<<<<< HEAD
                         self.player.vy = -4
-=======
-                        self.player.vy = -5
->>>>>>> 87001fce5dc77a00b25952f7277ddef03e317ae6
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_LEFT:
                     self.player.vx +=1

@@ -11,6 +11,7 @@ class Oiram (Mob):
 		self.push = False
 
 	def tick(self, level):
+<<<<<<< HEAD
 		if (self.vy < -0.5):
 			self.vy = self.vy * 0.9
 		else:
@@ -21,6 +22,13 @@ class Oiram (Mob):
 		if (self.vy > 2.5):
 			self.vy = 2.5
 		
+=======
+		if (self.vy < 2):
+			self.vy += 0.25
+		else:
+			self.vy = 5
+
+>>>>>>> 87001fce5dc77a00b25952f7277ddef03e317ae6
 		col = self.movey(level)
 
 		if (self.jump):

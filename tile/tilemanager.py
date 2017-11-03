@@ -18,10 +18,10 @@ class TileManager:
 		self.tiles[0xb469ff] = Tile(SKY, False)
 		
 		self.tiles[0x139932] = LayeredTile(SKY, GRASS)
-		self.tiles[0x00FFFF] = LayeredTile(SKY, COIN)
+		self.tiles[0x00FFFF] = LayeredTile(SKY, COIN_STILL)
 
 		self.tiles[0xFFFFFF] = Tile(SKY, False)
-		self.nullTile = Tile(NULL_TILE, False)
+		self.nullTile = Tile(BLOCK, False)
 
 		GRASS_DIRT = 0
 

@@ -16,7 +16,7 @@ class Screen:
 		self.yOffset = y
 
 	def drawSprite(self, id, tileId, x, y):
-		self.display.blit(self.sheets[id].getSprite(tileId), (x+self.xOffset,y+self.yOffset))
+		self.display.blit(self.sheets[id].getSprite(tileId), (x+self.xOffset, y+self.yOffset))
 
 	def drawFlippedSprite(self, id, tileId, x, y, flip):
 		sprite = self.sheets[id].getSprite(tileId)

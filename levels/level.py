@@ -62,7 +62,7 @@ class Level:
 			xTile = self.width - X_TILE_COUNT - 1
 		
 		screen.setOffset(xOffset, 0)
-
+		
 		for x in range(0 , X_TILE_COUNT+1):
 			for y in range(0,Y_TILE_COUNT):
 				tile = self.map[xTile + x + y*self.width]

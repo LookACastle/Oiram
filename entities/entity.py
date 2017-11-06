@@ -31,7 +31,7 @@ class Entity:
 					col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
 					if (col1 or col2):
 						self.x = int(cx + tileoffset)*16*SCALE
-						return 1
+						return True
 				self.x += movement
 			else:
 				tileMovement = math.floor(movement/16)
@@ -41,9 +41,9 @@ class Entity:
 					col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
 					if (col1 or col2):
 						self.x = int(cx + 1 + tileoffset)*16*SCALE -1
-						return 1
+						return True
 				self.x += movement
-		return 0
+		return False
 
 	def movey(self, level):
 		if (self.vy != 0):

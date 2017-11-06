@@ -9,55 +9,67 @@ class Oiram (Mob):
 		self.cstep = 0
 		self.jump = False
 		self.push = False
+		self.onMap = False
 
 	def tick(self, level):
-
-		if (self.vy < -0.5):
-			self.vy = self.vy * 0.9
-		else:
-			if (self.vy < 0.5):
-				self.vy = 0.5
+		if (not self.onMap):
+			if (self.vy < -0.5):
+				self.vy = self.vy * 0.9
 			else:
-				self.vy = self.vy * 1.1
-		if (self.vy > 2.5):
-			self.vy = 2.5
-
-		col = self.movey(level)
-
-		if (self.jump):
-			if (col == 1):
-				if (self.vy > 0):
-					self.jump = False
+				if (self.vy < 0.5):
+					self.vy = 0.5
 				else:
-					self.vy = 0
+					self.vy = self.vy * 1.1
+			if (self.vy > 2.5):
+				self.vy = 2.5
 
-		if (self.vx != 0):
-			if (self.vx > 0):
-				self.flip = False
-			if (self.vx < 0):
-				self.flip = True
+			col = self.movey(level)
 
-			col = self.movex(level)
+			if (self.jump):
+				if (col == True):
+					if (self.vy > 0):
+						self.jump = False
+					else:
+						self.vy = 0
 
-			if (col == 0):
-				self.steps = True
-				self.push = False
+			if (self.vx != 0):
+				if (self.vx > 0):
+					self.flip = False
+				if (self.vx < 0):
+					self.flip = True
+
+				col = self.movex(level)
+
+				if (col == False):
+					self.steps = True
+					self.push = False
+				else:
+					self.steps = False
+					self.push = True
 			else:
 				self.steps = False
-				self.push = True
-		else:
-			self.steps = False
-			self.push = False
+				self.push = False
 
-		if (not self.jump):
-			if (self.steps):
-				self.cstep += 1
-				self.id = int(self.cstep/3.5)%3
-			elif (self.push):
-				self.id = 4
+			if (not self.jump):
+				if (self.steps):
+					self.cstep += 1
+					self.id = int(self.cstep/3.5)%3
+				elif (self.push):
+					self.id = 4
+				else:
+					self.id = 5
 			else:
-				self.id = 5
+				self.id = 3
 		else:
-			self.id = 3
+			if (level.movementTicks > 0):
+				vel = level.getVelocity()
+				self.vx = vel[0]
+				self.vy = vel[1]
+				self.movex(level)
+				self.movey(level)
+			else:
+				self.vx = 0
+				self.vy = 0
+
 	def render (self, screen):
 		screen.drawFlippedSprite( self.sheet, self.id, self.x, self.y, self.flip)

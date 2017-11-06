@@ -61,15 +61,24 @@ class Level:
 			xOffset = X_TILE_COUNT*8*SCALE-(self.width*16 - X_TILE_COUNT*8)*SCALE
 			xTile = self.width - X_TILE_COUNT - 1
 		
-		screen.setOffset(xOffset, 0)
-		
-		for x in range(0 , X_TILE_COUNT+1):
-			for y in range(0,Y_TILE_COUNT):
-				tile = self.map[xTile + x + y*self.width]
+		yOffset = 0
+		yTile = 0
+		if (py > Y_TILE_COUNT*8*SCALE-8*SCALE):
+			yOffset = Y_TILE_COUNT*8*SCALE-py-8*SCALE
+			yTile = int(-yOffset/(16*SCALE))
+		if (yTile + Y_TILE_COUNT >= self.height ):
+			yOffset = Y_TILE_COUNT*8*SCALE-(self.height*16 - Y_TILE_COUNT*8)*SCALE
+			yTile = self.height - Y_TILE_COUNT - 1
+
+		screen.setOffset(xOffset, yOffset)
+
+		for x in range(0 , X_TILE_COUNT + 1):
+			for y in range(0,Y_TILE_COUNT + 1):
+				tile = self.map[xTile + x + (y+yTile)*self.width]
 				if (tile == None):
-					screen.drawSprite( TEXTURE, POWERUP, (x+xTile)*16*SCALE, y*16*SCALE)
+					screen.drawSprite( TEXTURE, POWERUP, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
 				else:
-					tile.render(screen, (x+xTile)*16*SCALE, y*16*SCALE)
+					tile.render(screen, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
 
 		for e in self.entities:
 			e.render(screen)

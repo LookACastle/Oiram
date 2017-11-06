@@ -1,4 +1,4 @@
-SCALE = 5
+SCALE = 4
 
 SCREEN_RES_WIDTH = 1920
 SCREEN_RES_HEIGHT = 1080
@@ -13,7 +13,9 @@ TEXTURE = 0
 OIRAM = 1
 
 SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png"]
-
+LEVELS = [None]*16
+LEVELS[0] = "level3.png"
+MAP = "overworld.png"
 #textures
 
 GRASSDIRT = 0

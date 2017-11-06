@@ -24,8 +24,6 @@ class TileManager:
 		self.tiles[0xFFFF00] = Tile(STONE_UNDERWORLD, False)
 		self.nullTile = Tile(BLOCK, False)
 
-		GRASS_DIRT = 0
-
 
 	def getNullTile(self):
 		return self.nullTile

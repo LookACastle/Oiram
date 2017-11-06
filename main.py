@@ -2,11 +2,12 @@ import pygame
 import math
 from constants import *
 from gfx.screen import Screen
-from levels.level import *
+from levels.levelmanager import *
 from tile.tilemanager import *
 from entities.entitymanager import *
 from entities.oiram import *
 import os
+
 class Game:
     def __init__ (self):
         self.running = True
@@ -14,7 +15,7 @@ class Game:
         pygame.init()
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
-        self.player = Oiram(100, SCREEN_HEIGHT-32*SCALE)
+        self.player = Oiram(16*SCALE, 16*SCALE)
 
     def start(self):
         self.run()
@@ -23,7 +24,7 @@ class Game:
     def init(self):
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
-        self.currentlevel = Level("level3.png", self.tileManager, self.entityManager)
+        self.levelManager = LevelManager(self.tileManager, self.entityManager)
 
     def run(self):
         last = pygame.time.get_ticks()
@@ -62,34 +63,58 @@ class Game:
 
     
     def tick(self):
+        currentlevel = self.levelManager.getCurrentLevel()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_a:
-                    self.player.x = 100
-                    self.player.y = SCREEN_HEIGHT-32*SCALE
-                if event.key == pygame.K_LEFT:
-                    self.player.vx -=1
-                if event.key == pygame.K_RIGHT:
-                    self.player.vx +=1
-                if event.key == pygame.K_UP:
-                    if (not self.player.jump):
-                        self.player.jump = True
-                        self.player.vy = -4
-            if event.type == pygame.KEYUP:
-                if event.key == pygame.K_LEFT:
-                    self.player.vx +=1
-                if event.key == pygame.K_RIGHT:
-                    self.player.vx -=1
+            if (currentlevel != None):
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_a:
+                        self.player.x = 100
+                        self.player.y = SCREEN_HEIGHT-32*SCALE
+                        #self.levelManager.changeLevel()
+                    if event.key == pygame.K_LEFT:
+                        self.player.vx -= 1
+                    if event.key == pygame.K_RIGHT:
+                        self.player.vx += 1
+                    if event.key == pygame.K_UP:
+                        if (not self.player.jump):
+                            self.player.jump = True
+                            self.player.vy = -4
+                if event.type == pygame.KEYUP:
+                    if event.key == pygame.K_LEFT:
+                        self.player.vx += 1
+                    if event.key == pygame.K_RIGHT:
+                        self.player.vx -= 1
+            else:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_a:
+                            self.player.x = 100
+                            self.player.y = SCREEN_HEIGHT-32*SCALE
+                            self.levelManager.changeLevel()
+                    if (self.levelManager.movementTicks <= 0):
+                        if event.key == pygame.K_LEFT:
+                            self.levelManager.goLeft()
+                        if event.key == pygame.K_RIGHT:
+                            self.levelManager.goRight()
+                        if event.key == pygame.K_UP:
+                            self.levelManager.goUp()
+                        if event.key == pygame.K_DOWN:
+                            self.levelManager.goDown()
+        
+        if (currentlevel == None):
+            self.player.onMap = True
+            self.player.tick(self.levelManager)
+        else:
+            self.player.onMap = False
+            self.player.tick(currentlevel)
 
-        self.player.tick(self.currentlevel)
-        self.currentlevel.tick()
+        self.levelManager.tick()
 
-        #self.level.tick()
 
     def render (self, dt):
-        self.currentlevel.drawlevel(self.screen, self.player.x, 0)
+        self.levelManager.drawCurrentlevel(self.screen, self.player.x, self.player.y)
         self.player.render(self.screen)
         pygame.display.update()
 

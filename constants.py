@@ -13,7 +13,7 @@ TEXTURE = 0
 OIRAM = 1
 
 SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png"]
-LEVELS = [None]*16
+LEVELS = [None]*16*16
 LEVELS[0] = "level3.png"
 MAP = "overworld.png"
 #textures

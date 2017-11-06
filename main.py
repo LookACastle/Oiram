@@ -13,6 +13,8 @@ class Game:
         self.running = True
         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, SCREEN_RES_HEIGHT*0.1)
         pygame.init()
+        dis = pygame.display.Info()
+        print(dis.current_w)
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
         self.player = Oiram(16*SCALE, 16*SCALE)
@@ -89,11 +91,9 @@ class Game:
                         self.player.vx -= 1
             else:
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_a:
-                            self.player.x = 100
-                            self.player.y = SCREEN_HEIGHT-32*SCALE
-                            self.levelManager.changeLevel()
                     if (self.levelManager.movementTicks <= 0):
+                        if event.key == pygame.K_a:
+                            self.levelManager.changeLevel(self.player)
                         if event.key == pygame.K_LEFT:
                             self.levelManager.goLeft()
                         if event.key == pygame.K_RIGHT:

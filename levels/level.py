@@ -9,6 +9,8 @@ class Level:
 		self.map = []
 		self.entities = []
 		self.loadTileMap(path)
+		self.open = True
+		self.cleared = False
 
 	def loadTileMap (self, path):
 		img = pygame.image.load("levels/" + path)

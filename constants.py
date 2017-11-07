@@ -17,15 +17,7 @@ SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
-
-LEVELS = [None]*16*16
-LEVELS[0] = "level3.png"
-LEVELS[1] = (0,1)
-LEVELS[17] = (0,1)
-LEVELS[32] = "level2.png"
-LEVELS[33] = (0,0)
 MAP = "overworld.png"
-
 
 #TEXTURES
 GRASSDIRT = 0
@@ -54,7 +46,7 @@ V_ROAD = 1
 BG = 2
 TREE = 3
 CLOSED_DOOR = 4
-OPEM_DOOR = 5
+OPEN_DOOR = 5
 COMPLETE_DOOR = 6
 MINI_BOSS = 7
 BOSS = 8

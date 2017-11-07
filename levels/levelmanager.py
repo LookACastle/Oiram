@@ -5,13 +5,14 @@ class LevelManager (Level):
 	def __init__(self, tileManager, entityManager):
 		Level.__init__(self, MAP, tileManager, entityManager)
 		self.currentlevel = None
-		self.levels = []
-		self.loadLevels()
-
-		self.playerv = (0,0)
-
 		self.mapwidth = MAP_WIDTH
 		self.mapheight = MAP_HEIGHT
+
+		self.levels = [None]*self.mapwidth*self.mapheight
+		self.loadLevels()
+
+		self.levels[0].open = True
+		self.playerv = (0,0)
 		self.cpos = [0,0]
 		self.velocity = [(0)]
 		self.movementTicks = 0
@@ -34,11 +35,14 @@ class LevelManager (Level):
 
 	def changeLevel (self, player):
 		if (self.currentlevel == None):
-			self.currentlevel = self.levels[self.cpos[0] + self.cpos[1]*self.mapwidth]
-			player.x = 100
-			player.y = SCREEN_HEIGHT-5*16*SCALE
-			player.vx = 0
-			player.vy = 0
+			level = self.levels[self.cpos[0] + self.cpos[1]*self.mapwidth]
+			if (isinstance(level, Level)):
+				if (level.open):
+					self.currentlevel = level
+					player.x = 100
+					player.y = SCREEN_HEIGHT-5*16*SCALE
+					player.vx = 0
+					player.vy = 0
 		else:
 			self.currentlevel = None
 			player.x = (1+4*self.cpos[0])*16*SCALE
@@ -56,17 +60,32 @@ class LevelManager (Level):
 				for y in range(0,self.mapwidth):
 					currentlevel = self.levels[x + y*self.mapwidth]
 					if (isinstance(currentlevel, Level)):
-						screen.drawScaledSprite( OVERWORLDMAP, OPEM_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE)
+						if (currentlevel.open):
+							if (not currentlevel.cleared):
+								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE)
+							else:
+								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE)
+						else:
+							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE)
 		else:
 			self.currentlevel.drawlevel(screen, px, py)
 
 	def loadLevels (self):
-		for item in LEVELS:
-			if (not isinstance(item, str)):
-				self.levels.append(item)
-			else:
-				level = Level(item, self.tileManager, self.entityManager)
-				self.levels.append(level)
+		levels = open("levels/maplevels.txt","r")
+		x = 0
+		y = 0
+		for line in levels:
+			formattedLine = line.replace("\n","").split("	")
+			for s in formattedLine:
+				if (len(s) > 0):
+					if (s[0] == "/"):
+						t = s.replace('/',"").split(",")
+						self.levels[x + y*self.mapwidth] = (int(t[0]), int(t[1]))
+					else:
+						self.levels[x + y*self.mapwidth] = Level(s, self.tileManager, self.entityManager)
+				x += 1
+			x = 0
+			y += 1
 
 	def addMovement(self, vx, vy):
 		self.cpos[0] = self.cpos[0] + vx
@@ -78,6 +97,10 @@ class LevelManager (Level):
 					self.setMapTile(self.cpos[0], self.cpos[1], (-vel[0], 0))
 				elif (vy !=0 and vel[1] != 0):
 					self.setMapTile(self.cpos[0], self.cpos[1], (0, -vel[1]))
+				elif (vx !=0 and vel[1] != 0):
+					self.setMapTile(self.cpos[0], self.cpos[1], (vel[1], 0))
+				elif (vy !=0 and vel[0] != 0):
+					self.setMapTile(self.cpos[0], self.cpos[1], (0, vel[0]))
 				else:
 					self.setMapTile(self.cpos[0], self.cpos[1], (-vel[1] , -vel[0]))
 				self.velocity.append(vel)
@@ -100,7 +123,6 @@ class LevelManager (Level):
 	def goRight (self):
 		if (self.getMapTile(self.cpos[0] + 1, self.cpos[1]) != None):
 			self.velocity.append((1,0))
-			print(self.velocity)
 			self.addMovement(1, 0)
 			self.movementTicks = 16*4
 

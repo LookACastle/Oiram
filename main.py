@@ -14,7 +14,6 @@ class Game:
         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, SCREEN_RES_HEIGHT*0.1)
         pygame.init()
         dis = pygame.display.Info()
-        print(dis.current_w)
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
         self.player = Oiram(16*SCALE, 16*SCALE)

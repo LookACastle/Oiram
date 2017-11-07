@@ -11,13 +11,17 @@ SCREEN_HEIGHT = 16*SCALE*Y_TILE_COUNT
 
 TEXTURE = 0
 OIRAM = 1
+OVERWORLDMAP = 2
 
-SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png"]
+SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png"]
+
 LEVELS = [None]*16*16
 LEVELS[0] = "level3.png"
+LEVELS[1] = (0,1)
 MAP = "overworld.png"
-#textures
 
+
+#TEXTURES
 GRASSDIRT = 0
 DIRT = 1
 GRASS = 2
@@ -39,3 +43,12 @@ SHROOM = 25
 SHROOM_HP = 27
 FLOWER = 29
 
+H_ROAD = 0
+L_ROAD = 1
+BG = 2
+TREE = 3
+CLOSED_DOOR = 4
+OPEM_DOOR = 5
+COMPLETE_DOOR = 6
+MINI_BOSS = 7
+BOSS = 8

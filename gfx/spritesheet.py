@@ -34,6 +34,7 @@ class SpriteSheet:
 		return self.output
 
 	def getScaledSprite(self, index, scale):
+		PRINT("HEY")
 		y = int(index/self.rowcount)
 		x = index-y*self.rowcount
 		#print(x,y,x*self.spritewidth, y*self.spriteheight*self.width)

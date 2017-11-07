@@ -8,21 +8,31 @@ class TileManager:
 		# til farve 0xBBGGRR
 		self.tiles = [None]*(0xFFFFFF+1)
 
-		self.tiles[0x105C96] = Tile(DIRT, True)
-		self.tiles[0x0FFF0F] = Tile(GRASSDIRT, True)
-		self.tiles[0xFF00FF] = Tile(POWERUP, True)
-		self.tiles[0x0C9AAF] = Tile(BLOCK, True)
-		self.tiles[0x0099FF] = Tile(BRICK, True)
-		self.tiles[0xDBDBDB] = Tile(STONE, True)
-		
-		self.tiles[0xb469ff] = Tile(SKY, False)
-		
-		self.tiles[0x139932] = LayeredTile(SKY, GRASS)
-		self.tiles[0x00FFFF] = LayeredTile(SKY, COIN_STILL)
 
-		self.tiles[0xFFFFFF] = Tile(SKY, False)
-		self.tiles[0xFFFF00] = Tile(STONE_UNDERWORLD, False)
-		self.nullTile = Tile(BLOCK, False)
+		"""
+		-------------Default level Tiles-------------
+		"""
+		self.tiles[0x105C96] = Tile(TEXTURE, DIRT, True)
+		self.tiles[0x0FFF0F] = Tile(TEXTURE, GRASSDIRT, True)
+		self.tiles[0xFF00FF] = Tile(TEXTURE, POWERUP, True)
+		self.tiles[0x0C9AAF] = Tile(TEXTURE, BLOCK, True)
+		self.tiles[0x0099FF] = Tile(TEXTURE, BRICK, True)
+		self.tiles[0xDBDBDB] = Tile(TEXTURE, STONE, True)
+		
+		self.tiles[0xb469ff] = Tile(TEXTURE, SKY, False)
+		
+		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)
+		self.tiles[0x00FFFF] = LayeredTile(TEXTURE, SKY, COIN_STILL)
+
+		self.tiles[0xFFFFFF] = Tile(TEXTURE, SKY, False)
+		self.tiles[0xFFFF00] = Tile(TEXTURE, STONE_UNDERWORLD, False)
+		self.nullTile = Tile(TEXTURE, BLOCK, False)
+
+
+		"""
+		-------------Overworld map Tiles-------------
+		"""
+		self.tiles[0x29B547] = Tile(OVERWORLDMAP, BG, False)
 
 
 	def getNullTile(self):

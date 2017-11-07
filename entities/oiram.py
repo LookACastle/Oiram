@@ -67,7 +67,20 @@ class Oiram (Mob):
 				self.vy = vel[1]
 				self.movex(level)
 				self.movey(level)
+				if (self.vx != 0 or self.vy != 0):
+					self.steps = True
+					if (self.vx > 0):
+						self.flip = False
+					if (self.vx < 0):
+						self.flip = True
+				else:
+					self.steps = False
+
+				if (self.steps):
+					self.cstep += 1
+					self.id = int(self.cstep/3.5)%3
 			else:
+				self.id = 5
 				self.vx = 0
 				self.vy = 0
 

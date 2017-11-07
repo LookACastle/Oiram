@@ -23,4 +23,4 @@ class Screen:
 		self.display.blit(pygame.transform.flip(sprite, flip, False), (x+self.xOffset,y+self.yOffset))
 
 	def drawScaledSprite(self, id, tileId, x, y, scale):
-		self.display.blit(self.sheets[id].getSprite(tileId), (x,y))
+		self.display.blit(self.sheets[id].getScaledSprite(tileId, scale), (x,y))

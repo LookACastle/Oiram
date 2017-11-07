@@ -19,8 +19,7 @@ class Screen:
 		self.display.blit(self.sheets[id].getSprite(tileId), (x+self.xOffset, y+self.yOffset))
 
 	def drawFlippedSprite(self, id, tileId, x, y, flip):
-		sprite = self.sheets[id].getSprite(tileId)
-		self.display.blit(pygame.transform.flip(sprite, flip, False), (x+self.xOffset,y+self.yOffset))
+		self.display.blit(pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False), (x+self.xOffset,y+self.yOffset))
 
-	def drawScaledSprite(self, id, tileId, x, y, scale):
-		self.display.blit(self.sheets[id].getScaledSprite(tileId, scale), (x,y))
+	def drawScaledSprite(self, id, tileId, x, y):
+		self.display.blit(self.sheets[id].getScaledSprite(tileId), (x+self.xOffset,y+self.yOffset))

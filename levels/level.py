@@ -36,14 +36,13 @@ class Level:
 		return False
 	
 	def isSolidTile(self, x, y):
-		if (x<0 or x>self.width): return True
-		if (y>self.height): return True
-		if (y<0): return False
+		if (x < 0 or x >= self.width): return True
+		if (y<0 or y >=self.height): return False
 		return self.map[x + y*self.width].isSolid()
 
 	def getTile(self, x, y):
-		if (x<0 or x>self.width): return self.tileManager.getNullTile()
-		if (y<0 or y>self.height): return self.tileManager.getNullTile()
+		if (x<0 or x>=self.width): return self.tileManager.getNullTile()
+		if (y<0 or y>=self.height): return self.tileManager.getNullTile()
 		return self.map[x + y*self.width]
 
 	def tick(self):

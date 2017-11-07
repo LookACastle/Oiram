@@ -64,6 +64,10 @@ class Game:
 
     
     def tick(self):
+        if (self.player.dead):
+            self.levelManager.changeLevel(self.player)
+            self.player.dead = False
+
         currentlevel = self.levelManager.getCurrentLevel()
 
         for event in pygame.event.get():
@@ -71,10 +75,6 @@ class Game:
                 self.running = False
             if (currentlevel != None):
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_a:
-                        self.player.x = 100
-                        self.player.y = SCREEN_HEIGHT-32*SCALE
-                        #self.levelManager.changeLevel()
                     if event.key == pygame.K_LEFT:
                         self.player.vx -= 1
                     if event.key == pygame.K_RIGHT:
@@ -90,12 +90,14 @@ class Game:
                         self.player.vx -= 1
             else:
                 if event.type == pygame.KEYDOWN:
+                    print(self.levelManager.movementTicks)
                     if (self.levelManager.movementTicks <= 0):
                         if event.key == pygame.K_a:
                             self.levelManager.changeLevel(self.player)
                         if event.key == pygame.K_LEFT:
                             self.levelManager.goLeft()
                         if event.key == pygame.K_RIGHT:
+                            print("right")
                             self.levelManager.goRight()
                         if event.key == pygame.K_UP:
                             self.levelManager.goUp()

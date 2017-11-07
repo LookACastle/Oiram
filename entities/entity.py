@@ -81,5 +81,5 @@ class Entity:
 		pass
 
 	def render (self, screen):
-		screen.drawSprite( self.sheet, self.id, self.x, self.y, self.flip)
+		screen.drawSprite( self.sheet, self.id, self.x, self.y)
 		

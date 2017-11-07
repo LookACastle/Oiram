@@ -1,5 +1,6 @@
 from tile.tile import *
 from tile.layeredtile import LayeredTile
+from tile.scaledtile import ScaledTile
 from constants import *
 
 class TileManager:
@@ -20,7 +21,7 @@ class TileManager:
 		self.tiles[0xDBDBDB] = Tile(TEXTURE, STONE, True)
 		
 		self.tiles[0xb469ff] = Tile(TEXTURE, SKY, False)
-		
+
 		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)
 		self.tiles[0x00FFFF] = LayeredTile(TEXTURE, SKY, COIN_STILL)
 
@@ -28,11 +29,19 @@ class TileManager:
 		self.tiles[0xFFFF00] = Tile(TEXTURE, STONE_UNDERWORLD, False)
 		self.nullTile = Tile(TEXTURE, BLOCK, False)
 
+		"""
+		-------------Entity Tiles-------------
+		"""
+
+		self.tiles[0x00C7FF] = Tile(TEXTURE, SKY, False)
+
 
 		"""
 		-------------Overworld map Tiles-------------
 		"""
-		self.tiles[0x29B547] = Tile(OVERWORLDMAP, BG, False)
+		self.tiles[0x29B547] = ScaledTile(OVERWORLDMAP, BG)
+		self.tiles[0xB7B7B7] = ScaledTile(OVERWORLDMAP, H_ROAD)
+		self.tiles[0xB8B8B8] = ScaledTile(OVERWORLDMAP, V_ROAD)
 
 
 	def getNullTile(self):

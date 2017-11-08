@@ -51,6 +51,9 @@ class Level:
 		for e in self.entities:
 			e.tick(self)
 
+	def collideTile (self, target, x, y):
+		self.getTile(x, y).collision(target, self)
+		
 	def drawlevel(self, screen, px, py):
 
 		xOffset = 0

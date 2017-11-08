@@ -3,7 +3,7 @@ from constants import *
 
 class Oiram (Mob):
 	def __init__(self, x, y):
-		Mob.__init__(self, OIRAM, 0, x, y, True, 1)
+		Mob.__init__(self, OIRAM, 0, x, y, True, 2)
 		self.steps = False
 		self.lstep = x
 		self.cstep = 0
@@ -22,12 +22,13 @@ class Oiram (Mob):
 				else:
 					self.vy = self.vy * 1.1
 			if (self.vy > 2.5):
-				self.vy = 2.5
+				self.vy = 2
 
 			col = self.movey(level)
+
 			if (self.y > level.height*16*SCALE):
 				self.dead = True
-				
+
 			if (self.jump):
 				if (col == True):
 					if (self.vy > 0):

@@ -98,9 +98,9 @@ class LevelManager (Level):
 				elif (vy !=0 and vel[1] != 0):
 					self.setMapTile(self.cpos[0], self.cpos[1], (0, -vel[1]))
 				elif (vx !=0 and vel[1] != 0):
-					self.setMapTile(self.cpos[0], self.cpos[1], (vel[1], 0))
+					self.setMapTile(self.cpos[0], self.cpos[1], (-vx, 0))
 				elif (vy !=0 and vel[0] != 0):
-					self.setMapTile(self.cpos[0], self.cpos[1], (0, vel[0]))
+					self.setMapTile(self.cpos[0], self.cpos[1], (0, -vy))
 				else:
 					self.setMapTile(self.cpos[0], self.cpos[1], (-vel[1] , -vel[0]))
 				self.velocity.append(vel)

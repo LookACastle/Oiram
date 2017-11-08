@@ -52,7 +52,7 @@ class Entity:
 			movement = self.vy*self.speed*SCALE
 			if (self.vy > 0):
 				tileMovement = int(movement/16)
-				for tileoffset in range(0, tileMovement+2):
+				for tileoffset in range(0, tileMovement+1):
 					ny = int(cy) + tileoffset + self.height
 					col1 = level.isSolidTile(int(cx + self.width - 0.1),ny)
 					col2 = level.isSolidTile(int(cx + 0.1),ny)
@@ -62,7 +62,7 @@ class Entity:
 				self.y += movement
 			else:
 				tileMovement = math.floor(movement/16)
-				for tileoffset in range(0, tileMovement - 1, -1):
+				for tileoffset in range(0, tileMovement, -1):
 					ny = int(cy) + tileoffset
 					col1 = level.isSolidTile(int(cx + self.width - 0.1),ny)
 					col2 = level.isSolidTile(int(cx + 0.1),ny)

@@ -15,7 +15,6 @@ class TileManager:
 		"""
 		self.tiles[0x105C96] = Tile(TEXTURE, DIRT, True)
 		self.tiles[0x0FFF0F] = Tile(TEXTURE, GRASSDIRT, True)
-		self.tiles[0xFF00FF] = Tile(TEXTURE, POWERUP, True)
 		self.tiles[0x0C9AAF] = Tile(TEXTURE, BLOCK, True)
 		self.tiles[0x0099FF] = Tile(TEXTURE, BRICK, True)
 		self.tiles[0xDBDBDB] = Tile(TEXTURE, STONE, True)
@@ -23,7 +22,6 @@ class TileManager:
 		self.tiles[0xb469ff] = Tile(TEXTURE, SKY, False)
 
 		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)
-		self.tiles[0x00FFFF] = LayeredTile(TEXTURE, SKY, COIN_STILL)
 
 		self.tiles[0xFFFFFF] = Tile(TEXTURE, SKY, False)
 		self.tiles[0xFFFF00] = Tile(TEXTURE, STONE_UNDERWORLD, False)

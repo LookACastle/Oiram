@@ -3,7 +3,7 @@ from constants import *
 
 class Oiram (Mob):
 	def __init__(self, x, y):
-		Mob.__init__(self, OIRAM, 0, x, y, True, 2)
+		Mob.__init__(self, OIRAM, 0, x, y, True, 1)
 		self.steps = False
 		self.lstep = x
 		self.cstep = 0

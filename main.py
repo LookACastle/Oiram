@@ -90,7 +90,7 @@ class Game:
                         self.player.vx -= 1
             else:
                 if event.type == pygame.KEYDOWN:
-                    if (self.levelManager.movementTicks <= 0):
+                    if (self.levelManager.movementTicks < 0):
                         if event.key == pygame.K_a:
                             self.levelManager.changeLevel(self.player)
                         if event.key == pygame.K_LEFT:

@@ -5,7 +5,6 @@ class Collectable (Mob):
 		Mob.__init__(self, sheet, id, x, y, True, 0)
 		self.idOffset = id
 		self.length = length
-		print(self.length)
 		self.animationTick = 0
 		self.animationSpeed = animationSpeed
 		self.pause = 0

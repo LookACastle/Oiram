@@ -15,7 +15,7 @@ class LevelManager (Level):
 		self.playerv = (0,0)
 		self.cpos = [0,0]
 		self.velocity = [(0)]
-		self.movementTicks = 0
+		self.movementTicks = -1
 	
 	def getCurrentLevel (self):
 		return self.currentlevel
@@ -29,7 +29,7 @@ class LevelManager (Level):
 				if (len(self.velocity) != 0):
 					self.movementTicks = 16*4
 			else:
-				self.movementTicks = 0
+				self.movementTicks = -1
 		if (self.currentlevel != None):
 			self.currentlevel.tick()
 
@@ -43,12 +43,14 @@ class LevelManager (Level):
 					player.y = SCREEN_HEIGHT-5*16*SCALE
 					player.vx = 0
 					player.vy = 0
+					player.speed = 2
 		else:
 			self.currentlevel = None
 			player.x = (1+4*self.cpos[0])*16*SCALE
 			player.y = (1+4*self.cpos[1])*16*SCALE
 			player.vx = 0
 			player.vy = 0
+			player.speed = 1
 
 	def getVelocity(self):
 		return self.velocity[0]
@@ -78,13 +80,11 @@ class LevelManager (Level):
 			formattedLine = line.replace("\n","").split("|")
 			for s in formattedLine:
 				if (len(s) > 0):
-					print(s)
 					if (s[0] != " "):
 						if (s[0] == "/"):
 							t = s.replace('/',"").split(",")
 							self.levels[x + y*self.mapwidth] = (int(t[0]), int(t[1]))
 						else:
-							print(s)
 							self.levels[x + y*self.mapwidth] = Level(s, self.tileManager, self.entityManager)
 				x += 1
 			x = 0

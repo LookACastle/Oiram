@@ -22,12 +22,13 @@ class Oiram (Mob):
 				else:
 					self.vy = self.vy * 1.1
 			if (self.vy > 2.5):
-				self.vy = 2.5
+				self.vy = 2
 
 			col = self.movey(level)
+
 			if (self.y > level.height*16*SCALE):
 				self.dead = True
-				
+
 			if (self.jump):
 				if (col == True):
 					if (self.vy > 0):

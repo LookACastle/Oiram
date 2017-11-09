@@ -9,6 +9,9 @@ class EntityManager:
 		# til farve 0xBBGGRR
 		self.entities = [None]*(0xFFFFFF+1)
 		self.entities[0xb469ff] = Baseenemy(OIRAM,0,0,True, 0.8)
-		self.entities[0x00C7FF] = Collectable(TEXTURE, STAR, 11,0,0)
+		self.entities[0x00C7FF] = Collectable(TEXTURE, STAR, 11,0,0, 60, 0.3)
+		self.entities[0xFF00FF] = Collectable(TEXTURE, POWERUP, 5,0,0, 60, 0.3)
+		self.entities[0x00FFFF] = Collectable(TEXTURE, COIN_FLIP_ANIMATION, 8,0,0, 0, 0.1)
+
 	def getEntity(self,color):
 		return self.entities[color]

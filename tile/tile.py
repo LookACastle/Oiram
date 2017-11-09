@@ -11,5 +11,7 @@ class Tile:
 
 	def render (self, screen, x, y):
 		screen.drawSprite( self.sheet, self.id, x, y)
-		
+	
+	def collision(self, target, level):
+		pass
 		

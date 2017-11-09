@@ -51,6 +51,9 @@ class Level:
 		for e in self.entities:
 			e.tick(self)
 
+	def collideTile (self, target, x, y):
+		self.getTile(x, y).collision(target, self)
+		
 	def drawlevel(self, screen, px, py):
 
 		xOffset = 0
@@ -76,9 +79,7 @@ class Level:
 		for x in range(0 , X_TILE_COUNT + 1):
 			for y in range(0,Y_TILE_COUNT + 1):
 				tile = self.map[xTile + x + (y+yTile)*self.width]
-				if (tile == None):
-					screen.drawSprite( TEXTURE, POWERUP, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
-				else:
+				if (tile != None):
 					tile.render(screen, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
 
 		for e in self.entities:

@@ -75,14 +75,17 @@ class LevelManager (Level):
 		x = 0
 		y = 0
 		for line in levels:
-			formattedLine = line.replace("\n","").split("	")
+			formattedLine = line.replace("\n","").split("|")
 			for s in formattedLine:
 				if (len(s) > 0):
-					if (s[0] == "/"):
-						t = s.replace('/',"").split(",")
-						self.levels[x + y*self.mapwidth] = (int(t[0]), int(t[1]))
-					else:
-						self.levels[x + y*self.mapwidth] = Level(s, self.tileManager, self.entityManager)
+					print(s)
+					if (s[0] != " "):
+						if (s[0] == "/"):
+							t = s.replace('/',"").split(",")
+							self.levels[x + y*self.mapwidth] = (int(t[0]), int(t[1]))
+						else:
+							print(s)
+							self.levels[x + y*self.mapwidth] = Level(s, self.tileManager, self.entityManager)
 				x += 1
 			x = 0
 			y += 1
@@ -98,9 +101,9 @@ class LevelManager (Level):
 				elif (vy !=0 and vel[1] != 0):
 					self.setMapTile(self.cpos[0], self.cpos[1], (0, -vel[1]))
 				elif (vx !=0 and vel[1] != 0):
-					self.setMapTile(self.cpos[0], self.cpos[1], (vel[1], 0))
+					self.setMapTile(self.cpos[0], self.cpos[1], (-vx, 0))
 				elif (vy !=0 and vel[0] != 0):
-					self.setMapTile(self.cpos[0], self.cpos[1], (0, vel[0]))
+					self.setMapTile(self.cpos[0], self.cpos[1], (0, -vy))
 				else:
 					self.setMapTile(self.cpos[0], self.cpos[1], (-vel[1] , -vel[0]))
 				self.velocity.append(vel)

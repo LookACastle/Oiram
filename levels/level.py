@@ -1,4 +1,5 @@
 import pygame
+import copy
 from tile import *
 from constants import *
 
@@ -8,9 +9,13 @@ class Level:
 		self.entityManager = entityManager
 		self.map = []
 		self.entities = []
+		self.loadedEntities = []
 		self.loadTileMap(path)
 		self.open = True
 		self.cleared = False
+		self.pause = False
+		self.endFlag = False
+		self.coinCount = 0
 
 	def loadTileMap (self, path):
 		img = pygame.image.load("levels/levels/" + path)
@@ -28,7 +33,12 @@ class Level:
 					self.map.append(self.tileManager.getTile(0xFFFFFF))
 				entity = self.entityManager.getEntity(pixel[x][y])
 				if (entity != None):
-					self.entities.append(entity.clone(x*16*SCALE, y*16*SCALE))
+					self.loadedEntities.append(entity.clone(x*16*SCALE, y*16*SCALE))
+
+	def reset (self):
+		self.entities = []
+		for e in self.loadedEntities:
+			self.entities.append(e.clone(e.x, e.y))
 
 	def tileCollision(self, points, colType):
 		for p in points:
@@ -48,8 +58,14 @@ class Level:
 		return self.map[x + y*self.width]
 
 	def tick(self):
-		for e in self.entities:
-			e.tick(self)
+		iOffset = 0
+		if (not self.pause):
+			for i in range(0,len(self.entities)):
+				e = self.entities[i - iOffset]
+				e.tick(self)
+				if (e.dead):
+					del(self.entities[i])
+					iOffset +=1
 
 	def entityCollision (self, target):
 		for e in self.entities:
@@ -74,7 +90,7 @@ class Level:
 		if (xTile + X_TILE_COUNT >= self.width ):
 			xOffset = X_TILE_COUNT*halfTile-(self.width*16 - X_TILE_COUNT*8)*SCALE
 			xTile = self.width - X_TILE_COUNT - 1
-		print(xOffset)
+
 		yOffset = 0
 		yTile = 0
 		if (py > Y_TILE_COUNT*8*SCALE-8*SCALE):

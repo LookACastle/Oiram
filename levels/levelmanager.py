@@ -20,7 +20,7 @@ class LevelManager (Level):
 	def getCurrentLevel (self):
 		return self.currentlevel
 
-	def tick(self):
+	def tick(self, player):
 		if (self.movementTicks > 0):
 			self.movementTicks -= 1
 		else:
@@ -31,6 +31,22 @@ class LevelManager (Level):
 			else:
 				self.movementTicks = -1
 		if (self.currentlevel != None):
+			if (self.currentlevel.endFlag):
+				if (player.liveCount > 0):
+					self.currentlevel.reset()
+					player.x = 100
+					player.y = SCREEN_HEIGHT-5*16*SCALE
+					player.vx = 0
+					player.vy = 0
+					player.speed = 1.5
+					player.dead = False
+					player.yOffset = 0
+					player.liveCount -= 1
+					self.currentlevel.endFlag = False
+				else:
+					self.currentlevel.endFlag = False
+					self.changeLevel(player)
+				return
 			self.currentlevel.tick()
 
 	def changeLevel (self, player):
@@ -39,11 +55,14 @@ class LevelManager (Level):
 			if (isinstance(level, Level)):
 				if (level.open):
 					self.currentlevel = level
+					self.currentlevel.reset()
 					player.x = 100
 					player.y = SCREEN_HEIGHT-5*16*SCALE
 					player.vx = 0
 					player.vy = 0
 					player.speed = 1.5
+					player.dead = False
+					player.yOffset = 0
 		else:
 			self.currentlevel = None
 			player.x = (1+4*self.cpos[0])*16*SCALE
@@ -51,6 +70,9 @@ class LevelManager (Level):
 			player.vx = 0
 			player.vy = 0
 			player.speed = 1
+			player.dead = False
+			player.yOffset = 0
+			player.liveCount = 3
 
 	def getVelocity(self):
 		return self.velocity[0]

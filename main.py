@@ -64,9 +64,6 @@ class Game:
 
     
     def tick(self):
-        if (self.player.dead):
-            self.levelManager.changeLevel(self.player)
-            self.player.dead = False
 
         currentlevel = self.levelManager.getCurrentLevel()
 
@@ -102,7 +99,7 @@ class Game:
                         if event.key == pygame.K_DOWN:
                             self.levelManager.goDown()
         
-        self.levelManager.tick()
+        self.levelManager.tick(self.player)
         
         if (currentlevel == None):
             self.player.onMap = True

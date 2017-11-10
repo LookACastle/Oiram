@@ -3,11 +3,11 @@ Write your name next to the decisions you stand by:
 
 Movement:
 Fall-Jump (Falling without jumping, results in the ability to jump midair): Votes: 
-Power-Jump (Holding the jump key, enables you to jump higher.): Votes: Andreas, Martin, Emil
-Sprint (When holding shift, you sprint): Votes: Emil
+Power-Jump (Holding the jump key, enables you to jump higher.): Votes: Andreas, Martin, Emil, Thor
+Sprint (When holding shift, you sprint): Votes: Emil, Thor
 Velocity Movement ("Rampup" start, you start at 0%, then eventually gets to 100% movement speed): Votes: 
-Power Dunk (Pressing the duck key, when in air, results in stopping the x movement, and accelerating the downwards y movement): Votes: Emil, Andreas
-Amount of levels per world: Votes: Andreas: 8 - Emil: 8 - Martin: 8 - Thor: 
+Power Dunk (Pressing the duck key, when in air, results in stopping the x movement, and accelerating the downwards y movement): Votes: Emil, Andreas, Thor
+Amount of levels per world: Votes: Andreas: 8 - Emil: 8 - Martin: 8 - Thor: 8
 
 
 Camera:

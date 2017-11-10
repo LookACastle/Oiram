@@ -16,7 +16,7 @@ class Game:
         dis = pygame.display.Info()
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
-        self.player = Oiram(16*SCALE, 16*SCALE)
+        self.player = Oiram(16*SCALE, 4*4*16*SCALE + 16*SCALE)
 
     def start(self):
         self.run()
@@ -102,14 +102,18 @@ class Game:
                         if event.key == pygame.K_DOWN:
                             self.levelManager.goDown()
         
+        self.levelManager.tick()
+        
         if (currentlevel == None):
             self.player.onMap = True
             self.player.tick(self.levelManager)
         else:
             self.player.onMap = False
             self.player.tick(currentlevel)
+            col = currentlevel.entityCollision(self.player)
+            if (col != None):
+                col.collide(self.player)
 
-        self.levelManager.tick()
 
 
     def render (self, dt):

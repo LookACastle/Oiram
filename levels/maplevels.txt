@@ -1,5 +1,5 @@
-level1.png|/0,1
- 		  |/0,1
-level2.png|/0,0|    |/1,0|/0,0
- 		  |/1,0|/1,0|/0,0
- 		  |    |    |/1,0|/0,0
+bonus1.png|/0,0      |/1,0|/1,0      |level3.png|
+          |level2.png|    |          |/0,1      |          |level5.png
+          |/0,-1     |    |bonus2.png|boss1.png |/1,0      |/0,0      
+          |level1.png|    |          |          |          |/0,1      
+/0,0      |/0,-1     |    |          |boss2.png |level4.png|/-1,0

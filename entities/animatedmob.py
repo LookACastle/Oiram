@@ -1,8 +1,8 @@
 from entities.mob import *
 
-class Collectable (Mob):
-	def __init__(self, sheet, id, length, x, y, pause, animationSpeed):
-		Mob.__init__(self, sheet, id, x, y, True, 0)
+class animatedMob (Mob):
+	def __init__(self, sheet, id, length, x, y, pause, animationSpeed, collision):
+		Mob.__init__(self, sheet, id, x, y, collision, 0)
 		self.idOffset = id
 		self.length = length
 		self.animationTick = 0
@@ -13,9 +13,9 @@ class Collectable (Mob):
 		self.dir = False
 		
 	def clone(self, x, y):
-		return Collectable(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed)	
+		return animatedMob(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.collision)	
 
-	def tick(self, level):
+	def animationtick(self):
 		if (self.pause <= 0):
 			if (self.animationTick <= self.length):
 				self.id = self.idOffset+int(self.animationTick)%self.length
@@ -26,6 +26,10 @@ class Collectable (Mob):
 				self.pause = self.addPause
 		else:
 			self.pause -= 1
+		
+	def tick(self, level):
+		self.animationtick()
+
 	'''
 		if (self.yOffset > 0):
 			self.dir = False
@@ -37,5 +41,9 @@ class Collectable (Mob):
 		else:
 			self.yOffset -= 0.2
 	'''
+
+	def collide(self, victim):
+		victim.dead = True
+
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y + self.yOffset)

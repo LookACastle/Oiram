@@ -13,7 +13,7 @@ class LevelManager (Level):
 
 		self.levels[0].open = True
 		self.playerv = (0,0)
-		self.cpos = [0,0]
+		self.cpos = [0,4]
 		self.velocity = [(0)]
 		self.movementTicks = -1
 	
@@ -43,7 +43,7 @@ class LevelManager (Level):
 					player.y = SCREEN_HEIGHT-5*16*SCALE
 					player.vx = 0
 					player.vy = 0
-					player.speed = 2
+					player.speed = 1.5
 		else:
 			self.currentlevel = None
 			player.x = (1+4*self.cpos[0])*16*SCALE
@@ -82,7 +82,7 @@ class LevelManager (Level):
 				if (len(s) > 0):
 					if (s[0] != " "):
 						if (s[0] == "/"):
-							t = s.replace('/',"").split(",")
+							t = s.replace('/',"").replace(" ","").split(",")
 							self.levels[x + y*self.mapwidth] = (int(t[0]), int(t[1]))
 						else:
 							self.levels[x + y*self.mapwidth] = Level(s, self.tileManager, self.entityManager)

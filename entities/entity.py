@@ -14,6 +14,7 @@ class Entity:
 		self.width = 1
 		self.height = 1
 		self.xmovement = False
+		self.dead = False
 
 	def clone(self, x, y):
 		return Entity(self.id, self.sheet, x, y, self.width, self.height, self.speed)
@@ -72,7 +73,26 @@ class Entity:
 				self.y += movement	
 		return 0
 
+	def entityCollision(self, target):
+		tx = target.x
+		ty = target.y
+		txw = tx + target.width*16*SCALE
+		tyh = ty + target.height*16*SCALE
 
+		xcol = 0
+		ycol = False
+
+		if (txw >= self.x and txw <= self.x + self.width*16*SCALE):
+			xcol = True
+		if (tx >= self.x and tx <= self.x + self.width*16*SCALE):
+			xcol = True
+		
+		if (tyh >= self.y and tyh <= self.y + self.height*16*SCALE):
+			ycol = True
+		if (ty >= self.y and ty <= self.y + self.height*16*SCALE):
+			ycol = True
+
+		return xcol == True and ycol == True
 
 	def collide(self, victim):
 		pass

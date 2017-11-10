@@ -13,7 +13,7 @@ class Level:
 		self.cleared = False
 
 	def loadTileMap (self, path):
-		img = pygame.image.load("levels/" + path)
+		img = pygame.image.load("levels/levels/" + path)
 		size = img.get_rect().size
 		self.width = size[0]
 		self.height = size[1]
@@ -51,6 +51,14 @@ class Level:
 		for e in self.entities:
 			e.tick(self)
 
+	def entityCollision (self, target):
+		for e in self.entities:
+			if (e.collision):
+				col = e.entityCollision(target)
+				if (col):
+					return e
+		return None
+
 	def collideTile (self, target, x, y):
 		self.getTile(x, y).collision(target, self)
 		
@@ -58,13 +66,15 @@ class Level:
 
 		xOffset = 0
 		xTile = 0
-		if (px >= X_TILE_COUNT*8*SCALE-8*SCALE):
-			xOffset = X_TILE_COUNT*8*SCALE-px-8*SCALE
+		halfScreenWidth = X_TILE_COUNT*8*SCALE
+		halfTile = 8*SCALE
+		if (px >= halfScreenWidth - halfTile):
+			xOffset = halfScreenWidth - px - halfTile
 			xTile = int(-xOffset/(16*SCALE))
 		if (xTile + X_TILE_COUNT >= self.width ):
-			xOffset = X_TILE_COUNT*8*SCALE-(self.width*16 - X_TILE_COUNT*8)*SCALE
+			xOffset = X_TILE_COUNT*halfTile-(self.width*16 - X_TILE_COUNT*8)*SCALE
 			xTile = self.width - X_TILE_COUNT - 1
-		
+		print(xOffset)
 		yOffset = 0
 		yTile = 0
 		if (py > Y_TILE_COUNT*8*SCALE-8*SCALE):
@@ -81,7 +91,9 @@ class Level:
 				tile = self.map[xTile + x + (y+yTile)*self.width]
 				if (tile != None):
 					tile.render(screen, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
-
+		
 		for e in self.entities:
-			e.render(screen)
+			if (e.x + xOffset > 0 and e.x + xOffset<X_TILE_COUNT*16*SCALE or e.x + e.width*16*SCALE + xOffset > 0 and e.x + e.width*16*SCALE + xOffset<X_TILE_COUNT*16*SCALE ):
+				e.render(screen)
+		
 		

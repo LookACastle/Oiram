@@ -10,7 +10,6 @@ class Oiram (Mob):
 		self.jump = False
 		self.push = False
 		self.onMap = False
-		self.dead = False
 
 	def tick(self, level):
 		if (not self.onMap):
@@ -21,7 +20,7 @@ class Oiram (Mob):
 					self.vy = 0.5
 				else:
 					self.vy = self.vy * 1.1
-			if (self.vy > 2.5):
+			if (self.vy > 2):
 				self.vy = 2
 
 			col = self.movey(level)

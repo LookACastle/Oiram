@@ -32,7 +32,7 @@ class LevelManager (Level):
 				self.movementTicks = -1
 		if (self.currentlevel != None):
 			if (self.currentlevel.endFlag):
-				if (player.liveCount > 0):
+				if (player.liveCount > 1):
 					self.currentlevel.reset()
 					player.x = 100
 					player.y = SCREEN_HEIGHT-5*16*SCALE

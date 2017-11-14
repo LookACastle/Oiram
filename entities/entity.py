@@ -28,21 +28,30 @@ class Entity:
 				tileMovement = int(movement/16)
 				for tileoffset in range(0, tileMovement+1):
 					nx = int(cx) + tileoffset + self.width
-					col1 = level.isSolidTile(nx, int(cy + 0.1))
-					col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
-					if (col1 or col2):
+					if (nx < 0 or nx >= level.width): 
 						self.x = int(cx + tileoffset)*16*SCALE
 						return True
+					else:
+						col1 = level.isSolidTile(nx, int(cy + 0.1))
+						col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+						if (col1 or col2):
+							self.x = int(cx + tileoffset)*16*SCALE
+							return True
 				self.x += movement
 			else:
 				tileMovement = math.floor(movement/16)
 				for tileoffset in range(0, tileMovement, -1):
 					nx = int(cx) + tileoffset
-					col1 = level.isSolidTile(nx, int(cy + 0.1))
-					col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
-					if (col1 or col2):
-						self.x = int(cx + 1 + tileoffset)*16*SCALE -1
+					if (cx <= 0 or nx >= level.width): 
+						print(nx)
+						self.x = int(cx + tileoffset)*16*SCALE
 						return True
+					else:
+						col1 = level.isSolidTile(nx, int(cy + 0.1))
+						col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+						if (col1 or col2):
+							self.x = int(cx + 1 + tileoffset)*16*SCALE -1
+							return True
 				self.x += movement
 		return False
 

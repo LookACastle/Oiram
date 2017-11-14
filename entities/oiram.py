@@ -112,6 +112,6 @@ class Oiram (Mob):
 			self.vy = -6
 		
 	def render (self, screen):
-		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, 0)
+		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, 0, 0)
 		screen.writeText("X" + str(self.liveCount), 18*SCALE, 2.5*SCALE)
 		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1*SCALE, 1*SCALE)

@@ -21,10 +21,19 @@ class Screen:
 	def drawSprite(self, id, tileId, x, y):
 		self.display.blit(self.sheets[id].getSprite(tileId), (x+self.xOffset, y+self.yOffset))
 
-	def drawColouredFlippedSprite(self, id, tileId, x, y, flip, overlay):
+	def drawColouredFlippedSprite(self, id, tileId, x, y, flip, overlay, strength):
 		sprite = pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False)
-		sprite.set_mask()
-		self.display.blit(colorArray, (x+self.xOffset,y+self.yOffset))
+		pxarray = pygame.PixelArray(sprite)
+		for px in range(0, 16):
+			for py in range(0,16):
+				color = pxarray[px*SCALE, py*SCALE]
+				print(color>>8 & 0xFF, color>>16 & 0xFF, color>>24 & 0xFF, color>>32 & 0xFF)
+				if (color>>32 & 0xFF != 0):
+					#fade colors here
+		ns = pxarray.make_surface()
+		del pxarray
+
+		self.display.blit(ns , (x+self.xOffset,y+self.yOffset))
 
 	def drawFlippedSprite(self, id, tileId, x, y, flip):
 		self.display.blit(pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False), (x+self.xOffset,y+self.yOffset))

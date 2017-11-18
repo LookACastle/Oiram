@@ -13,9 +13,9 @@ class Level:
 		self.loadTileMap(path)
 		self.open = True
 		self.cleared = False
-		self.pause = False
 		self.endFlag = False
 		self.coinCount = 0
+		self.pauseTimer = 0
 
 	def loadTileMap (self, path):
 		img = pygame.image.load("levels/levels/" + path)
@@ -56,15 +56,17 @@ class Level:
 		if (y<0 or y>=self.height): return self.tileManager.getNullTile()
 		return self.map[x + y*self.width]
 
-	def tick(self):
+	def tick(self, player):
 		iOffset = 0
-		if (not self.pause):
+		if (self.pauseTimer <= 0 and not player.dead):
 			for i in range(0,len(self.entities)):
 				e = self.entities[i - iOffset]
 				e.tick(self)
 				if (e.dead):
 					del(self.entities[i])
 					iOffset +=1
+		else:
+			self.pauseTimer -= 1
 
 	def entityCollision (self, target):
 		for e in self.entities:

@@ -13,60 +13,75 @@ class Oiram (Mob):
 		self.yOffset = 0
 		self.deadanimation = False
 		self.liveCount = 3
+		self.invincibleCouner = 0
+		self.overlay = [0, 0, 0]
+		self.overlayStrength = 0
+		self.increment = [True, False, False]
 
 	def tick(self, level):
 		if (not self.dead):
 			if (not self.onMap):
-				if (self.vy < -0.5):
-					self.vy = self.vy * 0.9
-				else:
-					if (self.vy < 0.5):
-						self.vy = 0.5
+				if (level.pauseTimer <= 0):
+					if (self.vy < -0.5):
+						self.vy = self.vy * 0.9
 					else:
-						self.vy = self.vy * 1.1
-				if (self.vy > 2):
-					self.vy = 2
-
-				col = self.movey(level)
-
-				if (self.y > level.height*16*SCALE):
-					self.kill()
-
-				if (self.jump):
-					if (col == True):
-						if (self.vy > 0):
-							self.jump = False
+						if (self.vy < 0.5):
+							self.vy = 0.5
 						else:
-							self.vy = 0
+							self.vy = self.vy * 1.1
+					if (self.vy > 2):
+						self.vy = 2
 
-				if (self.vx != 0):
-					if (self.vx > 0):
-						self.flip = False
-					if (self.vx < 0):
-						self.flip = True
+					col = self.movey(level)
 
-					col = self.movex(level)
+					if (self.y > level.height*16*SCALE):
+						self.kill(True)
 
-					if (col == False):
-						self.steps = True
-						self.push = False
+					if (self.jump):
+						if (col == True):
+							if (self.vy > 0):
+								self.jump = False
+							else:
+								self.vy = 0
+
+					if (self.vx != 0):
+						if (self.vx > 0):
+							self.flip = False
+						if (self.vx < 0):
+							self.flip = True
+
+						col = self.movex(level)
+
+						if (col == False):
+							self.steps = True
+							self.push = False
+						else:
+							self.steps = False
+							self.push = True
 					else:
 						self.steps = False
-						self.push = True
-				else:
-					self.steps = False
-					self.push = False
+						self.push = False
 
-				if (not self.jump):
-					if (self.steps):
-						self.cstep += 1
-						self.id = int(self.cstep/3.5)%3
-					elif (self.push):
-						self.id = 4
+					if (not self.jump):
+						if (self.steps):
+							self.cstep += 1
+							self.id = int(self.cstep/3.5)%3
+						elif (self.push):
+							self.id = 4
+						else:
+							self.id = 5
 					else:
-						self.id = 5
+						self.id = 3
+
+					if (self.invincibleCouner != 0):
+						self.overlayStrength = 0.6
+						self.invincibleCouner -= 1
+						section = int((self.invincibleCouner/3)%len(STAROVERLAY))
+						self.overlay = STAROVERLAY[section]
+					else:
+						self.overlayStrength = 0
 				else:
-					self.id = 3
+					print("pause")
 			else:
 				if (level.movementTicks > 0):
 					vel = level.getVelocity()
@@ -106,12 +121,15 @@ class Oiram (Mob):
 				self.dead = False
 				level.endFlag = True
 
-	def kill (self):
-		if (not self.dead):
-			self.dead = True
-			self.vy = -6
+	def kill (self, overwrite):
+		if (self.invincibleCouner <= 0 or overwrite):
+			if (not self.dead):
+				self.dead = True
+				self.vy = -6
+				self.overlayStrength = 0
+				self.invincibleCouner = 0
 		
 	def render (self, screen):
-		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, 0, 0)
+		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
 		screen.writeText("X" + str(self.liveCount), 18*SCALE, 2.5*SCALE)
 		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1*SCALE, 1*SCALE)

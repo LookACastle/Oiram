@@ -24,12 +24,18 @@ class Screen:
 	def drawColouredFlippedSprite(self, id, tileId, x, y, flip, overlay, strength):
 		sprite = pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False)
 		pxarray = pygame.PixelArray(sprite)
-		for px in range(0, 16):
-			for py in range(0,16):
-				color = pxarray[px*SCALE, py*SCALE]
-				print(color>>8 & 0xFF, color>>16 & 0xFF, color>>24 & 0xFF, color>>32 & 0xFF)
-				if (color>>32 & 0xFF != 0):
-					#fade colors here
+		if (strength > 0):
+			for px in range(0, 16):
+				for py in range(0,16):
+					color = pxarray[px*SCALE, py*SCALE]
+					if (color>>32 & 0xFF != 0):
+						cstrength = 1-strength
+						r = int((color>>8 & 0xFF)*cstrength + overlay[0]*strength)
+						g = int((color>>16 & 0xFF)*cstrength + overlay[1]*strength)
+						b = int((color>>24 & 0xFF)*cstrength + overlay[2]*strength)
+						for sx in range(px*SCALE, px*SCALE + SCALE):
+							for sy in range(py*SCALE, py*SCALE + SCALE):
+								pxarray[sx, sy] = (r, g, b)
 		ns = pxarray.make_surface()
 		del pxarray
 

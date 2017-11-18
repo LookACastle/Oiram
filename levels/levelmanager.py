@@ -47,7 +47,7 @@ class LevelManager (Level):
 					self.currentlevel.endFlag = False
 					self.changeLevel(player)
 				return
-			self.currentlevel.tick()
+			self.currentlevel.tick(player)
 
 	def changeLevel (self, player):
 		if (self.currentlevel == None):

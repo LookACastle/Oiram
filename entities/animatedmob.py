@@ -31,7 +31,7 @@ class animatedMob (Mob):
 		self.animationtick()
 
 	def collide(self, victim):
-		self.dead = True
+		victim.kill(False)
 
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y + self.yOffset)

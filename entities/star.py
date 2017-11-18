@@ -21,4 +21,5 @@ class Star (animatedMob):
 			self.yOffset -= 0.2
 
 	def collide(self, victim):
+		victim.invincibleCouner = 600
 		self.dead = True

@@ -30,20 +30,8 @@ class animatedMob (Mob):
 	def tick(self, level):
 		self.animationtick()
 
-	'''
-		if (self.yOffset > 0):
-			self.dir = False
-		if(self.yOffset < -10):
-			self.dir = True
-
-		if (self.dir):
-			self.yOffset += 0.2
-		else:
-			self.yOffset -= 0.2
-	'''
-
 	def collide(self, victim):
-		victim.kill()
+		self.dead = True
 
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y + self.yOffset)

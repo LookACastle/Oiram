@@ -12,8 +12,9 @@ SCREEN_HEIGHT = 16*SCALE*Y_TILE_COUNT
 TEXTURE = 0
 OIRAM = 1
 OVERWORLDMAP = 2
+ENEMIES = 3
 
-SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png"]
+SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
@@ -42,6 +43,7 @@ WIN_FLAG_TOP = 57
 WIN_FLAG_1 = 58
 WIN_FLAG_2 = 59
 
+#MAP
 ROAD = 0
 T_ROAD = 1
 B_ROAD = 2
@@ -60,3 +62,21 @@ OPEN_DOOR = 14
 COMPLETE_DOOR = 15
 MINI_BOSS = 16
 BOSS = 17
+
+#ENEMY
+ROLLING_FIRE = 0
+SPIKE = 2
+GUMBA = 4
+GUMBA_DEAD = 6
+FISH = 7
+SHIELD = 9
+CANON = 11
+DUNNO = 12
+BULLET_BILL = 13
+FIRE_GHOST = 14
+FIRE_BALL = 15
+FIRE_PROJ = 17
+GREEN_SHELL = 20
+RED_SHELL = 21
+LEGO = 22
+WATER = 26

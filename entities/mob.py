@@ -9,10 +9,7 @@ class Mob (Entity):
 		self.flip = False
 
 	def clone(self, x, y):
-		return Mob(self.sheet, self.id, x, y, self.collision, self.speed)	
-
-	#def tick(self, level):
-	#	self.move(level)
+		return Mob(self.sheet, self.id, x, y, self.collision, self.speed)
 
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y)

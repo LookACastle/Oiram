@@ -18,8 +18,6 @@ class TileManager:
 		self.tiles[0x0C9AAF] = Tile(TEXTURE, BLOCK, True)
 		self.tiles[0x0099FF] = Tile(TEXTURE, BRICK, True)
 		self.tiles[0xDBDBDB] = Tile(TEXTURE, STONE, True)
-		
-		self.tiles[0xb469ff] = Tile(TEXTURE, SKY, False)
 
 		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)
 

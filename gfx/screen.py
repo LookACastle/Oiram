@@ -25,8 +25,8 @@ class Screen:
 		sprite = pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False)
 		pxarray = pygame.PixelArray(sprite)
 		if (strength > 0):
-			for px in range(0, 16):
-				for py in range(0,16):
+			for px in range(0, int(sprite.get_width()/SCALE)):
+				for py in range(0,int(sprite.get_height()/SCALE)):
 					color = pxarray[px*SCALE, py*SCALE]
 					if (color>>32 & 0xFF != 0):
 						cstrength = 1-strength

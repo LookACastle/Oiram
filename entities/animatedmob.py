@@ -2,7 +2,7 @@ from entities.mob import *
 
 class animatedMob (Mob):
 	def __init__(self, sheet, id, length, x, y, pause, animationSpeed, collision):
-		Mob.__init__(self, sheet, id, x, y, collision, 0)
+		Mob.__init__(self, sheet, id, x, y, collision, 1)
 		self.idOffset = id
 		self.length = length
 		self.animationTick = 0

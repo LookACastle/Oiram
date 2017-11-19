@@ -3,6 +3,7 @@ from entities.baseenemy import *
 from entities.animatedmob import *
 from entities.star import *
 from entities.simpleenemy import *
+from entities.shroom import *
 from constants import *
 
 class EntityManager:
@@ -17,8 +18,9 @@ class EntityManager:
 
 		#enemy register
 		#gumba
-		self.entities[0x000001] = Simpleenemy(ENEMIES, GUMBA, 2, 0, 0, 0.1, True, True, 1)
-		self.entities[0x100001] = Simpleenemy(ENEMIES, GUMBA, 2, 0, 0, 0.1, True, True, -1)
+		self.entities[0x000001] = Simpleenemy(ENEMIES, GUMBA, 2, 0, 0, 1, 0.1, True, 1)
+		self.entities[0x100001] = Simpleenemy(ENEMIES, GUMBA, 2, 0, 0, 1, 0.1, True, -1)
+		self.entities[0x000002] = Shroom(TEXTURE, SHROOM, 2, 0, 0, 3, 0.08, True)
 
 	def getEntity(self,color):
 		return self.entities[color]

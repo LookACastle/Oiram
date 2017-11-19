@@ -1,8 +1,8 @@
 from entities.animatedmob import *
-from entities.oriam import Oriam
+from constants import SCALE
 
 class Simpleenemy (animatedMob):
-	def __init__(self, sheet, id, length, x, y, animationSpeed, collision, gravity, vx):
+	def __init__(self, sheet, id, length, x, y, speed, animationSpeed, gravity, vx):
 		animatedMob.__init__(self, sheet, id, length, x, y, 0, animationSpeed, True)
 		self.gravity = gravity
 		if (gravity):
@@ -10,20 +10,21 @@ class Simpleenemy (animatedMob):
 		self.vx = vx
 		self.deadTime = 0
 		self.mark = False
+		self.speed = speed
 
 	def clone(self, x, y):
-		return Simpleenemy(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.collision)	
+		return Simpleenemy(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed, self.gravity, self.vx)	
 		
 	def tick(self, level):
-
+		
 		if(self.deadTime <= 0):
 			if (self.mark):
 				self.dead = True
 				return
 			self.animationtick()
-			col = self.movey(level)
-			col = self.movex(level)
-			if (col):
+			coly = self.movey(level)
+			colx = self.movex(level)
+			if (colx):
 				self.vx = -self.vx
 		else:
 			self.id = 6
@@ -33,6 +34,10 @@ class Simpleenemy (animatedMob):
 		
 
 	def collide(self, victim):
-		if (victim.vy > 0):
-			if (victim)
-		self.dead = True
+		if (self.deadTime <= 0):
+			if (victim.invincibleCounter > 0 or victim.jump):
+				self.deadTime = 30
+				if (victim.jump):
+					victim.vy = -3
+				return
+			victim.kill(False)

@@ -6,6 +6,7 @@ from levels.levelmanager import *
 from tile.tilemanager import *
 from entities.entitymanager import *
 from entities.oiram import *
+from inputhandle.inputhandler import *
 import os
 
 class Game:
@@ -26,6 +27,7 @@ class Game:
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
         self.levelManager = LevelManager(self.tileManager, self.entityManager)
+        self.inputHandler = InputHandler()
 
     def run(self):
         last = pygame.time.get_ticks()
@@ -68,37 +70,43 @@ class Game:
         currentlevel = self.levelManager.getCurrentLevel()
 
         for event in pygame.event.get():
+            if (event.type == pygame.KEYDOWN or event.type == pygame.KEYUP):
+                self.inputHandler.toggleKey(event.key)
+
             if event.type == pygame.QUIT:
                 self.running = False
-            if (currentlevel != None):
-                if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_LEFT:
-                        self.player.vx -= 1
-                    if event.key == pygame.K_RIGHT:
-                        self.player.vx += 1
-                    if event.key == pygame.K_UP:
-                        if (not self.player.jump):
-                            self.player.jump = True
-                            self.player.vy = -4
-                if event.type == pygame.KEYUP:
-                    if event.key == pygame.K_LEFT:
-                        self.player.vx += 1
-                    if event.key == pygame.K_RIGHT:
-                        self.player.vx -= 1
+
+        if (currentlevel != None):
+            if (not self.inputHandler.S.isPressed() or not self.player.large or self.player.jump):
+                self.player.prone = False
+                if self.inputHandler.A.isPressed():
+                    self.player.vx = -1
+                elif self.inputHandler.D.isPressed():
+                    self.player.vx = 1
+                elif (self.inputHandler.D.isPressed() and self.inputHandler.A.isPressed()):
+                    self.player.vx = 0
+                else:
+                    self.player.vx = 0
+                if self.inputHandler.W.isPressed():
+                    if (not self.player.jump):
+                        self.player.jump = True
+                        self.player.vy = -4
             else:
-                if event.type == pygame.KEYDOWN:
-                    if (self.levelManager.movementTicks < 0):
-                        if event.key == pygame.K_a:
-                            self.levelManager.changeLevel(self.player)
-                        if event.key == pygame.K_LEFT:
-                            self.levelManager.goLeft()
-                        if event.key == pygame.K_RIGHT:
-                            self.levelManager.goRight()
-                        if event.key == pygame.K_UP:
-                            self.levelManager.goUp()
-                        if event.key == pygame.K_DOWN:
-                            self.levelManager.goDown()
-        
+                print("prone")
+                self.player.prone = True
+
+        else:
+            if (self.levelManager.movementTicks < 0):
+                if self.inputHandler.ENTER.isPressed():
+                    self.levelManager.changeLevel(self.player)
+                if self.inputHandler.A.isPressed():
+                    self.levelManager.goLeft()
+                if self.inputHandler.D.isPressed():
+                    self.levelManager.goRight()
+                if self.inputHandler.W.isPressed():
+                    self.levelManager.goUp()
+                if self.inputHandler.S.isPressed():
+                    self.levelManager.goDown()
         self.levelManager.tick(self.player)
         
         if (currentlevel == None):

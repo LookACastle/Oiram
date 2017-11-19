@@ -39,6 +39,8 @@ class TileManager:
 		self.tiles[0xB7B7B7] = ScaledTile(OVERWORLDMAP, H_ROAD)
 		self.tiles[0xB8B8B8] = ScaledTile(OVERWORLDMAP, V_ROAD)
 
+		self.tiles[0x000001] = Tile(TEXTURE, SKY, False)
+
 
 	def getNullTile(self):
 		return self.nullTile

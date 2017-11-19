@@ -13,10 +13,12 @@ class Oiram (Mob):
 		self.yOffset = 0
 		self.deadanimation = False
 		self.liveCount = 3
-		self.invincibleCouner = 0
+		self.invincibleCounter = 0
 		self.overlay = [0, 0, 0]
+		self.currentoverlay = STAROVERLAY
 		self.overlayStrength = 0
-		self.increment = [True, False, False]
+		self.large = False
+		self.flicker = False
 
 	def tick(self, level):
 		if (not self.dead):
@@ -62,6 +64,10 @@ class Oiram (Mob):
 						self.steps = False
 						self.push = False
 
+					if (self.large):
+						self.sheet = LARGEORIAM
+					else:
+						self.sheet = OIRAM
 					if (not self.jump):
 						if (self.steps):
 							self.cstep += 1
@@ -72,12 +78,13 @@ class Oiram (Mob):
 							self.id = 5
 					else:
 						self.id = 3
-
-					if (self.invincibleCouner != 0):
+					if (self.prone):
+						self.id = 11
+					if (self.invincibleCounter != 0):
 						self.overlayStrength = 0.6
-						self.invincibleCouner -= 1
-						section = int((self.invincibleCouner/3)%len(STAROVERLAY))
-						self.overlay = STAROVERLAY[section]
+						self.invincibleCounter -= 1
+						section = int((self.invincibleCounter/3)%len(self.currentoverlay))
+						self.overlay = self.currentoverlay[section]
 					else:
 						self.overlayStrength = 0
 				else:
@@ -120,14 +127,29 @@ class Oiram (Mob):
 			if (self.yOffset + self.y > level.height*16*SCALE):
 				self.dead = False
 				level.endFlag = True
+	
+	def enlarge(self):
+		self.large = True
+		self.height = 2
+
+	def highMode(self):
+		self.invincibleCounter = 600
+		self.currentoverlay = STAROVERLAY
 
 	def kill (self, overwrite):
-		if (self.invincibleCouner <= 0 or overwrite):
+		if (self.invincibleCounter <= 0 or overwrite):
 			if (not self.dead):
-				self.dead = True
-				self.vy = -6
-				self.overlayStrength = 0
-				self.invincibleCouner = 0
+				if (not self.large):
+					self.dead = True
+					self.vy = -6
+					self.overlayStrength = 0
+					self.invincibleCounter = 0
+				else:
+					self.large = False
+					self.height = 1
+					self.invincibleCounter = 90
+					self.currentoverlay = SKIPOVERLAY
+
 		
 	def render (self, screen):
 		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)

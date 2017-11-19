@@ -68,7 +68,7 @@ class Entity:
 					col2 = level.isSolidTile(int(cx + 0.1),ny)
 					if (col1 or col2):
 						self.y = int(cy + tileoffset)*16*SCALE
-						return 1
+						return True
 				self.y += movement
 			else:
 				tileMovement = math.floor(movement/16)
@@ -78,30 +78,33 @@ class Entity:
 					col2 = level.isSolidTile(int(cx + 0.1),ny)
 					if (col1 or col2):
 						self.y = int(cy + 1 + tileoffset)*16*SCALE
-						return 1
+						return True
 				self.y += movement	
-		return 0
+		return False
 
 	def entityCollision(self, target):
-		tx = target.x
-		ty = target.y
-		txw = tx + target.width*16*SCALE
-		tyh = ty + target.height*16*SCALE
+		for h in range(0, target.height):
+			for w in range(0, target.width):
+				tx = target.x + 1*w + 3*w*SCALE
+				ty = target.y + 1*h + 3*w*SCALE
+				txw = tx + target.width*16*SCALE - 2
+				tyh = ty + target.height*16*SCALE - 2
 
-		xcol = 0
-		ycol = False
+				xcol = 0
+				ycol = False
 
-		if (txw >= self.x and txw <= self.x + self.width*16*SCALE):
-			xcol = True
-		if (tx >= self.x and tx <= self.x + self.width*16*SCALE):
-			xcol = True
-		
-		if (tyh >= self.y and tyh <= self.y + self.height*16*SCALE):
-			ycol = True
-		if (ty >= self.y and ty <= self.y + self.height*16*SCALE):
-			ycol = True
-
-		return xcol == True and ycol == True
+				if (txw > self.x and txw < self.x + self.width*16*SCALE):
+					xcol = True
+				if (tx > self.x and tx < self.x + self.width*16*SCALE):
+					xcol = True
+				
+				if (tyh > self.y and tyh < self.y + self.height*16*SCALE):
+					ycol = True
+				if (ty > self.y and ty < self.y + self.height*16*SCALE):
+					ycol = True
+				if (xcol and ycol):
+					break
+		return xcol and ycol
 
 	def collide(self, victim):
 		pass

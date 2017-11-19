@@ -1,25 +1,17 @@
 from entities.animatedmob import *
 
-class Star (animatedMob):
+class Shroom (animatedMob):
 	def __init__(self, sheet, id, length, x, y, pause, animationSpeed, collision):
 		animatedMob.__init__(self, sheet, id, length, x, y, pause, animationSpeed, collision)
 
 	def clone(self, x, y):
-		return Star(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.collision)	
+		return Shroom(self.sheet, self.id, self.length, x, y, self.pause, self.animationSpeed, self.collision)	
 		
 	def tick(self, level):
 		self.animationtick()
 
-		if (self.yOffset > 0):
-			self.dir = False
-		if(self.yOffset < -10):
-			self.dir = True
-
-		if (self.dir):
-			self.yOffset += 0.2
-		else:
-			self.yOffset -= 0.2
+		coly = self.movey(level)
 
 	def collide(self, victim):
-		victim.highMode()
+		victim.enlarge()
 		self.dead = True

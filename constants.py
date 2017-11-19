@@ -13,8 +13,9 @@ TEXTURE = 0
 OIRAM = 1
 OVERWORLDMAP = 2
 ENEMIES = 3
+LARGEORIAM = 4
 
-SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png"]
+SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png","bigOiram_16_32.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
@@ -84,3 +85,4 @@ WATER = 26
 
 
 STAROVERLAY = [[17, 255, 227], [255, 255, 0], [255,100, 100]]
+SKIPOVERLAY = [[0, 0, 0], [255, 255, 255]]

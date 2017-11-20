@@ -34,6 +34,9 @@ class Oiram (Mob):
 					if (self.vy > 2):
 						self.vy = 2
 
+					if (self.vy < 0):
+						self.jump = True
+						
 					col = self.movey(level)
 
 					if (self.y > level.height*16*SCALE):
@@ -129,6 +132,8 @@ class Oiram (Mob):
 				level.endFlag = True
 	
 	def enlarge(self):
+		if (not self.large):
+			self.y -= 16*SCALE
 		self.large = True
 		self.height = 2
 
@@ -139,8 +144,10 @@ class Oiram (Mob):
 	def kill (self, overwrite):
 		if (self.invincibleCounter <= 0 or overwrite):
 			if (not self.dead):
-				if (not self.large):
+				if (not self.large or overwrite):
 					self.dead = True
+					self.large = False
+					self.height = 1
 					self.vy = -6
 					self.overlayStrength = 0
 					self.invincibleCounter = 0

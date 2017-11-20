@@ -1,9 +1,9 @@
-from entities.animatedmob import *
+from entities.simpleenemy import *
 from constants import SCALE
 
-class Simpleenemy (animatedMob):
+class Gumba (Simpleenemy):
 	def __init__(self, sheet, id, length, x, y, speed, animationSpeed, gravity, vx):
-		animatedMob.__init__(self, sheet, id, length, x, y, 0, animationSpeed, True)
+		animatedMob.__init__(self, sheet, id, length, x, y, speed, animationSpeed, gravity, vx)
 		self.gravity = gravity
 		if (gravity):
 			self.vy = 3
@@ -27,14 +27,13 @@ class Simpleenemy (animatedMob):
 				self.mark = True
 			colx = self.movex(level)
 			if (colx):
-				self.wallCollide()
+				self.vx = -self.vx
 		else:
 			self.id = 6
 			self.deadTime -= 1
 			self.mark = True
 
-	def wallCollide(self):
-		self.vx = -self.vx
+		
 
 	def collide(self, victim):
 		if (self.deadTime <= 0):

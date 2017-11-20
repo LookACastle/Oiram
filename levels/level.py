@@ -63,7 +63,7 @@ class Level:
 				e = self.entities[i - iOffset]
 				e.tick(self)
 				if (e.dead):
-					del(self.entities[i])
+					del(self.entities[i- iOffset])
 					iOffset +=1
 		else:
 			self.pauseTimer -= 1
@@ -73,7 +73,7 @@ class Level:
 			if (e.collision):
 				col = e.entityCollision(target)
 				if (col):
-					return e
+					e.collide(target)
 		return None
 
 	def collideTile (self, target, x, y):

@@ -89,7 +89,6 @@ class Game:
                     self.player.vx = 0
                 if self.inputHandler.W.isPressed():
                     if (not self.player.jump):
-                        self.player.jump = True
                         self.player.vy = -4
             else:
                 print("prone")
@@ -115,11 +114,7 @@ class Game:
         else:
             self.player.onMap = False
             self.player.tick(currentlevel)
-            col = currentlevel.entityCollision(self.player)
-            if (col != None):
-                col.collide(self.player)
-
-
+            currentlevel.entityCollision(self.player)
 
     def render (self, dt):
         self.levelManager.drawCurrentlevel(self.screen, self.player.x, self.player.y)

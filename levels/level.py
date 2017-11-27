@@ -7,15 +7,18 @@ class Level:
 	def __init__(self, path, tileManager, entityManager):
 		self.tileManager = tileManager
 		self.entityManager = entityManager
+		temp = path.replace(".png", "").split("-")
+		self.type = temp[0]
+		self.name = int(temp[1])
 		self.map = []
 		self.entities = []
 		self.loadedEntities = []
 		self.loadTileMap(path)
-		self.open = True
+		self.open = False
 		self.cleared = False
-		self.endFlag = False
 		self.coinCount = 0
 		self.pauseTimer = 0
+		self.endFlag = False
 
 	def loadTileMap (self, path):
 		img = pygame.image.load("levels/levels/" + path)

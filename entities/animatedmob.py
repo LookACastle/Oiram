@@ -9,7 +9,6 @@ class animatedMob (Mob):
 		self.animationSpeed = animationSpeed
 		self.pause = 0
 		self.addPause = pause
-		self.yOffset = 0
 		self.dir = False
 		
 	def clone(self, x, y):
@@ -34,4 +33,4 @@ class animatedMob (Mob):
 		victim.kill(False)
 
 	def render (self, screen):
-		screen.drawSprite( self.sheet, self.id, self.x, self.y + self.yOffset)
+		screen.drawSprite( self.sheet, self.id, self.x, self.y)

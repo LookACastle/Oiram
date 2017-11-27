@@ -18,11 +18,16 @@ class Oiram (Mob):
 		self.currentoverlay = STAROVERLAY
 		self.overlayStrength = 0
 		self.large = False
-		self.flicker = False
+		self.done = False
+		self.mark = False
+		self.lockinput = False
 
 	def tick(self, level):
 		if (not self.dead):
 			if (not self.onMap):
+				if (self.prone):
+					self.vy = 0
+					self.vx = 0
 				if (level.pauseTimer <= 0):
 					if (self.vy < -0.5):
 						self.vy = self.vy * 0.9
@@ -38,6 +43,10 @@ class Oiram (Mob):
 						self.jump = True
 						
 					col = self.movey(level)
+
+					if (col and self.done):
+						self.vx = 1
+						level.cleared = True
 
 					if (self.y > level.height*16*SCALE):
 						self.kill(True)
@@ -56,6 +65,10 @@ class Oiram (Mob):
 							self.flip = True
 
 						col = self.movex(level)
+
+						if (col and self.done):
+							level.endFlag = True
+							self.mark = True
 
 						if (col == False):
 							self.steps = True
@@ -131,6 +144,12 @@ class Oiram (Mob):
 				self.dead = False
 				level.endFlag = True
 	
+	def victory(self):
+		self.done = True
+		self.vx = 0
+		self.vy = 0
+		self.lockinput = True
+
 	def enlarge(self):
 		if (not self.large):
 			self.y -= 16*SCALE
@@ -142,20 +161,22 @@ class Oiram (Mob):
 		self.currentoverlay = STAROVERLAY
 
 	def kill (self, overwrite):
-		if (self.invincibleCounter <= 0 or overwrite):
-			if (not self.dead):
-				if (not self.large or overwrite):
-					self.dead = True
-					self.large = False
-					self.height = 1
-					self.vy = -6
-					self.overlayStrength = 0
-					self.invincibleCounter = 0
-				else:
-					self.large = False
-					self.height = 1
-					self.invincibleCounter = 90
-					self.currentoverlay = SKIPOVERLAY
+		if (not self.mark):
+			if (self.invincibleCounter <= 0 or overwrite):
+				if (not self.dead):
+					if (not self.large or overwrite):
+						self.dead = True
+						self.large = False
+						self.height = 1
+						self.overlayStrength = 0
+						self.vy = -6
+						self.overlayStrength = 0
+						self.invincibleCounter = 0
+					else:
+						self.large = False
+						self.height = 1
+						self.invincibleCounter = 90
+						self.currentoverlay = SKIPOVERLAY
 
 		
 	def render (self, screen):

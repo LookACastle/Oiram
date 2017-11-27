@@ -19,7 +19,7 @@ SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
-MAP = "overworld.png"
+MAP = "w-1.png"
 
 #TEXTURES
 GRASSDIRT = 0
@@ -28,8 +28,14 @@ GRASS = 2
 SKY = 3
 POWERUP = 4
 BLOCK = 9
-BLOCK_PUSH = 9
+BLOCK_PUSH = 10
 BRICK = 11
+CASTLE_1 = 12
+CASTLE_2 = 13
+CASTLE_3 = 14
+CASTLE_4 = 15
+CASTLE_5 = 16
+CASTLE_6 = 17
 BRICK_UNDERWORLD = 18
 STONE = 19
 STONE_UNDERWORLD = 20

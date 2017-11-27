@@ -11,11 +11,13 @@ class LevelManager (Level):
 		self.levels = [None]*self.mapwidth*self.mapheight
 		self.loadLevels()
 
-		self.levels[0].open = True
 		self.playerv = (0,0)
 		self.cpos = [0,4]
 		self.velocity = [(0)]
 		self.movementTicks = -1
+
+		self.openLevels = 0
+		self.openlevel(1)
 	
 	def getCurrentLevel (self):
 		return self.currentlevel
@@ -32,7 +34,9 @@ class LevelManager (Level):
 				self.movementTicks = -1
 		if (self.currentlevel != None):
 			if (self.currentlevel.endFlag):
-				if (player.liveCount > 1):
+				if (player.liveCount < 2 or player.mark):
+					self.changeLevel(player)
+				else:
 					self.currentlevel.reset()
 					player.x = 100
 					player.y = SCREEN_HEIGHT-5*16*SCALE
@@ -43,13 +47,12 @@ class LevelManager (Level):
 					player.yOffset = 0
 					player.liveCount -= 1
 					self.currentlevel.endFlag = False
-				else:
-					self.currentlevel.endFlag = False
-					self.changeLevel(player)
 				return
 			self.currentlevel.tick(player)
 
 	def changeLevel (self, player):
+		player.done = False
+		player.lockinput = False
 		if (self.currentlevel == None):
 			level = self.levels[self.cpos[0] + self.cpos[1]*self.mapwidth]
 			if (isinstance(level, Level)):
@@ -57,6 +60,7 @@ class LevelManager (Level):
 					self.currentlevel = level
 					self.currentlevel.reset()
 					player.x = 100
+					player.mark = False
 					player.y = SCREEN_HEIGHT-5*16*SCALE
 					player.vx = 0
 					player.vy = 0
@@ -64,6 +68,8 @@ class LevelManager (Level):
 					player.dead = False
 					player.yOffset = 0
 		else:
+			if (self.currentlevel.cleared and self.currentlevel.type != "e"):
+				self.openlevel(self.currentlevel.name + 1)
 			self.currentlevel = None
 			player.x = (1+4*self.cpos[0])*16*SCALE
 			player.y = (1+4*self.cpos[1])*16*SCALE
@@ -111,6 +117,15 @@ class LevelManager (Level):
 				x += 1
 			x = 0
 			y += 1
+
+	def openlevel (self, newlevel):
+		if (self.openLevels < newlevel):
+			self.openLevels = newlevel
+		for level in self.levels:
+			if (isinstance(level, Level)):
+				if (level.name <= self.openLevels):
+					level.open = True
+
 
 	def addMovement(self, vx, vy):
 		self.cpos[0] = self.cpos[0] + vx

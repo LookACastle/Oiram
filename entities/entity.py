@@ -15,6 +15,10 @@ class Entity:
 		self.height = 1
 		self.xmovement = False
 		self.dead = False
+		self.x1 = 0
+		self.x2 = 0
+		self.y1 = 0
+		self.y2 = 0
 
 	def clone(self, x, y):
 		return Entity(self.id, self.sheet, x, y, self.width, self.height, self.speed)
@@ -43,7 +47,6 @@ class Entity:
 				for tileoffset in range(0, tileMovement, -1):
 					nx = int(cx) + tileoffset
 					if (cx <= 0 or nx >= level.width): 
-						print(nx)
 						self.x = int(cx + tileoffset)*16*SCALE
 						return True
 					else:
@@ -85,22 +88,20 @@ class Entity:
 	def entityCollision(self, target):
 		for h in range(0, target.height):
 			for w in range(0, target.width):
-				tx = target.x + 1*w + 3*w*SCALE
-				ty = target.y + 1*h + 3*w*SCALE
-				txw = tx + target.width*16*SCALE - 2
-				tyh = ty + target.height*16*SCALE - 2
-
-				xcol = 0
+				tx = target.x + 1*w + 3*w*SCALE + target.x1
+				ty = target.y + 1*h + 3*w*SCALE + target.y1
+				txw = tx + target.width*16*SCALE - target.x1 - target.x2 - 2
+				tyh = ty + target.height*16*SCALE - target.y1 - target.y2 - 2
+				xcol = False
 				ycol = False
+				if (txw > self.x + self.x1 and txw < self.x + self.x1 + self.width*16*SCALE):
+					xcol = True
+				if (tx > self.x - self.x2 and tx < (self.x + self.width*16*SCALE)-self.x2):
+					xcol = True
 
-				if (txw > self.x and txw < self.x + self.width*16*SCALE):
-					xcol = True
-				if (tx > self.x and tx < self.x + self.width*16*SCALE):
-					xcol = True
-				
-				if (tyh > self.y and tyh < self.y + self.height*16*SCALE):
+				if (tyh > self.y + self.y1 and tyh < self.y + self.y1 + self.height*16*SCALE):
 					ycol = True
-				if (ty > self.y and ty < self.y + self.height*16*SCALE):
+				if (ty > self.y -self.y2 and ty < (self.y + self.height*16*SCALE)-self.y2):
 					ycol = True
 				if (xcol and ycol):
 					break

@@ -76,36 +76,36 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
-        if (currentlevel != None):
-            if (not self.inputHandler.S.isPressed() or not self.player.large or self.player.jump):
-                self.player.prone = False
-                if self.inputHandler.A.isPressed():
-                    self.player.vx = -1
-                elif self.inputHandler.D.isPressed():
-                    self.player.vx = 1
-                elif (self.inputHandler.D.isPressed() and self.inputHandler.A.isPressed()):
-                    self.player.vx = 0
+        if (not self.player.lockinput):
+            if (currentlevel != None):
+                if (not self.inputHandler.S.isPressed() or not self.player.large or self.player.jump):
+                    self.player.prone = False
+                    if self.inputHandler.A.isPressed():
+                        self.player.vx = -1
+                    elif self.inputHandler.D.isPressed():
+                        self.player.vx = 1
+                    elif (self.inputHandler.D.isPressed() and self.inputHandler.A.isPressed()):
+                        self.player.vx = 0
+                    else:
+                        self.player.vx = 0
+                    if self.inputHandler.W.isPressed():
+                        if (not self.player.jump):
+                            self.player.vy = -4
                 else:
-                    self.player.vx = 0
-                if self.inputHandler.W.isPressed():
-                    if (not self.player.jump):
-                        self.player.vy = -4
-            else:
-                print("prone")
-                self.player.prone = True
+                    self.player.prone = True
 
-        else:
-            if (self.levelManager.movementTicks < 0):
-                if self.inputHandler.ENTER.isPressed():
-                    self.levelManager.changeLevel(self.player)
-                if self.inputHandler.A.isPressed():
-                    self.levelManager.goLeft()
-                if self.inputHandler.D.isPressed():
-                    self.levelManager.goRight()
-                if self.inputHandler.W.isPressed():
-                    self.levelManager.goUp()
-                if self.inputHandler.S.isPressed():
-                    self.levelManager.goDown()
+            else:
+                if (self.levelManager.movementTicks < 0):
+                    if self.inputHandler.ENTER.isPressed():
+                        self.levelManager.changeLevel(self.player)
+                    if self.inputHandler.A.isPressed():
+                        self.levelManager.goLeft()
+                    if self.inputHandler.D.isPressed():
+                        self.levelManager.goRight()
+                    if self.inputHandler.W.isPressed():
+                        self.levelManager.goUp()
+                    if self.inputHandler.S.isPressed():
+                        self.levelManager.goDown()        
         self.levelManager.tick(self.player)
         
         if (currentlevel == None):

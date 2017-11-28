@@ -35,6 +35,7 @@ class LevelManager (Level):
 		if (self.currentlevel != None):
 			if (self.currentlevel.endFlag):
 				if (player.liveCount < 2 or player.mark):
+					self.currentlevel.endFlag = False
 					self.changeLevel(player)
 				else:
 					self.currentlevel.reset()
@@ -53,6 +54,9 @@ class LevelManager (Level):
 	def changeLevel (self, player):
 		player.done = False
 		player.lockinput = False
+		player.invincibleCounter = 0
+		player.overlaystrength = 0
+		player.deadanimation = False
 		if (self.currentlevel == None):
 			level = self.levels[self.cpos[0] + self.cpos[1]*self.mapwidth]
 			if (isinstance(level, Level)):

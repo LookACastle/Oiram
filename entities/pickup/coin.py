@@ -1,17 +1,15 @@
 from entities.animatedmob import *
 
-class Shroom (animatedMob):
+class Coin (animatedMob):
 	def __init__(self, sheet, id, length, x, y, pause, animationSpeed, collision):
 		animatedMob.__init__(self, sheet, id, length, x, y, pause, animationSpeed, collision)
 
 	def clone(self, x, y):
-		return Shroom(self.sheet, self.id, self.length, x, y, self.pause, self.animationSpeed, self.collision)	
+		return Shroom(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.collision)	
 		
 	def tick(self, level):
 		self.animationtick()
 
-		coly = self.movey(level)
-
 	def collide(self, victim):
-		victim.enlarge()
+		victim.addCoin()
 		self.dead = True

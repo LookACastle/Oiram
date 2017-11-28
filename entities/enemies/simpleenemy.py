@@ -2,8 +2,8 @@ from entities.animatedmob import *
 from constants import SCALE
 
 class Simpleenemy (animatedMob):
-	def __init__(self, sheet, id, length, x, y, speed, animationSpeed, vx):
-		animatedMob.__init__(self, sheet, id, length, x, y, 0, animationSpeed, True)
+	def __init__(self, sheet, id, length, x, y, pause, speed, animationSpeed, vx):
+		animatedMob.__init__(self, sheet, id, length, x, y, pause, animationSpeed, True)
 		self.vx = vx
 		self.deadTime = 0
 		self.mark = False
@@ -31,9 +31,6 @@ class Simpleenemy (animatedMob):
 			self.id = 6
 			self.deadTime -= 1
 			self.mark = True
-
-	def wallCollide(self):
-		pass
 
 	def collide(self, victim):
 		if (self.deadTime <= 0):

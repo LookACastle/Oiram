@@ -14,8 +14,9 @@ OIRAM = 1
 OVERWORLDMAP = 2
 ENEMIES = 3
 LARGEORIAM = 4
+LARGENEMIES = 5
 
-SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png","bigOiram_16_32.png"]
+SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png","bigOiram_16_32.png","enemies_16_32.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
@@ -87,6 +88,13 @@ GREEN_SHELL = 20
 RED_SHELL = 21
 LEGO = 22
 WATER = 26
+
+#LARGEENEMY
+GREEN_TURTLE = 0
+RED_TURTLE = 2
+CLOUD_MAN = 4
+PIRANA = 5
+HAMMERBRO = 7
 
 
 

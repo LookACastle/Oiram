@@ -71,6 +71,9 @@ class Level:
 		else:
 			self.pauseTimer -= 1
 
+	def addEntity(self, c, x, y):
+		self.entities.append(self.entityManager.getEntity(c).clone(x, y))
+
 	def entityCollision (self, target):
 		for e in self.entities:
 			if (e.collision):

@@ -2,7 +2,7 @@ from entities.animatedmob import *
 import random
 from constants import *
 
-class Hammer (animatedMob):
+class Lego (animatedMob):
 	def __init__(self, sheet, id, length, x, y, pause, animationSpeed, collision, flip):
 		animatedMob.__init__(self, sheet, id, length, x, y, pause, animationSpeed, collision)
 		self.vy = -random.randint(20, 40)/10
@@ -18,7 +18,7 @@ class Hammer (animatedMob):
 		self.x1 = 3*SCALE
 
 	def clone(self, x, y):
-		return Hammer(self.sheet, self.id, self.length, x, y, self.pause, self.animationSpeed, self.collision, self.flip)	
+		return Lego(self.sheet, self.id, self.length, x, y, self.pause, self.animationSpeed, self.collision, self.flip)	
 		
 	def tick(self, level):
 		self.animationtick()

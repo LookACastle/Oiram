@@ -7,7 +7,7 @@ class Balumba (Simpleenemy):
 		self.vy = 3
 
 	def clone(self, x, y):
-		return Balumbas(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed, self.vx)	
+		return Balumba(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed, self.vx)	
 
 	def wallCollide(self):
 		self.vx = -self.vx

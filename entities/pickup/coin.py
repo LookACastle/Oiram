@@ -8,5 +8,6 @@ class Coin (animatedMob):
 		return Coin(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.collision)	
 
 	def collide(self, victim):
-		victim.addCoin()
+		if (not victim.dead):
+			victim.addCoin()
 		self.dead = True

@@ -1,4 +1,4 @@
-# Oiram
+﻿# Oiram
 Totally not a clone of Mario made for a school project
 
 fell like making a level you self?
@@ -6,11 +6,11 @@ well it is farely simple, go into the levels folder and begin editing in one of 
 
 these are the factors that can be controlled:
 
-	- the dimensions of the level
-	- the background tiles
-	- the enemies spawn position
-	- the enemies direction
-	- the pickups spawn position
+    - the dimensions of the level
+    - the background tiles
+    - the enemies spawn position
+    - the enemies direction
+    - the pickups spawn position
 
 the changes are done by changing the colours of the image, here is a overview of what the colour codes means and list of schematics
 
@@ -27,9 +27,9 @@ the changes are done by changing the colours of the image, here is a overview of
 │                                                          │
 │                  --- colour codes ---                    │
 │                                                          │
-│			┌──────────────────────────────────┐           │
-│			│       Default level Tiles        │           │
-│			└──────────────────────────────────┘           │
+│           ┌──────────────────────────────────┐           │
+│           │       Default level Tiles        │           │
+│           └──────────────────────────────────┘           │
 │                  0xFFFFFF = SKY                          │
 │                  0x965C10 = DIRT                         │
 │                  0x0FFF0F = GRASSDIRT                    │
@@ -38,9 +38,9 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0x329913 = GRASS                        │
 │                  0x00FFFF = STONE_UNDERWORLD             │
 │                                                          │
-│			┌──────────────────────────────────┐           │
-│			│             Castle               │           │
-│			└──────────────────────────────────┘           │
+│           ┌──────────────────────────────────┐           │
+│           │             Castle               │           │
+│           └──────────────────────────────────┘           │
 │                                                          │
 │                  0x0099FF = Castle brick                 │
 │                  0x0199FF = CASTLE_1                     │
@@ -50,9 +50,9 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0x0599FF = CASTLE_5                     │
 │                  0x0699FF = CASTLE_6                     │
 │                                                          │
-│			┌──────────────────────────────────┐           │
-│			│            Map tiles             │           │
-│			└──────────────────────────────────┘           │
+│           ┌──────────────────────────────────┐           │
+│           │            Map tiles             │           │
+│           └──────────────────────────────────┘           │
 │                                                          │
 │                  0x47B529 = BG                           │
 │                  0xB7B7B7 = H_ROAD                       │
@@ -69,37 +69,37 @@ the changes are done by changing the colours of the image, here is a overview of
 │                                                          │
 │                   --- description ---                    │
 │                                                          │
-│		    spawns an entity at the given tile             │
-│		   and sets the background to a sky tile           │
+│           spawns an entity at the given tile             │
+│          and sets the background to a sky tile           │
 │                                                          │
 │                  --- colour codes ---                    │
 │                                                          │
-│			┌──────────────────────────────────┐           │
-│			│             Blocks               │           │
-│			└──────────────────────────────────┘           │
+│           ┌──────────────────────────────────┐           │
+│           │             Blocks               │           │
+│           └──────────────────────────────────┘           │
 │                                                          │
 │                  0xFF00FF = Powerup                      │
 │                                                          │
-│			┌──────────────────────────────────┐           │
-│			│             Pickups              │           │
-│			└──────────────────────────────────┘           │
+│           ┌──────────────────────────────────┐           │
+│           │             Pickups              │           │
+│           └──────────────────────────────────┘           │
 │                                                          │
 │                  0xFFC700 = Star                         │
 │                  0x000002 = Life up shroom               │
 │                  0xFFFF00 = Coin                         │
 │                                                          │
-│			┌──────────────────────────────────┐           │
-│			│             Enemies              │           │
-│			└──────────────────────────────────┘           │
-│					┌────────────────┐                     │
-│					│   left going   │                     │
-│					└────────────────┘                     │
+│           ┌──────────────────────────────────┐           │
+│           │             Enemies              │           │
+│           └──────────────────────────────────┘           │
+│                   ┌────────────────┐                     │
+│                   │   left going   │                     │
+│                   └────────────────┘                     │
 │                  0x000001 = Balumba                      │
 │                  0x000003 = Legobro                      │
 │                                                          │
-│					┌────────────────┐                     │
-│					│  right going   │                     │
-│					└────────────────┘                     │
+│                   ┌────────────────┐                     │
+│                   │  right going   │                     │
+│                   └────────────────┘                     │
 │                  0x010001 = Balumba                      │
 │                  0x010003 = Legobro                      │
 │                                                          │
@@ -113,16 +113,16 @@ the changes are done by changing the colours of the image, here is a overview of
 │                                                          │
 │                   --- description ---                    │
 │                                                          │
-│			   List of preprepaired segments               │
-│			can be seen in the schematics folder           │
+│              List of preprepaired segments               │
+│           can be seen in the schematics folder           │
 │                                                          │
 │                   --- schematics ---                     │
 │                                                          │
-│		┌──────────────────────────────────────┐           │
-│		 name: "Ending_1.png"                              │
-│		 creator: mart368b                                 │
-│		 description: default ending of a level            │
-│		└──────────────────────────────────────┘           │
+│       ┌──────────────────────────────────────┐           │
+│        name: "Ending_1.png"                              │
+│        creator: mart368b                                 │
+│        description: default ending of a level            │
+│       └──────────────────────────────────────┘           │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 

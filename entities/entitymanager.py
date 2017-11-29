@@ -11,7 +11,7 @@ from entities.enemies.balumba import *
 from entities.enemies.legobro import *
 
 #projectile entities
-from entities.projectiles.hammer import *
+from entities.projectiles.lego import *
 
 #items to pick up
 from entities.pickup.shroom import *
@@ -37,8 +37,8 @@ class EntityManager:
 		self.entities[0x020000] = Shroom(TEXTURE, SHROOM, 2, 0, 0, 3, 0.08, True)
 		self.entities[0x030000] = Legobro(LARGENEMIES, LEGOBRO, 4, 0, 0, 20, 0.08, False)
 		self.entities[0x030001] = Legobro(LARGENEMIES, LEGOBRO, 4, 0, 0, 20, 0.08, True)
-		self.entities[0x040000] = Hammer(ENEMIES, LEGO, 4, 0, 0, 3, 0.08, True, False)
-		self.entities[0x040001] = Hammer(ENEMIES, LEGO, 4, 0, 0, 3, 0.08, True, True)
+		self.entities[0x040000] = Lego(ENEMIES, LEGO, 4, 0, 0, 3, 0.08, True, False)
+		self.entities[0x040001] = Lego(ENEMIES, LEGO, 4, 0, 0, 3, 0.08, True, True)
 
 	def getEntity(self,color):
 		return self.entities[color]

@@ -5,10 +5,7 @@ class Coin (animatedMob):
 		animatedMob.__init__(self, sheet, id, length, x, y, pause, animationSpeed, collision)
 
 	def clone(self, x, y):
-		return Shroom(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.collision)	
-		
-	def tick(self, level):
-		self.animationtick()
+		return Coin(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.collision)	
 
 	def collide(self, victim):
 		victim.addCoin()

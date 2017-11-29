@@ -35,20 +35,12 @@ class TileManager:
 		self.nullTile = Tile(TEXTURE, BLOCK, False)
 
 		"""
-		-------------Entity Tiles-------------
-		"""
-
-		self.tiles[0x00C7FF] = Tile(TEXTURE, SKY, False)
-
-
-		"""
 		-------------Overworld map Tiles-------------
 		"""
 		self.tiles[0x29B547] = ScaledTile(OVERWORLDMAP, BG)
 		self.tiles[0xB7B7B7] = ScaledTile(OVERWORLDMAP, H_ROAD)
 		self.tiles[0xB8B8B8] = ScaledTile(OVERWORLDMAP, V_ROAD)
 
-		self.tiles[0x000001] = Tile(TEXTURE, SKY, False)
 
 
 	def getNullTile(self):

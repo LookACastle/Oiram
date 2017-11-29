@@ -10,13 +10,13 @@ class InputHandler:
 		self.ENTER = Key()
 
 	def toggleKey(self, key):
-		if (key == pygame.K_LEFT):
+		if (key == pygame.K_LEFT or key == pygame.K_a):
 			self.A.toggle()
-		if (key == pygame.K_RIGHT):
+		if (key == pygame.K_RIGHT or key == pygame.K_d):
 			self.D.toggle()
-		if (key == pygame.K_UP):
+		if (key == pygame.K_UP or key == pygame.K_w):
 			self.W.toggle()
-		if (key == pygame.K_DOWN):
+		if (key == pygame.K_DOWN or key == pygame.K_s):
 			self.S.toggle()
-		if (key == pygame.K_RETURN):
+		if (key == pygame.K_RETURN or key == pygame.K_SPACE):
 			self.ENTER.toggle()

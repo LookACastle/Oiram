@@ -1,32 +1,10 @@
-# Oiram
-Totally not a clone of Mario made for a school project
-
-fell like making a level you self?
-well it is farely simple, go into the levels folder and begin editing in one of the level images.
-
-these are the factors that can be controlled:
-
-	- the dimensions of the level
-	- the background tiles
-	- the enemies spawn position
-	- the enemies direction
-	- the pickups spawn position
-
-the changes are done by changing the colours of the image, here is a overview of what the colour codes means and list of schematics
 
 ┌──────────────────────────────────────────────────────────┐
 │                                                          │
-│                    Background tiles                      │
+│                    Tile colour list                      │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────┐
-│                                                          │
-│                   --- description ---                    │
-│                                                          │
-│        sets the background tile to the given tile        │
-│                                                          │
-│                  --- colour codes ---                    │
-│                                                          │
 │			┌──────────────────────────────────┐           │
 │			│       Default level Tiles        │           │
 │			└──────────────────────────────────┘           │
@@ -59,21 +37,12 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0xB8B8B8 = V_ROAD                       │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
-
 ┌──────────────────────────────────────────────────────────┐
 │                                                          │
-│                     Entity spawns                        │
+│                   Entity colour list                     │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────┐
-│                                                          │
-│                   --- description ---                    │
-│                                                          │
-│		    spawns an entity at the given tile             │
-│		   and sets the background to a sky tile           │
-│                                                          │
-│                  --- colour codes ---                    │
-│                                                          │
 │			┌──────────────────────────────────┐           │
 │			│             Blocks               │           │
 │			└──────────────────────────────────┘           │
@@ -109,20 +78,9 @@ the changes are done by changing the colours of the image, here is a overview of
 │                     Schematic list                       │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
-┌──────────────────────────────────────────────────────────┐
-│                                                          │
-│                   --- description ---                    │
-│                                                          │
-│			   List of preprepaired segments               │
-│			can be seen in the schematics folder           │
-│                                                          │
-│                   --- schematics ---                     │
-│                                                          │
-│		┌──────────────────────────────────────┐           │
-│		 name: "Ending_1.png"                              │
-│		 creator: mart368b                                 │
-│		 description: default ending of a level            │
-│		└──────────────────────────────────────┘           │
-│                                                          │
-└──────────────────────────────────────────────────────────┘
+		┌──────────────────────────────────────┐
+		 name: "Ending_1.png"
+		 description: default ending of a level
+		 posible variations: None
+		└──────────────────────────────────────┘
 

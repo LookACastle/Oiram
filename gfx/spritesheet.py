@@ -4,7 +4,7 @@ from constants import *
 
 class SpriteSheet:
 	def __init__(self, path):
-		sheet = pygame.image.load("Sprites/"+path)
+		sheet = pygame.image.load("Sprites/"+path).convert_alpha()
 		size = sheet.get_rect().size
 
 		self.width = size[0]
@@ -15,25 +15,18 @@ class SpriteSheet:
 		self.spritewidth = int(regex[0])
 		self.spriteheight = int(regex[1])
 
-		self.sprites = []
+		self.scalewidth = self.spritewidth*SCALE
+		self.scaleheight = self.spriteheight*SCALE
 
-		self.scaleWidth = self.spritewidth*SCALE
-		self.scaleHeight = self.spriteheight*SCALE
-		
+		self.spritesheet = pygame.transform.scale(sheet, (self.width*SCALE, self.height*SCALE))
+
+		self.sprites = []
 		for y in range(0,self.height,self.spriteheight):
 			for x in range(0,self.width,self.spritewidth):
-				sheetSection = pygame.Surface((self.spritewidth, self.spriteheight)).convert_alpha()
-				sheetSection.fill((0,0,0,0))
-				sheetSection.blit(sheet, (0,0), (x, y, self.spritewidth, self.spriteheight))
-				output = pygame.Surface((self.scaleWidth, self.scaleHeight)).convert_alpha()
-				pygame.transform.scale(sheetSection, (self.scaleWidth, self.scaleHeight), output)
-				self.sprites.append(output)
-
-		self.scaledoutput = pygame.Surface(((int(self.spritewidth/2)*SCALE), int((self.spriteheight/2)*SCALE))).convert_alpha()
+				self.sprites.append(self.spritesheet.subsurface((x*SCALE, y*SCALE, self.scalewidth, self.scaleheight)))
 
 	def getSprite(self, index):
 		return self.sprites[index]
 
 	def getScaledSprite(self, index):
-		pygame.transform.scale(self.sprites[index], (((int(self.spritewidth/2)*SCALE), int((self.spriteheight/2)*SCALE))), self.scaledoutput)
-		return self.scaledoutput
+		return pygame.transform.scale(self.sprites[index], ((int(self.scalewidth/2), int(self.scaleheight/2))))

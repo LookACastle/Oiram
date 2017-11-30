@@ -45,88 +45,15 @@ class Oiram (Mob):
 					self.vy = 0
 					self.vx = 0
 				if (level.pauseTimer <= 0):
-					if (self.vy < -0.5):
-						self.vy = self.vy * 0.9
-					else:
-						if (self.vy < 0.5):
-							self.vy = 0.5
-						else:
-							self.vy = self.vy * 1.1
-					if (self.vy > 2):
-						self.vy = 2
-
-					if (self.vy < 0):
-						self.jump = True
-					
-					ly = self.y
-					lvy = self.vy
-					col = self.movey(level)
-
-					if (col and lvy < 0):
-						level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)) - 1)*SCALE*16)
-
-					if (col and self.done):
-						self.vx = 1
-						level.cleared = True
-
-					if (self.y > level.height*16*SCALE):
-						self.kill(True)
-
-					if (self.jump):
-						if (col == True):
-							if (ly == self.y):
-								self.jump = False
-							else:
-								if (self.vy > 0):
-									self.jump = False
-								else:
-									self.vy = 0
+					self.verticalmovement(level)
 
 					if (self.vx != 0):
-						if (self.vx > 0):
-							self.flip = False
-						if (self.vx < 0):
-							self.flip = True
-
-						col = self.movex(level)
-
-						if (col and self.done):
-							level.endFlag = True
-							self.mark = True
-
-						if (col == False):
-							self.steps = True
-							self.push = False
-						else:
-							self.steps = False
-							self.push = True
+						self.horizontalmovement(level)
 					else:
 						self.steps = False
 						self.push = False
 
-					if (self.large):
-						self.sheet = LARGEORIAM
-					else:
-						self.sheet = OIRAM
-					if (not self.jump):
-						if (self.steps):
-							self.cstep += 1
-							self.id = int(self.cstep/3.5)%3
-						elif (self.push):
-							self.id = 4
-						else:
-							self.id = 5
-					else:
-						self.id = 3
-					if (self.prone):
-						self.id = 11
-					if (self.invincibleCounter != 0):
-						self.overlayStrength = 0.6
-						self.invincibleCounter -= 1
-						section = int((self.invincibleCounter/3)%len(self.currentoverlay))
-						self.overlay = self.currentoverlay[section]
-					else:
-						self.overlayStrength = 0
+					self.animationhandling()
 				else:
 					print("pause")
 		else:
@@ -153,7 +80,87 @@ class Oiram (Mob):
 				self.vx = 0
 				self.vy = 0
 	
-	def victory(self):
+	def verticalmovement(self, level):
+		if (self.vy < -0.5):
+			self.vy = self.vy * 0.9
+		else:
+			if (self.vy < 0.5):
+				self.vy = 0.5
+			else:
+				self.vy = self.vy * 1.1
+		if (self.vy > 2):
+			self.vy = 2
+
+		if (self.vy < 0):
+			self.jump = True
+		
+		ly = self.y
+		lvy = self.vy
+		col = self.movey(level)
+
+		if (col and lvy < 0):
+			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)) - 1)*SCALE*16)
+
+		if (col and self.done):
+			self.vx = 1
+			level.cleared = True
+
+		if (self.y > level.height*16*SCALE):
+			self.kill(True)
+
+		if (self.jump):
+			if (col == True):
+				if (ly == self.y):
+					self.jump = False
+				else:
+					if (self.vy > 0):
+						self.jump = False
+					else:
+						self.vy = 0
+
+	def horizontalmovement(self, level):
+		self.flip = False
+		if (self.vx < 0):
+			self.flip = True
+
+		col = self.movex(level)
+
+		if (col and self.done):
+			level.endFlag = True
+			self.mark = True
+
+		if (col == False):
+			self.steps = True
+			self.push = False
+		else:
+			self.steps = False
+			self.push = True
+
+	def animationhandling(self):
+		if (self.large):
+			self.sheet = LARGEORIAM
+		else:
+			self.sheet = OIRAM
+		if (not self.jump):
+			if (self.steps):
+				self.cstep += 1
+				self.id = int(self.cstep/3.5)%3
+			elif (self.push):
+				self.id = 4
+			else:
+				self.id = 5
+		else:
+			self.id = 3
+		if (self.prone):
+			self.id = 11
+		if (self.invincibleCounter != 0):
+			self.overlayStrength = 0.6
+			self.invincibleCounter -= 1
+			section = int((self.invincibleCounter/3)%len(self.currentoverlay))
+			self.overlay = self.currentoverlay[section]
+		else:
+			self.overlayStrength = 0
+	def victory(self, level):
 		self.done = True
 		self.vx = 0
 		self.vy = 0
@@ -192,11 +199,8 @@ class Oiram (Mob):
 
 		
 	def render (self, screen):
-		screen.drawFlippedSprite(self.sheet, self.id, self.x, self.y + self.yOffset, self.flip)
-		#screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
-		"""
+		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
 		screen.writeText("X" + str(self.liveCount), 18*SCALE, 2.5*SCALE)
 		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1*SCALE, 1*SCALE)
 		screen.writeText("X" + str(self.coinCount),  50*SCALE + 18*SCALE, 2.5*SCALE)
 		screen.drawGUISprite(TEXTURE, COIN_FLIP_ANIMATION, 50*SCALE + 1*SCALE, 1*SCALE)
-		"""

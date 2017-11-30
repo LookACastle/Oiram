@@ -30,6 +30,8 @@ class TileManager:
 
 		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)
 
+		for c in range(0x0F0000, 0x0F0002):
+			self.tiles[c] = Tile(TEXTURE, SKY, True)
 		self.tiles[0xFFFFFF] = Tile(TEXTURE, SKY, False)
 		self.tiles[0xFFFF00] = Tile(TEXTURE, STONE_UNDERWORLD, False)
 		self.nullTile = Tile(TEXTURE, BLOCK, False)

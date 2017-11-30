@@ -11,6 +11,7 @@ class Entity:
 		self.vy = 0
 		self.speed = 0
 		self.collision = False
+		self.solid = False
 		self.width = 1
 		self.height = 1
 		self.xmovement = False
@@ -53,7 +54,7 @@ class Entity:
 						col1 = level.isSolidTile(nx, int(cy + 0.1))
 						col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
 						if (col1 or col2):
-							self.x = int(cx + 1 + tileoffset)*16*SCALE -1
+							self.x = int(cx + 1 + tileoffset)*16*SCALE
 							return True
 				self.x += movement
 		return False
@@ -88,8 +89,8 @@ class Entity:
 	def entityCollision(self, target):
 		for h in range(0, target.height):
 			for w in range(0, target.width):
-				tx = target.x + 1*w + 3*w*SCALE + target.x1
-				ty = target.y + 1*h + 3*w*SCALE + target.y1
+				tx = target.x + w + 3*w*SCALE + target.x1
+				ty = target.y + h + 3*w*SCALE + target.y1
 				txw = tx + target.width*16*SCALE - target.x1 - target.x2 - 2
 				tyh = ty + target.height*16*SCALE - target.y1 - target.y2 - 2
 				xcol = False

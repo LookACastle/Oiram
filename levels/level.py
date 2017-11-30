@@ -19,6 +19,8 @@ class Level:
 		self.coinCount = 0
 		self.pauseTimer = 0
 		self.endFlag = False
+		self.entityQueue = []
+		self.addCoin = 0
 
 	def loadTileMap (self, path):
 		img = pygame.image.load("levels/levels/" + path)
@@ -53,6 +55,7 @@ class Level:
 	def isSolidTile(self, x, y):
 		if (y < 0 or y > self.height-1): return False
 		return self.map[x + y*self.width].isSolid()
+		
 
 	def getTile(self, x, y):
 		if (x<0 or x>=self.width): return self.tileManager.getNullTile()
@@ -60,6 +63,9 @@ class Level:
 		return self.map[x + y*self.width]
 
 	def tick(self, player):
+		self.entities = self.entityQueue + self.entities
+		self.entityQueue = []
+
 		iOffset = 0
 		if (self.pauseTimer <= 0 and not player.dead):
 			for i in range(0,len(self.entities)):
@@ -68,11 +74,20 @@ class Level:
 				if (e.dead):
 					del(self.entities[i- iOffset])
 					iOffset +=1
+			for coin in range(0, self.addCoin):
+				player.addCoin()
+			self.addCoin = 0
 		else:
 			self.pauseTimer -= 1
 
 	def addEntity(self, c, x, y):
-		self.entities.append(self.entityManager.getEntity(c).clone(x, y))
+		self.entityQueue.append(self.entityManager.getEntity(c).clone(x, y))
+	
+	def triggerBlock(self, x, y):
+		for e in self.entities:
+			if (e.solid):
+				if (e.x == x and e.y == y):
+					e.trigger()
 
 	def entityCollision (self, target):
 		for e in self.entities:

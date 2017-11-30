@@ -25,14 +25,14 @@ class SpriteSheet:
 				sheetSection = pygame.Surface((self.spritewidth, self.spriteheight)).convert_alpha()
 				sheetSection.fill((0,0,0,0))
 				sheetSection.blit(sheet, (0,0), (x, y, self.spritewidth, self.spriteheight))
-				self.sprites.append(sheetSection)
+				output = pygame.Surface((self.scaleWidth, self.scaleHeight)).convert_alpha()
+				pygame.transform.scale(sheetSection, (self.scaleWidth, self.scaleHeight), output)
+				self.sprites.append(output)
 
-		self.output = pygame.Surface((self.scaleWidth, self.scaleHeight)).convert_alpha()
 		self.scaledoutput = pygame.Surface(((int(self.spritewidth/2)*SCALE), int((self.spriteheight/2)*SCALE))).convert_alpha()
 
 	def getSprite(self, index):
-		pygame.transform.scale(self.sprites[index], (self.scaleWidth, self.scaleHeight), self.output)
-		return self.output
+		return self.sprites[index]
 
 	def getScaledSprite(self, index):
 		pygame.transform.scale(self.sprites[index], (((int(self.spritewidth/2)*SCALE), int((self.spriteheight/2)*SCALE))), self.scaledoutput)

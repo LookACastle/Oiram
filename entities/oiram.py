@@ -57,8 +57,13 @@ class Oiram (Mob):
 
 					if (self.vy < 0):
 						self.jump = True
-						
+					
+					ly = self.y
+					lvy = self.vy
 					col = self.movey(level)
+
+					if (col and lvy < 0):
+						level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)) - 1)*SCALE*16)
 
 					if (col and self.done):
 						self.vx = 1
@@ -69,10 +74,13 @@ class Oiram (Mob):
 
 					if (self.jump):
 						if (col == True):
-							if (self.vy > 0):
+							if (ly == self.y):
 								self.jump = False
 							else:
-								self.vy = 0
+								if (self.vy > 0):
+									self.jump = False
+								else:
+									self.vy = 0
 
 					if (self.vx != 0):
 						if (self.vx > 0):
@@ -184,8 +192,11 @@ class Oiram (Mob):
 
 		
 	def render (self, screen):
-		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
+		screen.drawFlippedSprite(self.sheet, self.id, self.x, self.y + self.yOffset, self.flip)
+		#screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
+		"""
 		screen.writeText("X" + str(self.liveCount), 18*SCALE, 2.5*SCALE)
 		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1*SCALE, 1*SCALE)
 		screen.writeText("X" + str(self.coinCount),  50*SCALE + 18*SCALE, 2.5*SCALE)
 		screen.drawGUISprite(TEXTURE, COIN_FLIP_ANIMATION, 50*SCALE + 1*SCALE, 1*SCALE)
+		"""

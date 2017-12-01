@@ -28,7 +28,7 @@ class Screen:
 			for px in range(0, int(sprite.get_width()/SCALE)):
 				for py in range(0,int(sprite.get_height()/SCALE)):
 					color = sprite.unmap_rgb(pxarray[px*SCALE, py*SCALE])
-					if (color[3] & 0xFF != 0):
+					if (color[3]  == 0xFF):
 						cstrength = 1-strength
 						r = color[0]*cstrength + overlay[0]*strength
 						g = color[1]*cstrength + overlay[1]*strength
@@ -36,9 +36,9 @@ class Screen:
 						for sx in range(px*SCALE, px*SCALE + SCALE):
 							for sy in range(py*SCALE, py*SCALE + SCALE):
 								pxarray[sx, sy] = (r, g, b)
-		ns = pxarray.make_surface()
+		#ns = pxarray.make_surface()
 		del pxarray
-		self.display.blit(ns , (x+self.xOffset,y+self.yOffset))
+		self.display.blit(sprite , (x+self.xOffset,y+self.yOffset))
 
 	def drawFlippedSprite(self, id, tileId, x, y, flip):
 		self.display.blit(pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False), (x+self.xOffset,y+self.yOffset))

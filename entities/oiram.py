@@ -160,7 +160,7 @@ class Oiram (Mob):
 			self.overlay = self.currentoverlay[section]
 		else:
 			self.overlayStrength = 0
-	def victory(self, level):
+	def victory(self):
 		self.done = True
 		self.vx = 0
 		self.vy = 0
@@ -177,6 +177,7 @@ class Oiram (Mob):
 
 	def highMode(self):
 		self.invincibleCounter = 600
+		self.speed = 10
 		self.currentoverlay = STAROVERLAY
 
 	def kill (self, overwrite):

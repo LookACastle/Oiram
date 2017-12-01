@@ -24,7 +24,7 @@ class SpriteSheet:
 		for y in range(0,self.height,self.spriteheight):
 			for x in range(0,self.width,self.spritewidth):
 				self.sprites.append(self.spritesheet.subsurface((x*SCALE, y*SCALE, self.scalewidth, self.scaleheight)))
-
+	
 	def getSprite(self, index):
 		return self.sprites[index]
 

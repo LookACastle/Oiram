@@ -59,10 +59,6 @@ class Game:
                 print ("fps: " + str(fps) + "  tps: " + str(tps))
                 frames = 0;
                 ticks = 0;
-            
-            timeToSleep = 1000 / 120 + last - pygame.time.get_ticks();
-            if (timeToSleep > 0):
-                pygame.time.delay(int(timeToSleep))
 
     
     def tick(self):

@@ -40,7 +40,7 @@ class Entity:
 						col1 = level.isSolidTile(nx, int(cy + 0.1))
 						col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
 						if (col1 or col2):
-							self.x = int(cx + tileoffset)*16*SCALE
+							self.x = int(cx + tileoffset)*16*SCALE + 0.1
 							return True
 				self.x += movement
 			else:
@@ -54,7 +54,7 @@ class Entity:
 						col1 = level.isSolidTile(nx, int(cy + 0.1))
 						col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
 						if (col1 or col2):
-							self.x = int(cx + 1 + tileoffset)*16*SCALE
+							self.x = int(cx + 1 + tileoffset)*16*SCALE - 0.1
 							return True
 				self.x += movement
 		return False

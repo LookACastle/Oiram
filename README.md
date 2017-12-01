@@ -78,7 +78,8 @@ the changes are done by changing the colours of the image, here is a overview of
 │           │             Blocks               │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x00000F = Powerup                      │
+│                  0x00000F = Powerup - coin               │
+│                  0x01000F = Powerup - shroom             │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Pickups              │           │

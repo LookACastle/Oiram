@@ -22,7 +22,7 @@ class Lego (animatedMob):
 		
 	def tick(self, level):
 		self.animationtick()
-		self.vx = self.vx * 0.99
+		self.vx = self.vx * 0.98
 		colx = self.movex(level)
 		if (self.vy < -0.5):
 			self.vy = self.vy * 0.9
@@ -30,9 +30,9 @@ class Lego (animatedMob):
 			if (self.vy < 0.5):
 				self.vy = 0.5
 			else:
-				self.vy = self.vy * 1.05
+				self.vy = self.vy * 1.01
 		coly = self.movey(level)
-		if (coly):
+		if (coly or self.y > level.height*16*SCALE):
 			self.dead = True
 
 	def collide(self, victim):

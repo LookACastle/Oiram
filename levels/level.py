@@ -63,7 +63,9 @@ class Level:
 		return self.map[x + y*self.width]
 
 	def tick(self, player):
-		self.entities = self.entityQueue + self.entities
+		for e in self.entities:
+			self.entityQueue.append(e)
+		self.entities = self.entityQueue
 		self.entityQueue = []
 
 		iOffset = 0

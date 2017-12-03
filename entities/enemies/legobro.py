@@ -13,7 +13,6 @@ class Legobro (Simpleenemy):
 		if (self.deadTime != 0):
 			self.dead = True
 			return
-		coly = self.movey(level)
 		if (self.pause == self.addPause):
 			if (self.flip):
 				level.addEntity(0x040001, self.x, self.y)

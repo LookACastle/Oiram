@@ -86,7 +86,8 @@ class Game:
                         self.player.vx = 0
                     if self.inputHandler.W.isPressed():
                         if (not self.player.jump):
-                            self.player.vy = -5
+                            self.player.vy = -4
+                            self.player.jump = True
                 else:
                     self.player.prone = True
 

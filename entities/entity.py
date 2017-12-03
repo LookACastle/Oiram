@@ -8,7 +8,7 @@ class Entity:
 		self.x = x
 		self.y = y
 		self.vx = 0
-		self.vy = 0
+		self.vy = 1
 		self.speed = 0
 		self.collision = False
 		self.solid = False
@@ -107,6 +107,11 @@ class Entity:
 				if (xcol and ycol):
 					break
 		return xcol and ycol
+
+	def applyGravity(self, maxSpeed):
+		self.vy = self.vy + 0.2
+		if (self.vy > maxSpeed):
+			self.vy = maxSpeed
 
 	def collide(self, victim):
 		pass

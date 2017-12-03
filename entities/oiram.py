@@ -1,5 +1,6 @@
 from entities.mob import *
 from constants import *
+from gfx.animationhandler import *
 
 class Oiram (Mob):
 	def __init__(self, x, y):
@@ -7,8 +8,6 @@ class Oiram (Mob):
 		self.steps = False
 		self.lstep = x
 		self.cstep = 0
-		self.jump = False
-		self.push = False
 		self.onMap = False
 		self.yOffset = 0
 		self.deadanimation = False
@@ -20,40 +19,52 @@ class Oiram (Mob):
 		self.overlayStrength = 0
 		self.large = False
 		self.done = False
+		self.jump = False
 		self.mark = False
 		self.lockinput = False
+		self.animationhandling = AnimationHandler(5)
+
+		# dead - 0
+		self.animationhandling.addAnimation(11)
+
+		# jump - 1
+		self.animationhandling.addAnimation(3)
+		
+		# push - 2
+		self.animationhandling.addAnimation(4)
+		
+		# walk - 3
+		self.animationhandling.addAnimation(0, 3, 4)
 
 	def tick(self, level):
+		self.animationhandling.clearState()
 		if (not self.onMap):
 			if (self.dead):
-				self.id = 11
-				if (self.vy < -0.5):
-					self.vy = self.vy * 0.9
-				else:
-					if (self.vy < 0.5):
-						self.vy = 0.5
-					else:
-						self.vy = self.vy * 1.1
-				if (self.vy > 3.5):
-					self.vy = 3.5
+				self.animationhandling.toggleAnimation(0)
+				self.applyGravity(3.5)
 				self.yOffset += self.vy*SCALE
 				if (self.yOffset + self.y > level.height*16*SCALE):
 					self.dead = False
 					level.endFlag = True
 			else:
-				if (self.prone):
-					self.vy = 0
-					self.vx = 0
 				if (level.pauseTimer <= 0):
-					self.verticalmovement(level)
-
-					if (self.vx != 0):
-						self.horizontalmovement(level)
+					if (self.prone):
+						self.animationhandling.toggleAnimation(0)
 					else:
-						self.steps = False
-						self.push = False
+						self.verticalmovement(level)
+						if (self.jump):
+							self.animationhandling.toggleAnimation(1)
 
-					self.animationhandling()
+						if (self.vx != 0):
+							self.horizontalmovement(level)
+							self.animationhandling.toggleAnimation(3)
+					if (self.invincibleCounter != 0):
+						self.overlayStrength = 0.6
+						self.invincibleCounter -= 1
+						section = int((self.invincibleCounter/3)%len(self.currentoverlay))
+						self.overlay = self.currentoverlay[section]
+					else:
+						self.overlayStrength = 0
 				else:
 					print("pause")
 		else:
@@ -64,42 +75,28 @@ class Oiram (Mob):
 				self.movex(level)
 				self.movey(level)
 				if (self.vx != 0 or self.vy != 0):
-					self.steps = True
+					self.animationhandling.toggleAnimation(3)
 					if (self.vx > 0):
 						self.flip = False
 					if (self.vx < 0):
 						self.flip = True
-				else:
-					self.steps = False
-
-				if (self.steps):
-					self.cstep += 1
-					self.id = int(self.cstep/3.5)%3
 			else:
-				self.id = 5
 				self.vx = 0
 				self.vy = 0
+		self.id = self.animationhandling.getAnimation()
 	
 	def verticalmovement(self, level):
-		if (self.vy < -0.5):
-			self.vy = self.vy * 0.9
-		else:
-			if (self.vy < 0.5):
-				self.vy = 0.5
-			else:
-				self.vy = self.vy * 1.1
-		if (self.vy > 2):
-			self.vy = 2
-
-		if (self.vy < 0):
-			self.jump = True
-		
+		self.applyGravity(2)
 		ly = self.y
 		lvy = self.vy
 		col = self.movey(level)
 
+		if (col and self.vy > 0):
+			self.jump = False
+
 		if (col and lvy < 0):
 			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)) - 1)*SCALE*16)
+			self.vy = 0
 
 		if (col and self.done):
 			self.vx = 1
@@ -107,16 +104,6 @@ class Oiram (Mob):
 
 		if (self.y > level.height*16*SCALE):
 			self.kill(True)
-
-		if (self.jump):
-			if (col == True):
-				if (ly == self.y):
-					self.jump = False
-				else:
-					if (self.vy > 0):
-						self.jump = False
-					else:
-						self.vy = 0
 
 	def horizontalmovement(self, level):
 		self.flip = False
@@ -129,37 +116,9 @@ class Oiram (Mob):
 			level.endFlag = True
 			self.mark = True
 
-		if (col == False):
-			self.steps = True
-			self.push = False
-		else:
-			self.steps = False
-			self.push = True
+		if (col):
+			self.animationhandling.toggleAnimation(2)
 
-	def animationhandling(self):
-		if (self.large):
-			self.sheet = LARGEORIAM
-		else:
-			self.sheet = OIRAM
-		if (not self.jump):
-			if (self.steps):
-				self.cstep += 1
-				self.id = int(self.cstep/3.5)%3
-			elif (self.push):
-				self.id = 4
-			else:
-				self.id = 5
-		else:
-			self.id = 3
-		if (self.prone):
-			self.id = 11
-		if (self.invincibleCounter != 0):
-			self.overlayStrength = 0.6
-			self.invincibleCounter -= 1
-			section = int((self.invincibleCounter/3)%len(self.currentoverlay))
-			self.overlay = self.currentoverlay[section]
-		else:
-			self.overlayStrength = 0
 	def victory(self):
 		self.done = True
 		self.vx = 0
@@ -174,10 +133,10 @@ class Oiram (Mob):
 			self.y -= 16*SCALE
 		self.large = True
 		self.height = 2
+		self.sheet = LARGEORIAM
 
 	def highMode(self):
 		self.invincibleCounter = 600
-		self.speed = 10
 		self.currentoverlay = STAROVERLAY
 
 	def kill (self, overwrite):
@@ -194,6 +153,7 @@ class Oiram (Mob):
 						self.invincibleCounter = 0
 					else:
 						self.large = False
+						self.sheet = OIRAM
 						self.height = 1
 						self.invincibleCounter = 90
 						self.currentoverlay = SKIPOVERLAY

@@ -5,23 +5,33 @@ from gfx.animationhandler import *
 class Oiram (Mob):
 	def __init__(self, x, y):
 		Mob.__init__(self, OIRAM, 0, x, y, True, 1)
-		self.steps = False
-		self.lstep = x
-		self.cstep = 0
-		self.onMap = False
+		#for no collision movement
 		self.yOffset = 0
-		self.deadanimation = False
+
+		#counters
 		self.liveCount = 3
 		self.coinCount = 0
 		self.invincibleCounter = 0
+
+		#player overlay
 		self.overlay = [0, 0, 0]
 		self.currentoverlay = STAROVERLAY
 		self.overlayStrength = 0
+
+		#player state
+		self.onMap = False
 		self.large = False
-		self.done = False
 		self.jump = False
+
+		#level manager flags
+		self.done = False
 		self.mark = False
 		self.lockinput = False
+
+		#movement handling
+		self.movementTypes = [self.levelMovement, self.deadMovement, self.mapMovement, self.mapMovement]
+
+		#animation handling
 		self.animationhandling = AnimationHandler(5)
 
 		# dead - 0
@@ -37,56 +47,58 @@ class Oiram (Mob):
 		self.animationhandling.addAnimation(0, 3, 4)
 
 	def tick(self, level):
-		self.animationhandling.clearState()
-		if (not self.onMap):
-			if (self.dead):
-				self.animationhandling.toggleAnimation(0)
-				self.applyGravity(3.5)
-				self.yOffset += self.vy*SCALE
-				if (self.yOffset + self.y > level.height*16*SCALE):
-					self.dead = False
-					level.endFlag = True
-			else:
-				if (level.pauseTimer <= 0):
-					if (self.prone):
-						self.animationhandling.toggleAnimation(0)
-					else:
-						self.verticalmovement(level)
-						if (self.jump):
-							self.animationhandling.toggleAnimation(1)
+		if (level.pauseTimer <= 0):
+			self.animationhandling.clearStates()
+			movementtype = self.movementTypes[int(self.onMap<<1)+int(self.dead)](level)
+			self.id = self.animationhandling.getAnimation()
 
-						if (self.vx != 0):
-							self.horizontalmovement(level)
-							self.animationhandling.toggleAnimation(3)
-					if (self.invincibleCounter != 0):
-						self.overlayStrength = 0.6
-						self.invincibleCounter -= 1
-						section = int((self.invincibleCounter/3)%len(self.currentoverlay))
-						self.overlay = self.currentoverlay[section]
-					else:
-						self.overlayStrength = 0
-				else:
-					print("pause")
+	def deadMovement(self, level):
+		self.animationhandling.toggleAnimation(0)
+		self.applyGravity(3.5)
+		self.yOffset += self.vy*SCALE
+		if (self.yOffset + self.y > level.height*16*SCALE):
+			self.dead = False
+			level.endFlag = True
+
+	def levelMovement(self, level):
+		if (self.prone):
+			self.animationhandling.toggleAnimation(0)
 		else:
-			if (level.movementTicks > 0):
-				vel = level.getVelocity()
-				self.vx = vel[0]
-				self.vy = vel[1]
-				self.movex(level)
-				self.movey(level)
-				if (self.vx != 0 or self.vy != 0):
-					self.animationhandling.toggleAnimation(3)
-					if (self.vx > 0):
-						self.flip = False
-					if (self.vx < 0):
-						self.flip = True
-			else:
-				self.vx = 0
-				self.vy = 0
-		self.id = self.animationhandling.getAnimation()
-	
+			self.verticalmovement(level)
+			if (self.jump):
+				self.animationhandling.toggleAnimation(1)
+			if (self.vx != 0):
+				self.horizontalmovement(level)
+				self.animationhandling.toggleAnimation(3)
+
+		if (self.invincibleCounter != 0):
+			self.overlayStrength = 0.6
+			self.invincibleCounter -= 1
+			section = int((self.invincibleCounter/3)%len(self.currentoverlay))
+			self.overlay = self.currentoverlay[section]
+		else:
+			self.overlayStrength = 0
+
+	def mapMovement(self, level):
+		if (level.movementTicks > 0):
+			vel = level.getVelocity()
+			self.vx = vel[0]
+			self.vy = vel[1]
+			self.movex(level)
+			self.movey(level)
+			if (self.vx != 0 or self.vy != 0):
+				self.animationhandling.toggleAnimation(3)
+				if (self.vx > 0):
+					self.flip = False
+				if (self.vx < 0):
+					self.flip = True
+		else:
+			self.vx = 0
+			self.vy = 0
+
 	def verticalmovement(self, level):
 		self.applyGravity(2)
+
 		ly = self.y
 		lvy = self.vy
 		col = self.movey(level)
@@ -149,7 +161,6 @@ class Oiram (Mob):
 						self.height = 1
 						self.overlayStrength = 0
 						self.vy = -6
-						self.overlayStrength = 0
 						self.invincibleCounter = 0
 					else:
 						self.large = False

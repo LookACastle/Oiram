@@ -43,7 +43,6 @@ class LevelManager (Level):
 					player.y = SCREEN_HEIGHT-5*16*SCALE
 					player.vx = 0
 					player.vy = 0
-					player.speed = 1.5
 					player.dead = False
 					player.yOffset = 0
 					player.liveCount -= 1
@@ -68,7 +67,6 @@ class LevelManager (Level):
 					player.y = SCREEN_HEIGHT-5*16*SCALE
 					player.vx = 0
 					player.vy = 0
-					player.speed = 1.5
 					player.dead = False
 					player.yOffset = 0
 		else:
@@ -79,7 +77,6 @@ class LevelManager (Level):
 			player.y = (1+4*self.cpos[1])*16*SCALE
 			player.vx = 0
 			player.vy = 0
-			player.speed = 1
 			player.dead = False
 			player.yOffset = 0
 			player.liveCount = 3

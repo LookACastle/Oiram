@@ -25,40 +25,39 @@ class Entity:
 		return Entity(self.id, self.sheet, x, y, self.width, self.height, self.speed)
 
 	def movex(self, level):
-		if(self.vx != 0):
-			cx = self.x/(16*SCALE)
-			cy = self.y/(16*SCALE)
-			movement = self.vx*self.speed*SCALE
-			if (self.vx > 0):
-				tileMovement = int(movement/16)
-				for tileoffset in range(0, tileMovement+1):
-					nx = int(cx) + tileoffset + self.width
-					if (nx < 0 or nx >= level.width): 
-						self.x = int(cx + tileoffset)*16*SCALE
-						return True
-					else:
-						col1 = level.isSolidTile(nx, int(cy + 0.1))
-						col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
-						if (col1 or col2):
-							self.x = int(cx + tileoffset)*16*SCALE + 0.1
+			if(self.vx != 0):
+				cx = self.x/(16*SCALE)
+				cy = self.y/(16*SCALE)
+				movement = self.vx*self.speed*SCALE
+				if (self.vx > 0):
+					tileMovement = int(movement/16)
+					for tileoffset in range(0, tileMovement+1):
+						nx = int(cx) + tileoffset + self.width
+						if (nx < 0 or nx >= level.width): 
+							self.x = int(cx + tileoffset)*16*SCALE
 							return True
-				self.x += movement
-			else:
-				tileMovement = math.floor(movement/16)
-				for tileoffset in range(0, tileMovement, -1):
-					nx = int(cx) + tileoffset
-					if (cx <= 0 or nx >= level.width): 
-						self.x = int(cx + tileoffset)*16*SCALE
-						return True
-					else:
-						col1 = level.isSolidTile(nx, int(cy + 0.1))
-						col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
-						if (col1 or col2):
-							self.x = int(cx + 1 + tileoffset)*16*SCALE - 0.1
+						else:
+							col1 = level.isSolidTile(nx, int(cy + 0.1))
+							col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+							if (col1 or col2):
+								self.x = int(cx + tileoffset)*16*SCALE + 0.1
+								return True
+				else:
+					tileMovement = math.floor(movement/16)
+					for tileoffset in range(0, tileMovement, -1):
+						nx = int(cx) + tileoffset
+						if (cx <= 0 or nx >= level.width): 
+							self.x = int(cx + tileoffset)*16*SCALE
 							return True
+						else:
+							col1 = level.isSolidTile(nx, int(cy + 0.1))
+							col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+							if (col1 or col2):
+								self.x = int(cx + 1 + tileoffset)*16*SCALE - 0.1
+								return True
 				self.x += movement
-		return False
-
+			return False
+	
 	def movey(self, level):
 		if (self.vy != 0):
 			cx = self.x/(16*SCALE)

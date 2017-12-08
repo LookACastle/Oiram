@@ -66,6 +66,7 @@ class LevelManager (Level):
 					player.mark = False
 					player.y = SCREEN_HEIGHT-5*16*SCALE
 					player.vx = 0
+					player.speed = 1.5
 					player.vy = 0
 					player.dead = False
 					player.yOffset = 0
@@ -77,6 +78,7 @@ class LevelManager (Level):
 			player.y = (1+4*self.cpos[1])*16*SCALE
 			player.vx = 0
 			player.vy = 0
+			player.speed = 1
 			player.dead = False
 			player.yOffset = 0
 			player.liveCount = 3
@@ -159,25 +161,25 @@ class LevelManager (Level):
 		if (self.getMapTile(self.cpos[0] - 1, self.cpos[1]) != None):
 			self.velocity.append((-1,0))
 			self.addMovement(-1, 0)
-			self.movementTicks = 16*4
+			self.movementTicks = 16*4 + 1
 
 	def goRight (self):
 		if (self.getMapTile(self.cpos[0] + 1, self.cpos[1]) != None):
 			self.velocity.append((1,0))
 			self.addMovement(1, 0)
-			self.movementTicks = 16*4
+			self.movementTicks = 16*4 + 1
 
 	def goDown (self):
 		if (self.getMapTile(self.cpos[0], self.cpos[1] + 1) != None):
 			self.velocity.append((0,1))
 			self.addMovement(0, 1)
-			self.movementTicks = 16*4
+			self.movementTicks = 16*4 + 1
 
 	def goUp (self):
 		if (self.getMapTile(self.cpos[0], self.cpos[1] - 1) != None):
 			self.velocity.append((0,-1))
 			self.addMovement(0, -1)
-			self.movementTicks = 16*4
+			self.movementTicks = 16*4 + 1
 
 	def drawlevel(self, screen, px, py):
 

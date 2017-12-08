@@ -4,7 +4,7 @@ from gfx.animationhandler import *
 
 class Oiram (Mob):
 	def __init__(self, x, y):
-		Mob.__init__(self, OIRAM, 0, x, y, True, 1.5)
+		Mob.__init__(self, OIRAM, 0, x, y, True, 1)
 		self.steps = False
 		self.lstep = x
 		self.cstep = 0
@@ -22,6 +22,7 @@ class Oiram (Mob):
 		self.jump = False
 		self.mark = False
 		self.lockinput = False
+		self.movementTypes = [self.normalMovement, self.deadMovement, self.mapMovement, self.mapMovement]
 		self.animationhandling = AnimationHandler(5)
 
 		# dead - 0
@@ -38,16 +39,7 @@ class Oiram (Mob):
 
 	def tick(self, level):
 		self.animationhandling.clearState()
-		if (not self.onMap):
-			if (self.dead):
-				self.deadMovement(level)
-			else:
-				if (level.pauseTimer <= 0):
-					self.normalMovement(level)
-				else:
-					print("pause")
-		else:
-			self.mapMovement(level)
+		self.movementTypes[int(self.onMap)<<1 + int(self.dead)](level)
 		self.id = self.animationhandling.getAnimation()
 	
 	def deadMovement(self, level):
@@ -84,7 +76,7 @@ class Oiram (Mob):
 			self.vy = vel[1]
 			self.movex(level)
 			self.movey(level)
-			if (self.vx != 0):
+			if (self.vx != 0 or self.vy != 0):
 				self.animationhandling.toggleAnimation(3)
 				if (self.vx > 0):
 					self.flip = False

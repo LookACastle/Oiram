@@ -28,5 +28,5 @@ class SpriteSheet:
 	def getSprite(self, index):
 		return self.sprites[index]
 
-	def getScaledSprite(self, index):
-		return pygame.transform.scale(self.sprites[index], ((int(self.scalewidth/2), int(self.scaleheight/2))))
+	def getScaledSprite(self, index, scale):
+		return pygame.transform.scale(self.sprites[index], ((int(self.scalewidth/scale), int(self.scaleheight/scale))))

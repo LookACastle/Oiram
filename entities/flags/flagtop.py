@@ -14,5 +14,8 @@ class FlagTop (Mob):
 	def collide(self, victim):
 		victim.victory()
 
+	def kill(self):
+		pass
+		
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y)

@@ -5,26 +5,38 @@ from gfx.animationhandler import *
 class Oiram (Mob):
 	def __init__(self, x, y):
 		Mob.__init__(self, OIRAM, 0, x, y, True, 1)
-		self.steps = False
-		self.lstep = x
-		self.cstep = 0
-		self.onMap = False
+		#variables
+		self.gravity = 0.2
 		self.yOffset = 0
-		self.deadanimation = False
+
+		#counters
+		self.cooldown = 0
 		self.liveCount = 3
 		self.coinCount = 0
 		self.invincibleCounter = 0
+
+		#overlay handler
 		self.overlay = [0, 0, 0]
 		self.currentoverlay = STAROVERLAY
 		self.overlayStrength = 0
+
+		#flags
+		self.deadanimation = False
 		self.large = False
 		self.done = False
 		self.jump = False
+		self.onMap = False
+		self.fire = False
 		self.mark = False
 		self.lockinput = False
+
+		#types of movement
 		self.movementTypes = [self.normalMovement, self.deadMovement, self.mapMovement, self.mapMovement]
+
+		#animation handler
 		self.animationhandling = AnimationHandler(5)
 
+		#add animations
 		# dead - 0
 		self.animationhandling.addAnimation(11)
 
@@ -39,35 +51,15 @@ class Oiram (Mob):
 
 	def tick(self, level):
 		self.animationhandling.clearState()
-		self.movementTypes[int(self.onMap)<<1 + int(self.dead)](level)
+		self.movementTypes[(int(self.onMap)<<1) + int(self.dead)](level)
 		self.id = self.animationhandling.getAnimation()
 	
 	def deadMovement(self, level):
 		self.animationhandling.toggleAnimation(0)
-		self.applyGravity(3.5)
+		self.applyGravity(3)
 		self.yOffset += self.vy*SCALE
 		if (self.yOffset + self.y > level.height*16*SCALE):
-			self.dead = False
 			level.endFlag = True
-	
-	def normalMovement(self, level):
-		if (self.prone):
-			self.animationhandling.toggleAnimation(0)
-		else:
-			self.verticalmovement(level)
-			if (self.jump and self.ly != self.y):
-				self.animationhandling.toggleAnimation(1)
-
-			if (self.vx != 0):
-				self.horizontalmovement(level)
-				self.animationhandling.toggleAnimation(3)
-		if (self.invincibleCounter != 0):
-			self.overlayStrength = 0.6
-			self.invincibleCounter -= 1
-			section = int((self.invincibleCounter/3)%len(self.currentoverlay))
-			self.overlay = self.currentoverlay[section]
-		else:
-			self.overlayStrength = 0
 
 	def mapMovement(self, level):
 		if (level.movementTicks > 0):
@@ -83,11 +75,34 @@ class Oiram (Mob):
 				if (self.vx < 0):
 					self.flip = True
 
+	def normalMovement(self, level):
+		if (self.cooldown > 0):
+			self.cooldown -= 1
+		if (self.prone):
+			self.animationhandling.toggleAnimation(0)
+		else:
+			self.verticalmovement(level)
+
+			if (self.vx != 0):
+				self.horizontalmovement(level)
+				self.animationhandling.toggleAnimation(3)
+
+		if (self.invincibleCounter != 0):
+			self.overlayStrength = 0.6
+			self.invincibleCounter -= 1
+			section = int((self.invincibleCounter/3)%len(self.currentoverlay))
+			self.overlay = self.currentoverlay[section]
+		else:
+			self.overlayStrength = 0
+
 	def verticalmovement(self, level):
-		self.applyGravity(2)
+		self.vy = self.vy + self.gravity
+		if (self.vy > 2):
+			self.vy = 2
 		self.ly = self.y
 		lvy = self.vy
 		col = self.movey(level)
+
 		if (col and self.vy > 0):
 			self.jump = False
 
@@ -101,6 +116,9 @@ class Oiram (Mob):
 
 		if (self.y > level.height*16*SCALE):
 			self.kill(True)
+
+		if (self.jump and (self.ly != self.y or not col)):
+			self.animationhandling.toggleAnimation(1)
 
 	def horizontalmovement(self, level):
 		self.flip = False
@@ -116,25 +134,37 @@ class Oiram (Mob):
 		if (col):
 			self.animationhandling.toggleAnimation(2)
 
+	def firewater(self, level):
+		if (self.cooldown <= 0):
+			self.cooldown = 60
+			if (self.flip):
+				level.addProjectile(0x060000, self.x, self.y, self.vx, self.vy)
+			else:
+				level.addProjectile(0x060001, self.x + 9*SCALE, self.y + 2*SCALE, self.vx, self.vy)
+
 	def victory(self):
 		self.done = True
 		self.vx = 0
-		self.vy = 0
+		self.vy = 0.8
 		self.lockinput = True
 
-	def addCoin(self):
-		self.coinCount += 1
-
-	def enlarge(self):
+	def enlarge(self, Fire):
 		if (not self.large):
 			self.y -= 16*SCALE
 		self.large = True
 		self.height = 2
-		self.sheet = LARGEORIAM
+		self.fire = Fire
+		if (self.fire):
+			self.sheet = WATERORIAM
+		else:
+			self.sheet = LARGEORIAM
 
 	def highMode(self):
 		self.invincibleCounter = 600
 		self.currentoverlay = STAROVERLAY
+
+	def addCoin(self):
+		self.coinCount += 1
 
 	def kill (self, overwrite):
 		if (not self.mark):
@@ -143,6 +173,7 @@ class Oiram (Mob):
 					if (not self.large or overwrite):
 						self.dead = True
 						self.large = False
+						self.sheet = OIRAM
 						self.height = 1
 						self.overlayStrength = 0
 						self.vy = -6
@@ -157,7 +188,10 @@ class Oiram (Mob):
 
 		
 	def render (self, screen):
-		screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
+		if (self.onMap):
+			screen.drawColouredFlippedSprite(OIRAM, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)	
+		else:
+			screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
 		screen.writeText("X" + str(self.liveCount), 18*SCALE, 2.5*SCALE)
 		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1*SCALE, 1*SCALE)
 		screen.writeText("X" + str(self.coinCount),  50*SCALE + 18*SCALE, 2.5*SCALE)

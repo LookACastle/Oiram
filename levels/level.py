@@ -84,6 +84,11 @@ class Level:
 
 	def addEntity(self, c, x, y):
 		self.entityQueue.append(self.entityManager.getEntity(c).clone(x, y))
+
+	def addProjectile(self, c, x, y, vx, vy):
+		e = self.entityManager.getEntity(c).clone(x, y)
+		e.addvel(vx, vy)
+		self.entityQueue.append(e)		
 	
 	def triggerBlock(self, x, y):
 		for e in self.entities:
@@ -98,6 +103,15 @@ class Level:
 				if (col):
 					e.collide(target)
 		return None
+
+	def collideEntity (self, target):
+		collided = []
+		for e in self.entities:
+			if (e.collision):
+				col = e.entityCollision(target)
+				if (col):
+					collided.append(e)
+		return collided
 
 	def collideTile (self, target, x, y):
 		self.getTile(x, y).collision(target, self)

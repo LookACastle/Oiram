@@ -80,14 +80,16 @@ the changes are done by changing the colours of the image, here is a overview of
 │                                                          │
 │                  0x00000F = Powerup - coin               │
 │                  0x01000F = Powerup - shroom             │
+│                  0x02000F = Powerup - flower             │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Pickups              │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
 │                  0xFFC700 = Star                         │
-│                  0x000002 = Life up shroom               │
+│                  0x000002 = shroom                       │
 │                  0xFFFF00 = Coin                         │
+│                  0x000005 = flower                       │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Enemies              │           │

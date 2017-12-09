@@ -76,18 +76,30 @@ class Game:
             if (currentlevel != None):
                 if (not self.inputHandler.S.isPressed() or not self.player.large or self.player.jump):
                     self.player.prone = False
-                    if self.inputHandler.A.isPressed():
+
+                    #movement handling
+                    if (self.inputHandler.A.isPressed() and not self.inputHandler.D.isPressed()):
                         self.player.vx = -1
-                    elif self.inputHandler.D.isPressed():
+                    elif (self.inputHandler.D.isPressed() and not self.inputHandler.A.isPressed()):
                         self.player.vx = 1
-                    elif (self.inputHandler.D.isPressed() and self.inputHandler.A.isPressed()):
-                        self.player.vx = 0
                     else:
                         self.player.vx = 0
-                    if self.inputHandler.W.isPressed():
+
+
+                    if (self.inputHandler.W.isPressed()):
                         if (not self.player.jump):
                             self.player.vy = -4
                             self.player.jump = True
+                            self.player.gravity = 0.2
+                        if(self.player.vy > 0):
+                            self.player.gravity = 0.3
+                    else:
+                        self.player.gravity = 0.3
+
+                    if (self.inputHandler.ENTER.isPressed()):
+                        if (self.player.fire):
+                             self.player.firewater(currentlevel)
+
                 else:
                     self.player.prone = True
 
@@ -111,6 +123,7 @@ class Game:
         else:
             self.player.onMap = False
             self.player.tick(currentlevel)
+            #check collision between player and objects
             currentlevel.entityCollision(self.player)
 
     def render (self, dt):

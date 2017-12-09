@@ -11,5 +11,5 @@ class Shroom (animatedMob):
 		self.animationtick()
 
 	def collide(self, victim):
-		victim.enlarge()
+		victim.enlarge(False)
 		self.dead = True

@@ -22,22 +22,18 @@ class Simpleenemy (animatedMob):
 			self.wallCollide()
 
 	def tick(self, level):
-		if(self.deadTime <= 0):
-			if (self.mark):
-				self.dead = True
-				return
-			self.simpleMovement(level)
-		else:
-			self.id = 6
-			self.deadTime -= 1
-			self.mark = True
+		pass
+
+	def kill(self):
+		self.dead = True
 
 	def collide(self, victim):
 		if (self.deadTime <= 0):
 			if (victim.invincibleCounter > 0 or victim.jump):
 				cx = victim.x + (victim.width*SCALE)/2
 				if (cx > self.x or cx < self.x + self.width*SCALE):
-					self.deadTime = 15
+					self.kill()
+					self.collision = False
 					if (victim.jump):
 						victim.vy = -3
 					return

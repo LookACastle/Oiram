@@ -14,9 +14,10 @@ OIRAM = 1
 OVERWORLDMAP = 2
 ENEMIES = 3
 LARGEORIAM = 4
-LARGENEMIES = 5
+WATERORIAM = 5
+LARGENEMIES = 6
 
-SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png","bigOiram_16_32.png","enemies_16_32.png"]
+SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png","bigOiram_16_32.png","bigOiramWater_16_32.png","enemies_16_32.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
@@ -74,8 +75,8 @@ BOSS = 17
 #ENEMY
 ROLLING_FIRE = 0
 SPIKE = 2
-GUMBA = 4
-GUMBA_DEAD = 6
+BALUMBA = 4
+BALUMBA_DEAD = 6
 FISH = 7
 SHIELD = 9
 CANON = 11
@@ -87,7 +88,10 @@ FIRE_PROJ = 17
 GREEN_SHELL = 20
 RED_SHELL = 21
 LEGO = 22
-WATER = 26
+WATER_DOWN = 26
+WATER_FLAT = 27
+WATER_UP = 28
+WATER_EXPLOSION = 29 
 
 #LARGEENEMY
 GREEN_TURTLE = 0

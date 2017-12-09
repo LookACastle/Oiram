@@ -26,23 +26,25 @@ class Entity:
 
 	def movex(self, level):
 			if(self.vx != 0):
-				cx = self.x/(16*SCALE)
-				cy = self.y/(16*SCALE)
+				cy = (self.y + self.y1)/(16*SCALE) + 0.1
+				cyh = (self.y - self.y2)/(16*SCALE) + self.height - 0.2
 				movement = self.vx*self.speed*SCALE
 				if (self.vx > 0):
 					tileMovement = int(movement/16)
+					cx = (self.x - self.x2)/(16*SCALE)
 					for tileoffset in range(0, tileMovement+1):
 						nx = int(cx) + tileoffset + self.width
 						if (nx < 0 or nx >= level.width): 
 							self.x = int(cx + tileoffset)*16*SCALE
 							return True
 						else:
-							col1 = level.isSolidTile(nx, int(cy + 0.1))
-							col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+							col1 = level.isSolidTile(nx, int(cy))
+							col2 = level.isSolidTile(nx, int(cyh))
 							if (col1 or col2):
-								self.x = int(cx + tileoffset)*16*SCALE + 0.1
+								self.x = int(cx + tileoffset)*16*SCALE + 0.1 + self.x2
 								return True
 				else:
+					cx = (self.x + self.x1)/(16*SCALE)
 					tileMovement = math.floor(movement/16)
 					for tileoffset in range(0, tileMovement, -1):
 						nx = int(cx) + tileoffset
@@ -50,39 +52,40 @@ class Entity:
 							self.x = int(cx + tileoffset)*16*SCALE
 							return True
 						else:
-							col1 = level.isSolidTile(nx, int(cy + 0.1))
-							col2 = level.isSolidTile(nx, int(cy + self.height - 0.2))
+							col1 = level.isSolidTile(nx, int(cy))
+							col2 = level.isSolidTile(nx, int(cyh))
 							if (col1 or col2):
-								self.x = int(cx + 1 + tileoffset)*16*SCALE - 0.1
+								self.x = int(cx + 1 + tileoffset)*16*SCALE - 0.1 - self.x1
 								return True
 				self.x += movement
 			return False
 	
 	def movey(self, level):
 		if (self.vy != 0):
-			cx = self.x/(16*SCALE)
-			cy = self.y/(16*SCALE)
+			cx = self.x/(16*SCALE) + 0.2
+			cxh = (self.x - self.x2)/(16*SCALE) + self.width - 0.2
 			movement = self.vy*self.speed*SCALE
 			if (self.vy > 0):
 				tileMovement = int(movement/16)
+				cy = (self.y - self.y2)/(16*SCALE)
 				for tileoffset in range(0, tileMovement+1):
 					ny = int(cy) + tileoffset + self.height
-					col1 = level.isSolidTile(int(cx + self.width - 0.1),ny)
-					col2 = level.isSolidTile(int(cx + 0.1),ny)
+					col1 = level.isSolidTile(int(cxh),ny)
+					col2 = level.isSolidTile(int(cx),ny)
 					if (col1 or col2):
-						self.y = int(cy + tileoffset)*16*SCALE
+						self.y = int(cy + tileoffset)*16*SCALE + self.y2
 						return True
-				self.y += movement
 			else:
 				tileMovement = math.floor(movement/16)
+				cy = (self.y + self.y1)/(16*SCALE)
 				for tileoffset in range(0, tileMovement, -1):
 					ny = int(cy) + tileoffset
-					col1 = level.isSolidTile(int(cx + self.width - 0.1),ny)
-					col2 = level.isSolidTile(int(cx + 0.1),ny)
+					col1 = level.isSolidTile(int(cxh),ny)
+					col2 = level.isSolidTile(int(cx),ny)
 					if (col1 or col2):
-						self.y = int(cy + 1 + tileoffset)*16*SCALE
+						self.y = int(cy + 1 + tileoffset)*16*SCALE - self.y1
 						return True
-				self.y += movement	
+			self.y += movement	
 		return False
 
 	def entityCollision(self, target):

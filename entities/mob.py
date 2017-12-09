@@ -13,4 +13,6 @@ class Mob (Entity):
 
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y)
-		
+	
+	def kill(self):
+		self.dead = True

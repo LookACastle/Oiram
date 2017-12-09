@@ -1,5 +1,5 @@
 from entities.enemies.simpleenemy import *
-from constants import SCALE
+from constants import *
 
 class Balumba (Simpleenemy):
 	def __init__(self, sheet, id, length, x, y, speed, animationSpeed, vx):
@@ -8,6 +8,20 @@ class Balumba (Simpleenemy):
 
 	def clone(self, x, y):
 		return Balumba(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed, self.vx)	
+
+	def tick (self, level):
+		if(self.deadTime <= 0):
+			if (self.mark):
+				self.dead = True
+				return
+			self.simpleMovement(level)
+		else:
+			self.id = BALUMBA_DEAD
+			self.deadTime -= 1
+			self.mark = True
+
+	def kill (self):
+		self.deadTime = 15
 
 	def wallCollide(self):
 		self.vx = -self.vx

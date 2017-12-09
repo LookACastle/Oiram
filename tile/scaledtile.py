@@ -6,6 +6,6 @@ class ScaledTile (Tile):
 		Tile.__init__(self, sheet, id, False)
 
 	def render (self, screen, x, y):
-		screen.drawScaledSprite( self.sheet, self.id, x, y)
+		screen.drawScaledSprite( self.sheet, self.id, x, y, 2)
 		
 		

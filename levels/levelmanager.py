@@ -95,11 +95,11 @@ class LevelManager (Level):
 					if (isinstance(currentlevel, Level)):
 						if (currentlevel.open):
 							if (not currentlevel.cleared):
-								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE)
+								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE, 2)
 							else:
-								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE)
+								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE, 2)
 						else:
-							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE)
+							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE, 2)
 		else:
 			self.currentlevel.drawlevel(screen, px, py)
 

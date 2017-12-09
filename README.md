@@ -106,6 +106,12 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0x010001 = Balumba                      │
 │                  0x010003 = Legobro                      │
 │                                                          │
+│                   ┌────────────────┐                     │
+│                   │  interceptors  │                     │
+│                   └────────────────┘                     │
+│                                                          │
+│                  0x000008 = Fire ghost                   │
+│                                                          │
 └──────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────┐
 │                                                          │
@@ -121,11 +127,21 @@ the changes are done by changing the colours of the image, here is a overview of
 │                                                          │
 │                   --- schematics ---                     │
 │                                                          │
-│       ┌──────────────────────────────────────┐           │
+│ ┌──────────────────────────────────────────────────────┐ │
+│                                                          │
 │        name: "Ending_1.png"                              │
 │        creator: mart368b                                 │
 │        description: default ending of a level            │
-│       └──────────────────────────────────────┘           │
+│                                                          │
+│ └──────────────────────────────────────────────────────┘ │
+│                                                          │
+│ ┌──────────────────────────────────────────────────────┐ │
+│                                                          │
+│        name: "Ghost_Intercept.png"                       │
+│        creator: mart368b                                 │
+│        description: basic fire ghost interceptor         │
+│                                                          │
+│ └──────────────────────────────────────────────────────┘ │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 

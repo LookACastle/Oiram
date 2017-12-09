@@ -12,6 +12,7 @@ from entities.flags.flagtop import *
 #enemies
 from entities.enemies.balumba import *
 from entities.enemies.legobro import *
+from entities.enemies.spikey import *
 
 #projectile entities
 from entities.projectiles.lego import *
@@ -23,6 +24,9 @@ from entities.pickup.fireflower import *
 from entities.pickup.star import *
 from entities.pickup.coin import *
 from entities.pickup.coindrop import *
+
+#interceptors
+from entities.interceptor.fireghost import *
 
 from constants import *
 
@@ -63,6 +67,13 @@ class EntityManager:
 		#Water bullet
 		self.entities[0x060000] = Waterball(ENEMIES, WATER_DOWN, 1, 0, True)
 		self.entities[0x060001] = Waterball(ENEMIES, WATER_DOWN, 1, 0, False)
+
+		#Spikey
+		self.entities[0x070000] = Spikey(ENEMIES, SPIKE, 2, 0, 0, 1, 0.1, 1)
+		self.entities[0x070001] = Spikey(ENEMIES, SPIKE, 2, 0, 0, 1, 0.1, -1)
+
+		#fire ghost
+		self.entities[0x080000] = FireGhost(ENEMIES, FIRE_GHOST, 0, 0)
 
 	def getEntity(self,color):
 		return self.entities[color]

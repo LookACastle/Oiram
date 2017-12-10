@@ -62,6 +62,11 @@ class Level:
 		if (y<0 or y>=self.height): return self.tileManager.getNullTile()
 		return self.map[x + y*self.width]
 
+	def setTile(self, x, y, c):
+		if (x<0 or x>=self.width): return
+		if (y<0 or y>=self.height): return
+		self.map[x + y*self.width] = self.tileManager.getTile(c)
+
 	def tick(self, player):
 		for e in self.entities:
 			self.entityQueue.append(e)
@@ -85,16 +90,19 @@ class Level:
 	def addEntity(self, c, x, y):
 		self.entityQueue.append(self.entityManager.getEntity(c).clone(x, y))
 
+	def getQueuedEntity (self):
+		return self.entityQueue[len(self.entityQueue)-1]
+
 	def addProjectile(self, c, x, y, vx, vy):
 		e = self.entityManager.getEntity(c).clone(x, y)
 		e.addvel(vx, vy)
 		self.entityQueue.append(e)		
 	
-	def triggerBlock(self, x, y):
+	def triggerBlock(self, x, y, target):
 		for e in self.entities:
 			if (e.solid):
 				if (e.x == x and e.y == y):
-					e.trigger()
+					e.trigger(target)
 
 	def entityCollision (self, target):
 		for e in self.entities:

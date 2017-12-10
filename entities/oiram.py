@@ -107,7 +107,7 @@ class Oiram (Mob):
 			self.jump = False
 
 		if (col and lvy < 0):
-			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)) - 1)*SCALE*16)
+			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)) - 1)*SCALE*16, self)
 			self.vy = 0
 
 		if (col and self.done):

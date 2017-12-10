@@ -81,6 +81,7 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0x00000F = Powerup - coin               │
 │                  0x01000F = Powerup - shroom             │
 │                  0x02000F = Powerup - flower             │
+│                  0x03000F = Brick - breakable            │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Pickups              │           │

@@ -4,6 +4,7 @@ from entities.animatedmob import *
 
 #blocks
 from entities.blocks.powerup import *
+from entities.blocks.brick import *
 
 #end flags
 from entities.flags.flagpole import *
@@ -17,6 +18,7 @@ from entities.enemies.spikey import *
 #projectile entities
 from entities.projectiles.lego import *
 from entities.projectiles.waterball import *
+from entities.projectiles.brickfragment import *
 
 #items to pick up
 from entities.pickup.shroom import *
@@ -38,6 +40,7 @@ class EntityManager:
 		self.entities[0x0F0000] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x020000)
 		self.entities[0x0F0001] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x01FFFF)
 		self.entities[0x0F0002] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x050000)
+		self.entities[0x0F0100] = Brick(TEXTURE, BRICK,0,0)
 		self.entities[0x00FFFF] = Coin(TEXTURE, COIN_FLIP_ANIMATION, 8,0,0, 0, 0.1, True)
 		self.entities[0x01FFFF] = Coindrop(TEXTURE, COIN_FLIP_ANIMATION, 8,0,0, 0, 0.4, True)
 
@@ -65,8 +68,8 @@ class EntityManager:
 		self.entities[0x050000] = FireFlower(TEXTURE, FLOWER, 2, 0, 0, 3, 0.08, True)
 
 		#Water bullet
-		self.entities[0x060000] = Waterball(ENEMIES, WATER_DOWN, 1, 0, True)
-		self.entities[0x060001] = Waterball(ENEMIES, WATER_DOWN, 1, 0, False)
+		self.entities[0x060000] = Waterball(ENEMIES, WATER_DOWN, 0, 0, True)
+		self.entities[0x060001] = Waterball(ENEMIES, WATER_DOWN, 0, 0, False)
 
 		#Spikey
 		self.entities[0x070000] = Spikey(ENEMIES, SPIKE, 2, 0, 0, 1, 0.1, 1)
@@ -74,6 +77,13 @@ class EntityManager:
 
 		#fire ghost
 		self.entities[0x080000] = FireGhost(ENEMIES, FIRE_GHOST, 0, 0)
+
+		#brick fragments
+		self.entities[0x090000] = BrickFragment(FRAGMENTS, FULL, 0, 0)
+		self.entities[0x090001] = BrickFragment(FRAGMENTS, LEFT_TOP, 0, 0)
+		self.entities[0x090002] = BrickFragment(FRAGMENTS, TOP, 0, 0)
+		self.entities[0x090003] = BrickFragment(FRAGMENTS, HALF, 0, 0)
+		self.entities[0x090004] = BrickFragment(FRAGMENTS, HALF_WIDE, 0, 0)
 
 	def getEntity(self,color):
 		return self.entities[color]

@@ -15,7 +15,7 @@ class TileManager:
 		"""
 		self.tiles[0x105C96] = Tile(TEXTURE, DIRT, True)
 		self.tiles[0x0FFF0F] = Tile(TEXTURE, GRASSDIRT, True)
-		self.tiles[0x0C9AAF] = Tile(TEXTURE, BLOCK_PUSH, True)
+		self.tiles[0x0C9AAF] = Tile(TEXTURE, BLOCK, True)
 		self.tiles[0xDBDBDB] = Tile(TEXTURE, STONE, True)
 
 		#Castle
@@ -32,6 +32,7 @@ class TileManager:
 
 		for c in range(0x0F0000, 0x0F0005):
 			self.tiles[c] = Tile(TEXTURE, SKY, True)
+		self.tiles[0x0F0100] = Tile(TEXTURE, SKY, True)
 		self.tiles[0xFFFFFF] = Tile(TEXTURE, SKY, False)
 		self.tiles[0xFFFF00] = Tile(TEXTURE, STONE_UNDERWORLD, False)
 		self.nullTile = Tile(TEXTURE, BLOCK, False)
@@ -48,5 +49,5 @@ class TileManager:
 	def getNullTile(self):
 		return self.nullTile
 
-	def getTile(self,color):
+	def getTile(self, color):
 		return self.tiles[color]

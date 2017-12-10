@@ -16,8 +16,16 @@ ENEMIES = 3
 LARGEORIAM = 4
 WATERORIAM = 5
 LARGENEMIES = 6
+FRAGMENTS = 7
 
-SPRITE_LIST = ["basicTiles_16_16.png", "smallOiram_16_16.png", "worldmapsprites_32_32.png","enemies_16_16.png","bigOiram_16_32.png","bigOiramWater_16_32.png","enemies_16_32.png"]
+SPRITE_LIST = ["basicTiles_16_16.png",
+			   "smallOiram_16_16.png",
+			   "worldmapsprites_32_32.png",
+			   "enemies_16_16.png",
+			   "bigOiram_16_32.png",
+			   "bigOiramWater_16_32.png",
+			   "enemies_16_32.png",
+			   "fragments_9_5.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
@@ -99,6 +107,13 @@ RED_TURTLE = 2
 CLOUD_MAN = 4
 PIRANA = 5
 LEGOBRO = 7
+
+#FRAGMENT
+FULL = 0
+LEFT_TOP = 1
+TOP = 2
+HALF = 3
+HALF_WIDE = 4
 
 STAROVERLAY = [[17, 255, 227], [255, 255, 0], [255,100, 100]]
 SKIPOVERLAY = [[0, 0, 0], [255, 255, 255]]

@@ -40,6 +40,9 @@ class Screen:
 		del pxarray
 		self.display.blit(sprite , (x+self.xOffset,y+self.yOffset))
 
+	def drawRotateSprite(self, id, tileId, x, y, angle):
+		self.display.blit(pygame.transform.rotate(self.sheets[id].getSprite(tileId), angle), (x+self.xOffset,y+self.yOffset))
+
 	def drawFlippedSprite(self, id, tileId, x, y, flipx, flipy = False):
 		self.display.blit(pygame.transform.flip(self.sheets[id].getSprite(tileId), flipx, flipy), (x+self.xOffset,y+self.yOffset))
 

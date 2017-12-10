@@ -10,10 +10,10 @@ class SpriteSheet:
 		self.width = size[0]
 		self.height = size[1]
 
-		regex = re.findall("((?<=\_)[0-9][0-9])", path)
+		parsing = path.replace(".png", "").split("_")
 
-		self.spritewidth = int(regex[0])
-		self.spriteheight = int(regex[1])
+		self.spritewidth = int(parsing[1])
+		self.spriteheight = int(parsing[2])
 
 		self.scalewidth = self.spritewidth*SCALE
 		self.scaleheight = self.spriteheight*SCALE

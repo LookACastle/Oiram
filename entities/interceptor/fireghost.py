@@ -79,7 +79,6 @@ class FireGhost (Mob):
 			if (self.y >= level.height*16*SCALE):
 				self.downTimer = 0
 				self.travelTimeSet = True
-		print(self.vy, self.upTimer, self.downTimer, self.sleepTimer)
 
 		self.id = self.animationhandling.getAnimation()
 

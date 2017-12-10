@@ -17,6 +17,7 @@ class Powerup (animatedMob):
 	def tick(self, level):
 		if (not self.empty):
 			self.animationtick()
+			
 		if (self.hitTime > 0):
 			if (self.content != None):
 				level.addEntity(self.content, self.x, self.y - 16*SCALE)
@@ -29,10 +30,16 @@ class Powerup (animatedMob):
 			else:
 				self.y += 5
 
-	def trigger(self):
+		if(self.mark):
+			self.dead = True
+
+		if (self.content == None and self.y == self.oy):
+			level.setTile(int(self.x/(16*SCALE) + 0.1), int(self.y/(16*SCALE) + 0.1), 0x0C9AAF)
+			self.mark = True
+
+	def trigger(self, target):
 		if (self.content != None):
 			self.empty = True
-			self.id = BLOCK
 			self.hitTime = 6
 
 	def collide(self, victim):

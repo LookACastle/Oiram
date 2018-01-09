@@ -23,6 +23,10 @@ class FireGhost (Mob):
 		self.offset = 0
 		self.dir = False
 
+		self.y2 = 2*SCALE
+		self.x1 = 2*SCALE
+		self.x2 = 2*SCALE
+
 	def clone(self, x, y):
 		return FireGhost(self.sheet, self.id, x, y)	
 

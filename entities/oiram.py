@@ -9,6 +9,10 @@ class Oiram (Mob):
 		self.gravity = 0.2
 		self.yOffset = 0
 
+		#checkpoint
+		self.checkpointx = 0
+		self.checkpointy = 0
+
 		#counters
 		self.cooldown = 0
 		self.liveCount = 3
@@ -49,11 +53,26 @@ class Oiram (Mob):
 		# walk - 3
 		self.animationhandling.addAnimation(0, 3, 4)
 
+		self.y1 = 4*SCALE
+
 	def tick(self, level):
 		self.animationhandling.clearState()
 		self.movementTypes[(int(self.onMap)<<1) + int(self.dead)](level)
 		self.id = self.animationhandling.getAnimation()
 	
+	def setCheckpoint (self, x, y):
+		self.checkpointx = x
+		self.checkpointy = y
+
+	def reset (self):
+		print(self.checkpointx, self.checkpointy)
+		self.x = self.checkpointx
+		self.y = self.checkpointy
+		self.vx = 0
+		self.vy = 0
+		self.dead = False
+		self.yOffset = 0
+
 	def deadMovement(self, level):
 		self.animationhandling.toggleAnimation(0)
 		self.applyGravity(3)
@@ -107,7 +126,8 @@ class Oiram (Mob):
 			self.jump = False
 
 		if (col and lvy < 0):
-			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)) - 1)*SCALE*16, self)
+			print("trigger")
+			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)))*SCALE*16, self)
 			self.vy = 0
 
 		if (col and self.done):
@@ -135,7 +155,7 @@ class Oiram (Mob):
 			self.animationhandling.toggleAnimation(2)
 
 	def firewater(self, level):
-		if (self.cooldown <= 0):
+		if (self.cooldown <= 0 and self.fire):
 			self.cooldown = 60
 			if (self.flip):
 				level.addProjectile(0x060000, self.x, self.y, self.vx, self.vy)
@@ -173,6 +193,7 @@ class Oiram (Mob):
 					if (not self.large or overwrite):
 						self.dead = True
 						self.large = False
+						self.fire = False
 						self.sheet = OIRAM
 						self.height = 1
 						self.overlayStrength = 0
@@ -181,6 +202,7 @@ class Oiram (Mob):
 						self.invincibleCounter = 0
 					else:
 						self.large = False
+						self.fire = False
 						self.sheet = OIRAM
 						self.height = 1
 						self.invincibleCounter = 90

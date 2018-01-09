@@ -90,11 +90,15 @@ class Waterball (Mob):
 
 
 		collidedentities = level.collideEntity(self)
-		if (self.deadTime == -1 and len(collidedentities) > 0):
-			self.kill()
 
+		kills = 0
 		for e in collidedentities:
-			e.kill()
+			if (e.killable):
+				e.kill()
+				kills += 1
+
+		if (self.deadTime == -1 and len(collidedentities) > 0 and kills > 0):
+			self.kill()
 
 		self.id = self.animationhandling.getAnimation()
 

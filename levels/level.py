@@ -13,8 +13,11 @@ class Level:
 		self.map = []
 		self.entities = []
 		self.loadedEntities = []
+		self.loadedMap = []
+		self.spawnx = 0
+		self.spawny = 0
 		self.loadTileMap(path)
-		self.open = False
+		self.open = True
 		self.cleared = False
 		self.coinCount = 0
 		self.pauseTimer = 0
@@ -28,22 +31,29 @@ class Level:
 		self.width = size[0]
 		self.height = size[1]
 		pixel = pygame.PixelArray(img)
-		self.map = []
 		for y in range(0,self.height):
 			for x in range(0,self.width):
-				tile = self.tileManager.getTile(pixel[x][y])
+				colour = pixel[x][y]
+				if (colour == 0xFF0001):
+					self.spawnx = x*16*SCALE
+					self.spawny = y*16*SCALE
+				tile = self.tileManager.getTile(colour)
+
 				if (tile != None):
-					self.map.append(tile)
+					self.loadedMap.append(tile)
 				else:
-					self.map.append(self.tileManager.getTile(0xFFFFFF))
+					self.loadedMap.append(self.tileManager.getTile(0xFFFFFF))
+
 				entity = self.entityManager.getEntity(pixel[x][y])
 				if (entity != None):
 					self.loadedEntities.append(entity.clone(x*16*SCALE, y*16*SCALE))
+		self.map = self.loadedMap[:]
 
 	def reset (self):
 		self.entities = []
 		for e in self.loadedEntities:
 			self.entities.append(e.clone(e.x, e.y))
+		self.map = self.loadedMap[:]
 
 	def tileCollision(self, points, colType):
 		for p in points:

@@ -16,6 +16,11 @@ the changes are done by changing the colours of the image, here is a overview of
 
 ┌──────────────────────────────────────────────────────────┐
 │                                                          │
+│                0x0100FF = Player spawn                   │
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────┐
+│                                                          │
 │                    Background tiles                      │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
@@ -37,6 +42,8 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0xDBDBDB = STONE                        │
 │                  0x329913 = GRASS                        │
 │                  0x00FFFF = STONE_UNDERWORLD             │
+│                  0xFFC549 = Bridge                       │
+│                  0xFFC548 = Burned brigde                │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Castle               │           │
@@ -78,8 +85,8 @@ the changes are done by changing the colours of the image, here is a overview of
 │           │             Blocks               │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x00000F = Powerup - coin               │
-│                  0x01000F = Powerup - shroom             │
+│                  0x01000F = Powerup - coin               │
+│                  0x00000F = Powerup - shroom             │
 │                  0x02000F = Powerup - flower             │
 │                  0x03000F = Brick - breakable            │
 │                                                          │
@@ -87,6 +94,7 @@ the changes are done by changing the colours of the image, here is a overview of
 │           │             Pickups              │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
+│                  0x0200FF = Checkpoint                   │
 │                  0xFFC700 = Star                         │
 │                  0x000002 = shroom                       │
 │                  0xFFFF00 = Coin                         │

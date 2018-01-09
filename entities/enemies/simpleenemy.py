@@ -29,6 +29,9 @@ class Simpleenemy (animatedMob):
 
 	def collide(self, victim):
 		if (self.deadTime <= 0):
+			if (victim.mobControl):
+				self.wallCollide()
+				return
 			if (victim.invincibleCounter > 0 or victim.jump):
 				cx = victim.x + (victim.width*SCALE)/2
 				if (cx > self.x or cx < self.x + self.width*SCALE):

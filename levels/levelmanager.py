@@ -39,12 +39,7 @@ class LevelManager (Level):
 					self.changeLevel(player)
 				else:
 					self.currentlevel.reset()
-					player.x = 100
-					player.y = SCREEN_HEIGHT-5*16*SCALE
-					player.vx = 0
-					player.vy = 0
-					player.dead = False
-					player.yOffset = 0
+					player.reset()
 					player.liveCount -= 1
 					self.currentlevel.endFlag = False
 				return
@@ -61,26 +56,19 @@ class LevelManager (Level):
 			if (isinstance(level, Level)):
 				if (level.open):
 					self.currentlevel = level
+					player.setCheckpoint(self.currentlevel.spawnx, self.currentlevel.spawny)
 					self.currentlevel.reset()
-					player.x = 100
+					player.reset()
 					player.mark = False
-					player.y = SCREEN_HEIGHT-5*16*SCALE
-					player.vx = 0
 					player.speed = 1.5
-					player.vy = 0
-					player.dead = False
 					player.yOffset = 0
 		else:
 			if (self.currentlevel.cleared and self.currentlevel.type != "e"):
 				self.openlevel(self.currentlevel.name + 1)
 			self.currentlevel = None
-			player.x = (1+4*self.cpos[0])*16*SCALE
-			player.y = (1+4*self.cpos[1])*16*SCALE
-			player.vx = 0
-			player.vy = 0
+			player.setCheckpoint((1+4*self.cpos[0])*16*SCALE, (1+4*self.cpos[1])*16*SCALE) 
+			player.reset()
 			player.speed = 1
-			player.dead = False
-			player.yOffset = 0
 			player.liveCount = 3
 
 	def getVelocity(self):

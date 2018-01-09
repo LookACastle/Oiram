@@ -7,6 +7,7 @@ from entities.blocks.powerup import *
 from entities.blocks.brick import *
 
 #end flags
+from entities.flags.checkpoint import *
 from entities.flags.flagpole import *
 from entities.flags.flagtop import *
 
@@ -45,6 +46,7 @@ class EntityManager:
 		self.entities[0x01FFFF] = Coindrop(TEXTURE, COIN_FLIP_ANIMATION, 8,0,0, 0, 0.4, True)
 
 		#end flag
+		self.entities[0xFF0002] = Checkpoint(TEXTURE, WIN_FLAG_2,0,0)
 		self.entities[0xFF0000] = FlagPole(TEXTURE, 0, 0)
 		self.entities[0xFF0100] = FlagTop(TEXTURE, 0, 0)
 

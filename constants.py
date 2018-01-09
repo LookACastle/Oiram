@@ -18,7 +18,7 @@ WATERORIAM = 5
 LARGENEMIES = 6
 FRAGMENTS = 7
 
-SPRITE_LIST = ["basicTiles_16_16.png",
+SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "smallOiram_16_16.png",
 			   "worldmapsprites_32_32.png",
 			   "enemies_16_16.png",
@@ -59,6 +59,8 @@ WIN_FLAG_POLE = 56
 WIN_FLAG_TOP = 57
 WIN_FLAG_1 = 58
 WIN_FLAG_2 = 59
+BRIDGE = 60
+BRIDGE_BURN = 60
 
 #MAP
 ROAD = 0
@@ -114,6 +116,16 @@ LEFT_TOP = 1
 TOP = 2
 HALF = 3
 HALF_WIDE = 4
+
+#FRAGMENT MAP
+PARTS = [[0x090001, 0x090002],
+		 [0x090003, 0x090000, 0x090004],
+		 [0x090001, 0x090000],
+		 [0x090003, 0x090000, 0x090004]]
+OFFSET = [[0, 7],
+		  [0, 3, 11],
+		  [0, 7],
+		  [0, 3, 11]]
 
 STAROVERLAY = [[17, 255, 227], [255, 255, 0], [255,100, 100]]
 SKIPOVERLAY = [[0, 0, 0], [255, 255, 255]]

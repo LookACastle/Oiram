@@ -38,6 +38,7 @@ class Powerup (animatedMob):
 			self.mark = True
 
 	def trigger(self, target):
+		print("col")
 		if (self.content != None):
 			self.empty = True
 			self.hitTime = 6

@@ -19,29 +19,20 @@ class Brick (Entity):
 			level.setTile(int(self.x/(16*SCALE) + 0.1), int(self.y/(16*SCALE) + 0.1), 0xFFFFFF)
 		if (self.broken):
 			self.placed = True
-
-			parts = [[0x090001, 0x090002],
-					 [0x090003, 0x090000, 0x090004],
-					 [0x090001, 0x090000],
-					 [0x090003, 0x090000, 0x090004]]
-			offset = [[0, 7],
-					  [0, 3, 11],
-					  [0, 7],
-					  [0, 3, 11]]
-
 			yoffset = -1
 
-			for y in range(len(parts)):
-				for x in range(len(parts[y])):
-					level.addEntity(parts[y][x], self.x + offset[y][x]*SCALE, self.y + yoffset*SCALE)
+			for y in range(len(PARTS)):
+				for x in range(len(PARTS[y])):
+					level.addEntity(PARTS[y][x], self.x + OFFSET[y][x]*SCALE, self.y + yoffset*SCALE)
 					fragment = level.getQueuedEntity()
 					fragment.addOrigin(self.breakoriginx, self.breakoriginy)
 				yoffset += 4
 
 	def trigger(self, target):
-		self.broken = True
-		self.breakoriginx = target.x + target.width*SCALE*0.7
-		self.breakoriginy = target.y
+		if (target.large):
+			self.broken = True
+			self.breakoriginx = target.x + target.width*SCALE*0.7
+			self.breakoriginy = target.y
 
 	def collide(self, victim):
 		pass

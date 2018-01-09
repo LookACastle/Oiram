@@ -20,6 +20,8 @@ class Entity:
 		self.x2 = 0
 		self.y1 = 0
 		self.y2 = 0
+		self.killable = True
+		self.mobControl = False
 
 	def clone(self, x, y):
 		return Entity(self.id, self.sheet, x, y, self.width, self.height, self.speed)

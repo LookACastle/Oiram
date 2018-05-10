@@ -5,6 +5,7 @@ class Tile:
 		self.id = id
 		self.sheet = sheet
 		self.solid = solid
+		self.test = False
 
 	def isSolid (self):
 		return self.solid

@@ -31,12 +31,19 @@ class Level:
 		self.width = size[0]
 		self.height = size[1]
 		pixel = pygame.PixelArray(img)
+		tube = False;
 		for y in range(0,self.height):
 			for x in range(0,self.width):
 				colour = pixel[x][y]
 				if (colour == 0xFF0001):
 					self.spawnx = x*16*SCALE
 					self.spawny = y*16*SCALE
+				if (tube):
+					tube = False
+					colour = 0x0F0100
+				if (colour == 0x346800 or colour == 0x10D080):
+					tube = True
+
 				tile = self.tileManager.getTile(colour)
 
 				if (tile != None):
@@ -87,12 +94,13 @@ class Level:
 		if (self.pauseTimer <= 0 and not player.dead):
 			for i in range(0,len(self.entities)):
 				e = self.entities[i - iOffset]
-				e.tick(self)
+				if(e.visible):
+					e.tick(self)
 				if (e.dead):
 					del(self.entities[i- iOffset])
 					iOffset +=1
-			for coin in range(0, self.addCoin):
-				player.addCoin()
+				for coin in range(0, self.addCoin):
+						player.addCoin()
 			self.addCoin = 0
 		else:
 			self.pauseTimer -= 1
@@ -110,9 +118,11 @@ class Level:
 	
 	def triggerBlock(self, x, y, target):
 		for e in self.entities:
-			if (e.solid):
-				if (e.x == x and e.y == y):
-					e.trigger(target)
+			if (e.solid and e.visible):
+				if (e.rightDirection([target.vx, target.vy])):
+					for w in range(0, e.width):
+						if ((e.x + w*16*SCALE == x) and e.y == y):
+							e.trigger(target)
 
 	def entityCollision (self, target):
 		for e in self.entities:
@@ -155,7 +165,6 @@ class Level:
 		if (yTile + Y_TILE_COUNT >= self.height ):
 			yOffset = Y_TILE_COUNT*8*SCALE-(self.height*16 - Y_TILE_COUNT*8)*SCALE
 			yTile = self.height - Y_TILE_COUNT - 1
-
 		screen.setOffset(xOffset, yOffset)
 
 		for x in range(0 , X_TILE_COUNT + 1):
@@ -167,5 +176,8 @@ class Level:
 		for e in self.entities:
 			if (e.x + xOffset > 0 and e.x + xOffset<X_TILE_COUNT*16*SCALE or e.x + e.width*16*SCALE + xOffset > 0 and e.x + e.width*16*SCALE + xOffset<X_TILE_COUNT*16*SCALE ):
 				e.render(screen)
+				e.visible = True
+			else:
+				e.visible = False
 		
 		

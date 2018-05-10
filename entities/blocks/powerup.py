@@ -10,9 +10,15 @@ class Powerup (animatedMob):
 		self.content = content
 		self.empty = False
 		self.solid = True
+		self.hit = False;
 
 	def clone(self, x, y):
 		return Powerup(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.content)	
+
+	def rightDirection (self, direction):
+		if (direction[1] < 0):
+			return True
+		return False
 
 	def tick(self, level):
 		if (not self.empty):
@@ -33,14 +39,14 @@ class Powerup (animatedMob):
 		if(self.mark):
 			self.dead = True
 
-		if (self.content == None and self.y == self.oy):
-			level.setTile(int(self.x/(16*SCALE) + 0.1), int(self.y/(16*SCALE) + 0.1), 0x0C9AAF)
+		if (self.content == None and self.hit and self.y == self.oy):
+			level.setTile(int(self.x/(16*SCALE) + 0.1), int(self.y/(16*SCALE) + 0.1), 0x0C9ACF)
 			self.mark = True
 
 	def trigger(self, target):
-		print("col")
-		if (self.content != None):
+		if (self.hit == False):
 			self.empty = True
+			self.hit = True
 			self.hitTime = 6
 
 	def collide(self, victim):

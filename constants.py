@@ -1,10 +1,12 @@
-SCALE = 4
+SCALE = 3
 
 SCREEN_RES_WIDTH = 1920
 SCREEN_RES_HEIGHT = 1080
 
-X_TILE_COUNT = 18
-Y_TILE_COUNT = 10
+TPS = 40
+
+X_TILE_COUNT = 30
+Y_TILE_COUNT = 14
 
 SCREEN_WIDTH = 16*SCALE*X_TILE_COUNT
 SCREEN_HEIGHT = 16*SCALE*Y_TILE_COUNT
@@ -17,6 +19,7 @@ LARGEORIAM = 4
 WATERORIAM = 5
 LARGENEMIES = 6
 FRAGMENTS = 7
+TUBES = 8
 
 SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "smallOiram_16_16.png",
@@ -25,7 +28,8 @@ SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "bigOiram_16_32.png",
 			   "bigOiramWater_16_32.png",
 			   "enemies_16_32.png",
-			   "fragments_9_5.png"]
+			   "fragments_9_5.png",
+			   "tube_32_16.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
@@ -129,3 +133,7 @@ OFFSET = [[0, 7],
 
 STAROVERLAY = [[17, 255, 227], [255, 255, 0], [255,100, 100]]
 SKIPOVERLAY = [[0, 0, 0], [255, 255, 255]]
+
+#TUBES
+TOPTUBE = 0
+BASETUBE = 1

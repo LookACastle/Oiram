@@ -74,6 +74,9 @@ class Game:
 
         if (not self.player.lockinput):
             if (currentlevel != None):
+                if (self.inputHandler.S.isPressed()):
+                    print("pressed")
+                    self.levelManager.currentlevel.triggerBlock(int((self.player.x + self.player.width*8*SCALE)/(16*SCALE))*SCALE*16,int(((self.player.y)/(16*SCALE))+self.player.height)*SCALE*16, self.player)
                 if (not self.inputHandler.S.isPressed() or not self.player.large or self.player.jump):
                     self.player.prone = False
 

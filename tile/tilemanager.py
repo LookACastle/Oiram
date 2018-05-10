@@ -15,9 +15,11 @@ class TileManager:
 		"""
 		self.tiles[0x105C96] = Tile(TEXTURE, DIRT, True)
 		self.tiles[0x0FFF0F] = Tile(TEXTURE, GRASSDIRT, True)
-		self.tiles[0x0C9AAF] = Tile(TEXTURE, BLOCK, True)
+		self.tiles[0x0C9AAF] = Tile(TEXTURE, BLOCK_PUSH, True)
+		self.tiles[0x0C9ACF] = Tile(TEXTURE, BLOCK, True)
 		self.tiles[0xDBDBDB] = Tile(TEXTURE, STONE, True)
 		self.tiles[0x49C5FF] = Tile(TEXTURE, BRIDGE, True)
+		self.tiles[0x49C5FF] = Tile(TEXTURE, BRIDGE_BURN, True)
 		self.tiles[0x49C5FF] = Tile(TEXTURE, BRIDGE_BURN, True)
 
 		#Castle
@@ -31,12 +33,16 @@ class TileManager:
 
 
 		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)
-
+		#Blank tiles for powerups
 		for c in range(0x0F0000, 0x0F0005):
 			self.tiles[c] = Tile(TEXTURE, SKY, True)
+
 		self.tiles[0x0F0100] = Tile(TEXTURE, SKY, True)
 		self.tiles[0xFFFFFF] = Tile(TEXTURE, SKY, False)
+		self.tiles[0xFC945C] = Tile(TEXTURE, SKY, False)
 		self.tiles[0xFFFF00] = Tile(TEXTURE, STONE_UNDERWORLD, False)
+		self.tiles[0x346800] = Tile(TEXTURE, SKY, True)
+		self.tiles[0x10D080] = Tile(TEXTURE, SKY, True)
 		self.nullTile = Tile(TEXTURE, BLOCK, False)
 
 		"""

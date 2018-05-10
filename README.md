@@ -43,7 +43,7 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0x329913 = GRASS                        │
 │                  0x00FFFF = STONE_UNDERWORLD             │
 │                  0xFFC549 = Bridge                       │
-│                  0xFFC548 = Burned brigde                │
+│                  0xFFC548 = Burned bridge                │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Castle               │           │
@@ -85,10 +85,13 @@ the changes are done by changing the colours of the image, here is a overview of
 │           │             Blocks               │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x01000F = Powerup - coin               │
 │                  0x00000F = Powerup - shroom             │
+│                  0x01000F = Powerup - coin               │
 │                  0x02000F = Powerup - flower             │
-│                  0x03000F = Brick - breakable            │
+│                  0x03000F = Powerup - empty              │
+│                  0x04000F = Powerup - Star               │
+│                  0x00010F = Brick - breakable            │
+│                  0x00010F = Tube top                     │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Pickups              │           │

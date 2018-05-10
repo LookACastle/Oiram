@@ -1,10 +1,9 @@
-from entities.entity import *
+from entities.blocks.blockentity import *
 from constants import *
 
-class Brick (Entity):
+class Brick (BlockEntity):
 	def __init__(self, sheet, id, x, y):
-		Entity.__init__(self, sheet, id, x, y)
-		self.solid = True
+		BlockEntity.__init__(self, sheet, id, x, y)
 		self.broken = False
 		self.breakoriginx = 0
 		self.breakoriginy = 0
@@ -12,6 +11,11 @@ class Brick (Entity):
 
 	def clone(self, x, y):
 		return Brick(self.sheet, self.id, x, y)	
+
+	def rightDirection (self, direction):
+		if (direction[1] < 0):
+			return True
+		return False
 
 	def tick(self, level):
 		if (self.placed):
@@ -33,6 +37,3 @@ class Brick (Entity):
 			self.broken = True
 			self.breakoriginx = target.x + target.width*SCALE*0.7
 			self.breakoriginy = target.y
-
-	def collide(self, victim):
-		pass

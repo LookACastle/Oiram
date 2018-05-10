@@ -60,7 +60,7 @@ class LevelManager (Level):
 					self.currentlevel.reset()
 					player.reset()
 					player.mark = False
-					player.speed = 1.5
+					player.speed = 2
 					player.yOffset = 0
 		else:
 			if (self.currentlevel.cleared and self.currentlevel.type != "e"):

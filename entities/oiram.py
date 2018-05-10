@@ -121,12 +121,10 @@ class Oiram (Mob):
 		self.ly = self.y
 		lvy = self.vy
 		col = self.movey(level)
-
 		if (col and self.vy > 0):
 			self.jump = False
 
 		if (col and lvy < 0):
-			print("trigger")
 			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)))*SCALE*16, self)
 			self.vy = 0
 

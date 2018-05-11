@@ -112,8 +112,8 @@ class Entity:
 					break
 		return xcol and ycol
 
-	def applyGravity(self, maxSpeed):
-		self.vy = self.vy + 0.2
+	def applyGravity(self, gravity, maxSpeed):
+		self.vy = self.vy + gravity
 		if (self.vy > maxSpeed):
 			self.vy = maxSpeed
 

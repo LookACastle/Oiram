@@ -165,6 +165,7 @@ class Level:
 		if (yTile + Y_TILE_COUNT >= self.height ):
 			yOffset = Y_TILE_COUNT*8*SCALE-(self.height*16 - Y_TILE_COUNT*8)*SCALE
 			yTile = self.height - Y_TILE_COUNT - 1
+		
 		screen.setOffset(xOffset, yOffset)
 
 		for x in range(0 , X_TILE_COUNT + 1):

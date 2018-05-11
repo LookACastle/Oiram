@@ -3,7 +3,20 @@ SCALE = 3
 SCREEN_RES_WIDTH = 1920
 SCREEN_RES_HEIGHT = 1080
 
-TPS = 40
+TPS = 50
+
+ORIAM_JUMP_FORCE = 3.8
+ORIAM_ACCELERATION = 0.3
+ORIAM_RESISTANCE = 20
+ORIAM_HORIZONTAL_MAX_SPEED = 3
+ORIAM_VERTICAL_MAX_SPEED = 2.5
+
+
+LEGO_VERTICAL_MAX_SPEED = 2
+
+NORMAL_VERTICAL_MAX_SPEED = 4
+
+GLOBAL_GRAVITY = 0.2
 
 X_TILE_COUNT = 30
 Y_TILE_COUNT = 14
@@ -20,6 +33,7 @@ WATERORIAM = 5
 LARGENEMIES = 6
 FRAGMENTS = 7
 TUBES = 8
+ONEUP = 9
 
 SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "smallOiram_16_16.png",
@@ -29,7 +43,8 @@ SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "bigOiramWater_16_32.png",
 			   "enemies_16_32.png",
 			   "fragments_9_5.png",
-			   "tube_32_16.png"]
+			   "tube_32_16.png",
+			   "oneup_23_8.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
@@ -137,3 +152,6 @@ SKIPOVERLAY = [[0, 0, 0], [255, 255, 255]]
 #TUBES
 TOPTUBE = 0
 BASETUBE = 1
+
+#ONEUP
+ONEUP_TEXT = 0

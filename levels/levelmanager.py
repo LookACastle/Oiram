@@ -34,13 +34,13 @@ class LevelManager (Level):
 				self.movementTicks = -1
 		if (self.currentlevel != None):
 			if (self.currentlevel.endFlag):
-				if (player.liveCount < 2 or player.mark):
+				if (player.lifeCount < 2 or player.mark):
 					self.currentlevel.endFlag = False
 					self.changeLevel(player)
 				else:
 					self.currentlevel.reset()
 					player.reset()
-					player.liveCount -= 1
+					player.lifeCount -= 1
 					self.currentlevel.endFlag = False
 				return
 			self.currentlevel.tick(player)
@@ -69,7 +69,7 @@ class LevelManager (Level):
 			player.setCheckpoint((1+4*self.cpos[0])*16*SCALE, (1+4*self.cpos[1])*16*SCALE) 
 			player.reset()
 			player.speed = 1
-			player.liveCount = 3
+			player.lifeCount = 3
 
 	def getVelocity(self):
 		return self.velocity[0]

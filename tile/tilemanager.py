@@ -34,7 +34,7 @@ class TileManager:
 
 		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)
 		#Blank tiles for powerups
-		for c in range(0x0F0000, 0x0F0005):
+		for c in range(0x0F0000, 0x0F0010):
 			self.tiles[c] = Tile(TEXTURE, SKY, True)
 
 		self.tiles[0x0F0100] = Tile(TEXTURE, SKY, True)

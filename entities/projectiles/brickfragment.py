@@ -23,7 +23,7 @@ class BrickFragment (Entity):
 			self.dead = True
 			return
 
-		self.applyGravity(4)
+		self.applyGravity(GLOBAL_GRAVITY, 4)
 		self.vx = self.vx*0.99
 
 		self.y += self.vy*SCALE

@@ -85,11 +85,12 @@ the changes are done by changing the colours of the image, here is a overview of
 │           │             Blocks               │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x00000F = Powerup - shroom             │
+│                  0x00000F = Powerup - Shroom             │
 │                  0x01000F = Powerup - coin               │
 │                  0x02000F = Powerup - flower             │
 │                  0x03000F = Powerup - empty              │
 │                  0x04000F = Powerup - Star               │
+│                  0x05000F = Powerup - Shroom life +      │
 │                  0x00010F = Brick - breakable            │
 │                  0x00010F = Tube top                     │
 │                                                          │
@@ -99,7 +100,8 @@ the changes are done by changing the colours of the image, here is a overview of
 │                                                          │
 │                  0x0200FF = Checkpoint                   │
 │                  0xFFC700 = Star                         │
-│                  0x000002 = shroom                       │
+│                  0x000002 = Shroom                       │
+│                  0x010002 = Shroom life+                 │
 │                  0xFFFF00 = Coin                         │
 │                  0x000005 = flower                       │
 │                                                          │

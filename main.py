@@ -41,7 +41,7 @@ class Game:
             dMs = now - last;
             last = now;
             deltaMs += dMs;
-            dt += float(dMs * (60) / 1000.0);
+            dt += float(dMs * (TPS) / 1000.0);
             missingTicks = int(math.floor(dt));
             for tick in range(0,missingTicks):
                 self.tick();
@@ -82,16 +82,16 @@ class Game:
 
                     #movement handling
                     if (self.inputHandler.A.isPressed() and not self.inputHandler.D.isPressed()):
-                        self.player.vx = -1
+                        self.player.ax = -ORIAM_ACCELERATION
                     elif (self.inputHandler.D.isPressed() and not self.inputHandler.A.isPressed()):
-                        self.player.vx = 1
+                        self.player.ax = ORIAM_ACCELERATION
                     else:
-                        self.player.vx = 0
+                        self.player.ax = 0
 
 
                     if (self.inputHandler.W.isPressed()):
                         if (not self.player.jump):
-                            self.player.vy = -4
+                            self.player.vy = -ORIAM_JUMP_FORCE
                             self.player.jump = True
                             self.player.gravity = 0.2
                         if(self.player.vy > 0):
@@ -134,7 +134,6 @@ class Game:
         self.player.render(self.screen)
         pygame.display.update()
 
-    
     def stop(self):
         pygame.quit()
 

@@ -24,13 +24,7 @@ class Lego (animatedMob):
 		self.animationtick()
 		self.vx = self.vx * 0.98
 		colx = self.movex(level)
-		if (self.vy < -0.5):
-			self.vy = self.vy * 0.9
-		else:
-			if (self.vy < 0.5):
-				self.vy = 0.5
-			else:
-				self.vy = self.vy * 1.01
+		self.applyGravity(GLOBAL_GRAVITY, LEGO_VERTICAL_MAX_SPEED)
 		coly = self.movey(level)
 		if (coly or self.y > level.height*16*SCALE):
 			self.dead = True

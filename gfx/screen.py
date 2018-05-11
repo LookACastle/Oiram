@@ -51,9 +51,13 @@ class Screen:
 
 	def drawScaledFlippedSprite(self, id, tileId, x, y, scale, flip):
 		self.display.blit(pygame.transform.flip(self.sheets[id].getScaledSprite(tileId, scale), flip, False), (x+self.xOffset,y+self.yOffset))
+
 	def writeText (self, txt, x, y):
 		label = self.font.render(txt, 1, (255,255,255))
 		self.display.blit(label, (x, y))
+
+	def drawScaledGUISprite(self, id, tileId, x, y, scale):
+			self.display.blit(self.sheets[id].getScaledSprite(tileId, scale), (x,y))
 
 	def drawGUISprite(self, id, tileId, x, y):
 		self.display.blit(self.sheets[id].getSprite(tileId), (x, y))

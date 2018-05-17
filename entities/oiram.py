@@ -18,7 +18,7 @@ class Oiram (Mob):
 		#counters
 		self.cooldown = 0
 		self.lifeCount = 3
-		self.gainedLifes = 200
+		self.gainedLifes = 0
 		self.coinCount = 0
 		self.invincibleCounter = 0
 
@@ -69,7 +69,6 @@ class Oiram (Mob):
 		self.id = self.animationhandling.getAnimation()
 		if (self.gainedLifes > 0 and self.onMap == False):
 			self.gainedLifes -= 1
-			print(self.gainedLifes)
 			level.addEntity(0xFF00FF, self.x, self.y);
 	
 	def setCheckpoint (self, x, y):
@@ -77,7 +76,6 @@ class Oiram (Mob):
 		self.checkpointy = y
 
 	def reset (self):
-		print(self.checkpointx, self.checkpointy)
 		self.x = self.checkpointx
 		self.y = self.checkpointy
 		self.vx = 0
@@ -111,8 +109,8 @@ class Oiram (Mob):
 			level.pauseTimer = self.animationpause
 			self.animationpause -= 1
 			if (self.animationpause == 0):
-				print(self.large)
 				self.large = True
+				self.y += self.heightdifferens*16*SCALE
 				self.sheet = self.newform
 				return
 			if (self.animationpause % 5 == 0):
@@ -126,7 +124,6 @@ class Oiram (Mob):
 			else:
 				self.sheet = self.newform
 			return
-		print(self.large)
 		if (self.cooldown > 0):
 			self.cooldown -= 1
 		if (self.prone):
@@ -210,18 +207,24 @@ class Oiram (Mob):
 
 	def enlarge(self, Fire):
 		self.previousform = self.sheet
-		self.animationpause = 60
-		if (not self.large):
-			self.y -= 1*16*SCALE
-		self.heightdifferens = self.height - 2
-		self.height = 2
 		self.fire = Fire
+		self.height = 2
 		if (self.fire):
 			self.sheet = WATERORIAM
 			self.newform = self.sheet
 		else:
 			self.sheet = LARGEORIAM
 			self.newform = self.sheet
+		if (self.previousform != self.newform):
+			if (self.previousform == OIRAM):
+				self.animationpause = 60
+				self.heightdifferens = -1
+				self.y -= 1*16*SCALE
+			else:
+				self.heightdifferens = 0
+			
+		
+
 
 	def highMode(self):
 		self.invincibleCounter = 600
@@ -229,12 +232,14 @@ class Oiram (Mob):
 
 	def addCoin(self):
 		self.coinCount += 1
+		if(self.coinCount == 50):
+			self.coinCount = 0
+			self.addLife()
 
 	def kill (self, overwrite):
 		if (not self.mark):
 			if (self.invincibleCounter <= 0 or overwrite):
 				if (not self.dead):
-					print(self.large)
 					if (not self.large or overwrite):
 						self.dead = True
 						self.large = False

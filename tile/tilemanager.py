@@ -38,6 +38,7 @@ class TileManager:
 			self.tiles[c] = Tile(TEXTURE, SKY, True)
 
 		self.tiles[0x0F0100] = Tile(TEXTURE, SKY, True)
+		self.tiles[0x0F0200] = Tile(TEXTURE, SKY, True)
 		self.tiles[0xFFFFFF] = Tile(TEXTURE, SKY, False)
 		self.tiles[0xFC945C] = Tile(TEXTURE, SKY, False)
 		self.tiles[0xFFFF00] = Tile(TEXTURE, STONE_UNDERWORLD, False)

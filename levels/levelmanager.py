@@ -66,7 +66,7 @@ class LevelManager (Level):
 			if (self.currentlevel.cleared and self.currentlevel.type != "e"):
 				self.openlevel(self.currentlevel.name + 1)
 			self.currentlevel = None
-			player.setCheckpoint((1+4*self.cpos[0])*16*SCALE, (1+4*self.cpos[1])*16*SCALE) 
+			player.setCheckpoint((1+13+4*self.cpos[0])*16*SCALE, (1+9+4*self.cpos[1])*16*SCALE) 
 			player.reset()
 			player.speed = 1
 			player.lifeCount = 3
@@ -83,11 +83,11 @@ class LevelManager (Level):
 					if (isinstance(currentlevel, Level)):
 						if (currentlevel.open):
 							if (not currentlevel.cleared):
-								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE, 2)
+								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+13+4*x)*16*SCALE, (1+9+4*y)*16*SCALE, 2)
 							else:
-								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE, 2)
+								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+13+4*x)*16*SCALE, (1+9+4*y)*16*SCALE, 2)
 						else:
-							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+4*x)*16*SCALE, (1+4*y)*16*SCALE, 2)
+							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+13+4*x)*16*SCALE, (1+9+4*y)*16*SCALE, 2)
 		else:
 			self.currentlevel.drawlevel(screen, px, py)
 

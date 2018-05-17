@@ -23,25 +23,23 @@ class Powerup (animatedMob):
 	def tick(self, level):
 		if (not self.empty):
 			self.animationtick()
-			
+		
 		if (self.hitTime > 0):
-			if (self.content != None):
-				level.addEntity(self.content, self.x, self.y - 16*SCALE)
-				self.content = None
 			self.y -= 5
 			self.hitTime -= 1
 		else:
 			if (self.y >= self.oy):
 				self.y = self.oy
 			else:
+				if (self.content != None):
+					level.addEntity(self.content, self.x, self.oy - 16*SCALE)
+					self.content = None
+				if (self.id != BLOCK):
+						self.id = BLOCK
 				self.y += 5
 
 		if(self.mark):
 			self.dead = True
-
-		if (self.content == None and self.hit and self.y == self.oy):
-			level.setTile(int(self.x/(16*SCALE) + 0.1), int(self.y/(16*SCALE) + 0.1), 0x0C9ACF)
-			self.mark = True
 
 	def trigger(self, target):
 		if (self.hit == False):

@@ -11,7 +11,7 @@ class Legobro (Simpleenemy):
 
 	def tick(self, level):
 		self.movey(level)
-		if (self.pause == self.addPause):
+		if (self.pause == self.addPause and self.visible):
 			if (self.flip):
 				level.addEntity(0x040001, self.x, self.y)
 			else:

@@ -57,6 +57,7 @@ class Level:
 		self.map = self.loadedMap[:]
 
 	def reset (self):
+		self.exhausted = []
 		self.entities = []
 		for e in self.loadedEntities:
 			self.entities.append(e.clone(e.x, e.y))
@@ -99,8 +100,8 @@ class Level:
 				if (e.dead):
 					del(self.entities[i- iOffset])
 					iOffset +=1
-				for coin in range(0, self.addCoin):
-						player.addCoin()
+			for coin in range(0, self.addCoin):
+					player.addCoin()
 			self.addCoin = 0
 		else:
 			self.pauseTimer -= 1

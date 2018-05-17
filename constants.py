@@ -3,12 +3,12 @@ SCALE = 3
 SCREEN_RES_WIDTH = 1920
 SCREEN_RES_HEIGHT = 1080
 
-TPS = 50
+TPS = 60
 
 ORIAM_JUMP_FORCE = 3.8
 ORIAM_ACCELERATION = 0.3
 ORIAM_RESISTANCE = 20
-ORIAM_HORIZONTAL_MAX_SPEED = 3
+ORIAM_HORIZONTAL_MAX_SPEED = 2
 ORIAM_VERTICAL_MAX_SPEED = 2.5
 
 
@@ -34,6 +34,7 @@ LARGENEMIES = 6
 FRAGMENTS = 7
 TUBES = 8
 ONEUP = 9
+MENU_SHEET = 10
 
 SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "smallOiram_16_16.png",
@@ -44,11 +45,15 @@ SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "enemies_16_32.png",
 			   "fragments_9_5.png",
 			   "tube_32_16.png",
-			   "oneup_23_8.png"]
+			   "oneup_23_8.png",
+			   "menu_200_160.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
 MAP = "w-1.png"
+
+#PAUSEMENU
+MAIN_MENU = 0
 
 #TEXTURES
 GRASSDIRT = 0

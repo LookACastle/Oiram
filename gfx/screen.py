@@ -5,6 +5,10 @@ from gfx.spritesheet import SpriteSheet
 class Screen:
 	def __init__(self, display):
 		self.display = display
+		self.overlay = pygame.Surface((SCREEN_WIDTH, SCREEN_RES_HEIGHT)).convert_alpha()
+		for x in range(0, int(SCREEN_WIDTH)):
+			for y in range(0, int(SCREEN_HEIGHT)):
+				self.overlay.set_at((x, y), (30,30,30,100))
 		self.sheets = []
 		self.xOffset = 0
 		self.yOffset = 0
@@ -61,3 +65,7 @@ class Screen:
 
 	def drawGUISprite(self, id, tileId, x, y):
 		self.display.blit(self.sheets[id].getSprite(tileId), (x, y))
+
+
+	def drawOverlay(self):
+		self.display.blit(self.overlay, (0, 0))

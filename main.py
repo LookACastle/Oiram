@@ -7,6 +7,7 @@ from tile.tilemanager import *
 from entities.entitymanager import *
 from entities.oiram import *
 from inputhandle.inputhandler import *
+from pausemenu.pausemenu import *
 import os
 
 class Game:
@@ -17,7 +18,8 @@ class Game:
         dis = pygame.display.Info()
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
-        self.player = Oiram(16*SCALE, 4*4*16*SCALE + 16*SCALE)
+        self.player = Oiram(14*16*SCALE, 6*4*16*SCALE + 2*16*SCALE)
+        self.pausemenu = PauseMenu(self.screen)
 
     def start(self):
         self.run()
@@ -72,10 +74,21 @@ class Game:
             if event.type == pygame.QUIT:
                 self.running = False
 
+        mousepress = pygame.mouse.get_pressed()
+        if (mousepress[0] != self.inputHandler.MOUSE.pressed):
+            self.inputHandler.toggleMouse(0)
+
+        if (self.inputHandler.ESC.isNewPress() and self.player.dead == False):
+            self.pausemenu.toggle()
+
+        if (self.pausemenu.active):
+            if (self.inputHandler.MOUSE.isNewPress()):
+                self.pausemenu.checkCollision(pygame.mouse.get_pos())
+            return
+
         if (not self.player.lockinput):
             if (currentlevel != None):
                 if (self.inputHandler.S.isPressed()):
-                    print("pressed")
                     self.levelManager.currentlevel.triggerBlock(int((self.player.x + self.player.width*8*SCALE)/(16*SCALE))*SCALE*16,int(((self.player.y)/(16*SCALE))+self.player.height)*SCALE*16, self.player)
                 if (not self.inputHandler.S.isPressed() or not self.player.large or self.player.jump):
                     self.player.prone = False
@@ -89,7 +102,7 @@ class Game:
                         self.player.ax = 0
 
 
-                    if (self.inputHandler.W.isPressed()):
+                    if (self.inputHandler.W.isNewPress()):
                         if (not self.player.jump):
                             self.player.vy = -ORIAM_JUMP_FORCE
                             self.player.jump = True
@@ -132,6 +145,8 @@ class Game:
     def render (self, dt):
         self.levelManager.drawCurrentlevel(self.screen, self.player.x, self.player.y)
         self.player.render(self.screen)
+        if(self.pausemenu.active):
+            self.pausemenu.render(self.screen)
         pygame.display.update()
 
     def stop(self):

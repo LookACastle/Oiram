@@ -5,6 +5,7 @@ from entities.animatedmob import *
 #blocks
 from entities.blocks.powerup import *
 from entities.blocks.brick import *
+from entities.blocks.coinbrick import *
 from entities.blocks.basetube import *
 
 #end flags
@@ -45,12 +46,12 @@ class EntityManager:
 		self.entities = [None]*(0xFFFFFF+1)
 		self.entities[0x00C7FF] = Star(TEXTURE, STAR, 11,0,0, 60, 0.3, True)
 		self.entities[0x0F0000] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x020000)
-		self.entities[0x0F0001] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x01FFFF)
 		self.entities[0x0F0002] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x050000)
 		self.entities[0x0F0003] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, None)
 		self.entities[0x0F0004] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x00C7FF)
 		self.entities[0x0F0005] = Powerup(TEXTURE, POWERUP, 5,0,0, 60, 0.2, 0x020001)
 		self.entities[0x0F0100] = Brick(TEXTURE, BRICK,0,0)
+		self.entities[0x0F0200] = CoinBrick(TEXTURE, BRICK,0,0)
 		self.entities[0x00FFFF] = Coin(TEXTURE, COIN_FLIP_ANIMATION, 8,0,0, 0, 0.1, True)
 		self.entities[0x01FFFF] = Coindrop(TEXTURE, COIN_FLIP_ANIMATION, 8,0,0, 0, 0.4, True)
 

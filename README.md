@@ -1,5 +1,5 @@
 ﻿# Oiram
-Totally not a clone of Mario made for a school project
+Totally not a clone of Mario
 
 fell like making a level you self?
 well it is farely simple, go into the levels folder and begin editing in one of the level images.
@@ -86,13 +86,14 @@ the changes are done by changing the colours of the image, here is a overview of
 │           └──────────────────────────────────┘           │
 │                                                          │
 │                  0x00000F = Powerup - Shroom             │
-│                  0x01000F = Powerup - coin               │
 │                  0x02000F = Powerup - flower             │
 │                  0x03000F = Powerup - empty              │
 │                  0x04000F = Powerup - Star               │
 │                  0x05000F = Powerup - Shroom life +      │
 │                  0x00010F = Brick - breakable            │
-│                  0x00010F = Tube top                     │
+│                  0x00020F = Brick - coin                 │
+│                  0x006834 = Tube top                     │
+│                  0x80D010 = Tube top                     │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Pickups              │           │

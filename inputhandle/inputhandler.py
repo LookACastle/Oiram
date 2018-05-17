@@ -1,4 +1,5 @@
 from inputhandle.key import *
+from inputhandle.mouse import *
 import pygame
 
 class InputHandler:
@@ -8,6 +9,8 @@ class InputHandler:
 		self.W = Key()
 		self.S = Key()
 		self.ENTER = Key()
+		self.ESC = Key()
+		self.MOUSE = Mouse()
 
 	def toggleKey(self, key):
 		if (key == pygame.K_LEFT or key == pygame.K_a):
@@ -20,3 +23,10 @@ class InputHandler:
 			self.S.toggle()
 		if (key == pygame.K_RETURN or key == pygame.K_SPACE):
 			self.ENTER.toggle()
+		if (key == pygame.K_ESCAPE):
+			self.ESC.toggle()
+
+	def toggleMouse(self, mouse):
+		if (mouse == 0):
+			self.MOUSE.toggle(pygame.mouse.get_pos())
+			

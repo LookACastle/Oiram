@@ -16,4 +16,4 @@ class BaseTube (BlockEntity):
 		return BaseTube(self.sheet, self.id, x, y, self.width, self.height)	
 
 	def trigger(self, target):
-		print("trigger")
+		print("tube trigger")

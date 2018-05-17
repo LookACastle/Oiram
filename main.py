@@ -9,17 +9,25 @@ from entities.oiram import *
 from inputhandle.inputhandler import *
 from pausemenu.pausemenu import *
 import os
+import configparser
 
 class Game:
     def __init__ (self):
         self.running = True
         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, SCREEN_RES_HEIGHT*0.1)
+        self.loadConfig()
         pygame.init()
         dis = pygame.display.Info()
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
         self.player = Oiram(14*16*SCALE, 6*4*16*SCALE + 2*16*SCALE)
         self.pausemenu = PauseMenu(self.screen)
+    
+    def loadConfig(self):
+        self.config = configparser.ConfigParser()
+        self.config.read(CONFIG_URL)
+        graphicsettings = self.config["GRAPHICS"]
+        print (graphicsettings["SCALE"])
 
     def start(self):
         self.run()
@@ -78,17 +86,24 @@ class Game:
         if (mousepress[0] != self.inputHandler.MOUSE.pressed):
             self.inputHandler.toggleMouse(0)
 
-        if (self.inputHandler.ESC.isNewPress() and self.player.dead == False):
-            self.pausemenu.toggle()
+        if (self.inputHandler.ESC.isNewPress() and self.player.dead == False and self.player.onMap == False):
+            if (self.pausemenu.active):
+                self.pausemenu.active = False
+            else:
+                self.pausemenu.open()
 
         if (self.pausemenu.active):
             mousepos = pygame.mouse.get_pos()
             if (self.inputHandler.MOUSE.isNewPress()):
                 pressedbutton = self.pausemenu.pressButton(mousepos)
                 if (len(pressedbutton) > 0):
-                    pressedbutton[0].action(self)
-            self.pausemenu.resetHover()
+                    for b in pressedbutton:
+                        b.pressed = True
+                        if (pressedbutton[0].action != None):
+                            pressedbutton[0].action(self)
+            self.pausemenu.resetStates(self.inputHandler.MOUSE.isPressed())
             self.pausemenu.hoverButton(mousepos)
+            self.pausemenu.dragButton(mousepos)
             return
 
         if (not self.player.lockinput):

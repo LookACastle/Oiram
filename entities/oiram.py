@@ -113,7 +113,7 @@ class Oiram (Mob):
 				self.y += self.heightdifferens*16*SCALE
 				self.sheet = self.newform
 				return
-			if (self.animationpause % 5 == 0):
+			if (self.animationpause % 8 == 0):
 				if (self.large):
 					self.y += self.heightdifferens*16*SCALE
 				else:

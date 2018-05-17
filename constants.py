@@ -1,4 +1,6 @@
-SCALE = 3
+CONFIG_URL = "config.txt"
+
+SCALE = 2
 
 SCREEN_RES_WIDTH = 1920
 SCREEN_RES_HEIGHT = 1080
@@ -6,9 +8,9 @@ SCREEN_RES_HEIGHT = 1080
 TPS = 60
 
 ORIAM_JUMP_FORCE = 3.8
-ORIAM_ACCELERATION = 0.3
+ORIAM_ACCELERATION = 0.2
 ORIAM_RESISTANCE = 20
-ORIAM_HORIZONTAL_MAX_SPEED = 2
+ORIAM_HORIZONTAL_MAX_SPEED = 1.5
 ORIAM_VERTICAL_MAX_SPEED = 2.5
 
 
@@ -35,6 +37,8 @@ FRAGMENTS = 7
 TUBES = 8
 ONEUP = 9
 MENU_SHEET = 10
+MENU_SLIDE = 11
+MENU_BUTTON = 12
 
 SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "smallOiram_16_16.png",
@@ -46,14 +50,16 @@ SPRITE_LIST = ["basicTilesWide_16_16.png",
 			   "fragments_9_5.png",
 			   "tube_32_16.png",
 			   "oneup_23_8.png",
-			   "menu_200_160.png"]
+			   "menu_200_160.png",
+			   "slider_88_4.png",
+			   "button_7_14.png"]
 
 MAP_WIDTH = 16
 MAP_HEIGHT = 16
 MAP = "w-1.png"
 
-#PAUSEMENU
-MAIN_MENU = 0
+#MENUITEM
+MENU_ITEM = 0
 
 #TEXTURES
 GRASSDIRT = 0

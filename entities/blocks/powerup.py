@@ -2,8 +2,9 @@ from entities.animatedmob import *
 from constants import *
 
 class Powerup (animatedMob):
-	def __init__(self, sheet, id, length, x, y, pause, animationSpeed, content):
+	def __init__(self, sheet, id, length, x, y, pause, animationSpeed, content, usedid):
 		animatedMob.__init__(self, sheet, id, length, x, y, pause, animationSpeed, False)
+		self.usedid = usedid
 		self.hitTime = 0
 		self.mark = False
 		self.oy = y
@@ -13,7 +14,7 @@ class Powerup (animatedMob):
 		self.hit = False;
 
 	def clone(self, x, y):
-		return Powerup(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.content)	
+		return Powerup(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.content, self.usedid)	
 
 	def rightDirection (self, direction):
 		if (direction[1] < 0):
@@ -34,8 +35,8 @@ class Powerup (animatedMob):
 				if (self.content != None):
 					level.addEntity(self.content, self.x, self.oy - 16*SCALE)
 					self.content = None
-				if (self.id != BLOCK):
-						self.id = BLOCK
+				if (self.id != self.usedid):
+						self.id = self.usedid
 				self.y += 5
 
 		if(self.mark):

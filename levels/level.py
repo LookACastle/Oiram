@@ -2,6 +2,7 @@ import pygame
 import copy
 from tile import *
 from constants import *
+import importlib
 
 class Level:
 	def __init__(self, path, tileManager, entityManager):
@@ -146,10 +147,10 @@ class Level:
 		self.getTile(x, y).collision(target, self)
 		
 	def drawlevel(self, screen, px, py):
-
+		
 		xOffset = 0
 		xTile = 0
-		halfScreenWidth = X_TILE_COUNT*8*SCALE
+		halfScreenWidth = X_TILE_COUNT*8*screen.scale
 		halfTile = 8*SCALE
 		if (px >= halfScreenWidth - halfTile):
 			xOffset = halfScreenWidth - px - halfTile
@@ -181,5 +182,4 @@ class Level:
 				e.visible = True
 			else:
 				e.visible = False
-		
-		
+	

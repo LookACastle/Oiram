@@ -89,7 +89,8 @@ the changes are done by changing the colours of the image, here is a overview of
 │                  0x02000F = Powerup - flower             │
 │                  0x03000F = Powerup - empty              │
 │                  0x04000F = Powerup - Star               │
-│                  0x05000F = Powerup - Shroom life +      │
+│                  0x05000F = Sky - Shroom life +          │
+│                  0x06000F = Sky- empty                   │
 │                  0x00010F = Brick - breakable            │
 │                  0x00020F = Brick - coin                 │
 │                  0x006834 = Tube top                     │

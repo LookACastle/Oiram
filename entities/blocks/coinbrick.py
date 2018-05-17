@@ -6,7 +6,6 @@ class CoinBrick (Brick):
 	def __init__(self, sheet, id, x, y):
 		Brick.__init__(self, sheet, id, x, y)
 		self.coinCount = random.randint(5, 10)
-		print(self.coinCount)
 		self.deltaCount = 0
 		self.oy = y
 		self.hitTime = 0

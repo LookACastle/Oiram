@@ -1,8 +1,11 @@
 from constants import *
-class TextObject:
+from pausemenu.menuitem.baseobject import *
+
+class TextObject (BaseObject):
 	def __init__(self, text, x, y, screen, margin, action):
-		self.label = screen.font.render(text, 1, (255,255,255))
-		self.shadowlabel = screen.font.render(text, 1, (100,100,100))
+		BaseObject.__init__(self)
+		self.label = screen.font70.render(text, 1, (255,255,255))
+		self.shadowlabel = screen.font70.render(text, 1, (100,100,100))
 		self.hover = False
 		self.width = self.label.get_width()
 		self.height = self.label.get_height()

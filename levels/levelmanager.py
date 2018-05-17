@@ -18,7 +18,7 @@ class LevelManager (Level):
 
 		self.openLevels = 0
 		self.openlevel(1)
-	
+
 	def getCurrentLevel (self):
 		return self.currentlevel
 
@@ -46,6 +46,7 @@ class LevelManager (Level):
 			self.currentlevel.tick(player)
 
 	def changeLevel (self, player):
+		global SCALE
 		player.done = False
 		player.lockinput = False
 		player.invincibleCounter = 0

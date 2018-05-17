@@ -2,16 +2,14 @@ from pausemenu.menuitem.textobject import *
 from constants import *
 
 class MainMenu:
-	def __init__(self, x, y, screen):
-		self.x = x
-		self.y = y
+	def __init__(self, screen):
 		options = ["Resume", "Options", "Quit"]
 		actions = [resumeAction, optionAction, quitAction]
 		self.objects = []
 		y = 0
 		maxwidth = 0
 		for i in range(0, len(options)):
-			textbox = TextObject(options[i], self.x + 45*SCALE,self.y + y + 30*SCALE, screen, 30, actions[i])
+			textbox = TextObject(options[i], 45*SCALE, y + 30*SCALE, screen, 30, actions[i])
 			if (textbox.width > maxwidth):
 				maxwidth = textbox.width
 			self.objects.append(textbox)
@@ -25,10 +23,15 @@ class MainMenu:
 			if (o.isHoverAble):
 				o.hover = False
 
+	def resetPress(self):
+		for o in self.objects:
+			if (o.isPressAble()):
+				o.pressed = False
+
 	def getCollision(self, x, y):
 		collided = []
 		for o in self.objects:
-			if (o.checkCollision(x-self.x, y-self.y)):
+			if (o.checkCollision(x, y)):
 				collided.append(o)
 		return collided
 
@@ -37,10 +40,11 @@ class MainMenu:
 			o.render(screen, x, y)
 
 def quitAction(main):
-	print("quit")
+	main.levelManager.changeLevel(main.player)
+	main.pausemenu.active = False
 
 def resumeAction(main):
 	main.pausemenu.active = False
 
 def optionAction(main):
-	print("options")
+	main.pausemenu.changeMenu("option")

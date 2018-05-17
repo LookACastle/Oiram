@@ -13,10 +13,18 @@ class Screen:
 		self.xOffset = 0
 		self.yOffset = 0
 		#self.font = pygame.font.SysFont("monospace", 15)
-		self.font = pygame.font.Font("gfx/DefaultFont.ttf", 70)
+		self.font70 = pygame.font.Font("gfx/DefaultFont.ttf", 70)
+		self.font30 = pygame.font.Font("gfx/DefaultFont.ttf", 30)
+		
+		self.scale = SCALE
 
 		for path in SPRITE_LIST:
 			self.sheets.append(SpriteSheet(path))
+
+	def rescale(self, newscale):
+		self.scale = newscale
+		for sheet in self.sheets:
+			sheet.scale(newscale)
 
 	def setOffset(self, x, y):
 		self.xOffset = x
@@ -57,7 +65,7 @@ class Screen:
 		self.display.blit(pygame.transform.flip(self.sheets[id].getScaledSprite(tileId, scale), flip, False), (x+self.xOffset,y+self.yOffset))
 
 	def writeText (self, txt, x, y):
-		label = self.font.render(txt, 1, (255,255,255))
+		label = self.font70.render(txt, 1, (255,255,255))
 		self.display.blit(label, (x, y))
 
 	def drawScaledGUISprite(self, id, tileId, x, y, scale):

@@ -82,8 +82,13 @@ class Game:
             self.pausemenu.toggle()
 
         if (self.pausemenu.active):
+            mousepos = pygame.mouse.get_pos()
             if (self.inputHandler.MOUSE.isNewPress()):
-                self.pausemenu.checkCollision(pygame.mouse.get_pos())
+                pressedbutton = self.pausemenu.pressButton(mousepos)
+                if (len(pressedbutton) > 0):
+                    pressedbutton[0].action(self)
+            self.pausemenu.resetHover()
+            self.pausemenu.hoverButton(mousepos)
             return
 
         if (not self.player.lockinput):
@@ -131,6 +136,7 @@ class Game:
                         self.levelManager.goUp()
                     if self.inputHandler.S.isPressed():
                         self.levelManager.goDown()        
+       
         self.levelManager.tick(self.player)
         
         if (currentlevel == None):

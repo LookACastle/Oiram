@@ -12,8 +12,8 @@ class Waterball (Mob):
 			self.vx = 2
 		else:
 			self.vx = -2
-		self.y2 = 6*SCALE
-		self.x2 = 6*SCALE
+		self.y2 = 6
+		self.x2 = 6
 		self.offset = 0
 		self.deadTime = -1
 		#animation handler
@@ -40,11 +40,11 @@ class Waterball (Mob):
 
 	def kill(self):
 		self.scale = 1.2
-		self.y -= 1.5*SCALE
+		self.y -= 1.5
 		if (self.vx > 0):
-			self.x += 2.5*SCALE
+			self.x += 2.5
 		else:
-			self.x -= 6*SCALE
+			self.x -= 6
 
 		self.deadTime = 6*3
 
@@ -71,7 +71,7 @@ class Waterball (Mob):
 
 		coly = self.movey(level)
 
-		if (self.y > level.height*16*SCALE):
+		if (self.y > level.height*16):
 			self.dead = True
 			return
 
@@ -79,7 +79,7 @@ class Waterball (Mob):
 		if (self.vy < 0):
 			self.animationhandling.toggleAnimation(1)
 		if (self.vy < 0.2 and self.vy > -0.2):
-			self.offset = -6*SCALE
+			self.offset = -6
 			self.animationhandling.toggleAnimation(0)
 		if (coly):
 			if (self.vy > 0):

@@ -20,9 +20,24 @@ class Game:
         dis = pygame.display.Info()
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
         self.screen = Screen(self.display)
-        self.player = Oiram(14*16*SCALE, 6*4*16*SCALE + 2*16*SCALE)
+        self.player = Oiram(14*16, 6*4*16 + 2*16)
         self.pausemenu = PauseMenu(self.screen)
+        self.tps = TPS
+        self.log = ""
     
+    def rescaleDislpay(self, newscale):
+        self.screen.rescale(newscale)
+        self.resizeDisplay()
+
+    def resizeDisplay(self):
+        SCREEN_WIDTH = 16*self.screen.scale*self.levelManager.horizontaltilecount
+        SCREEN_HEIGHT = 16*self.screen.scale*self.levelManager.verticaltaltilecount
+        self.screen.width = SCREEN_WIDTH
+        self.screen.height = SCREEN_HEIGHT
+        self.screen.renderOverlay()
+        self.pausemenu.setPostition(SCREEN_WIDTH, SCREEN_HEIGHT, self.screen)
+        self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
+
     def loadConfig(self):
         self.config = configparser.ConfigParser()
         self.config.read(CONFIG_URL)
@@ -51,7 +66,7 @@ class Game:
             dMs = now - last;
             last = now;
             deltaMs += dMs;
-            dt += float(dMs * (TPS) / 1000.0);
+            dt += float(dMs * (self.tps) / 1000.0);
             missingTicks = int(math.floor(dt));
             for tick in range(0,missingTicks):
                 self.tick();
@@ -66,7 +81,7 @@ class Game:
                 
                 fps = str(frames);
                 tps = str(ticks);
-                print ("fps: " + str(fps) + "  tps: " + str(tps))
+                self.log = "fps: " + str(fps) + "  tps: " + str(tps)
                 frames = 0;
                 ticks = 0;
 
@@ -90,10 +105,12 @@ class Game:
             if (self.pausemenu.active):
                 self.pausemenu.active = False
             else:
+                self.screen.renderOverlay()
                 self.pausemenu.open()
 
         if (self.pausemenu.active):
-            mousepos = pygame.mouse.get_pos()
+            mousedisplaypos = pygame.mouse.get_pos()
+            mousepos = (mousedisplaypos[0]/self.screen.scale, mousedisplaypos[1]/self.screen.scale)
             if (self.inputHandler.MOUSE.isNewPress()):
                 pressedbutton = self.pausemenu.pressButton(mousepos)
                 if (len(pressedbutton) > 0):
@@ -103,13 +120,15 @@ class Game:
                             pressedbutton[0].action(self)
             self.pausemenu.resetStates(self.inputHandler.MOUSE.isPressed())
             self.pausemenu.hoverButton(mousepos)
-            self.pausemenu.dragButton(mousepos)
+            dragged = self.pausemenu.dragButton(mousepos)
+            if (len(dragged) > 0):
+                dragged[0].dragaction(self, dragged[0])
             return
 
         if (not self.player.lockinput):
             if (currentlevel != None):
                 if (self.inputHandler.S.isPressed()):
-                    self.levelManager.currentlevel.triggerBlock(int((self.player.x + self.player.width*8*SCALE)/(16*SCALE))*SCALE*16,int(((self.player.y)/(16*SCALE))+self.player.height)*SCALE*16, self.player)
+                    self.levelManager.currentlevel.triggerBlock(int((self.player.x + self.player.width*8)/16)*16,int(((self.player.y)/16)+self.player.height)*16, self.player)
                 if (not self.inputHandler.S.isPressed() or not self.player.large or self.player.jump):
                     self.player.prone = False
 
@@ -168,6 +187,7 @@ class Game:
         self.player.render(self.screen)
         if(self.pausemenu.active):
             self.pausemenu.render(self.screen)
+        self.screen.writeSmallText(self.log,  0, 20)
         pygame.display.update()
 
     def stop(self):

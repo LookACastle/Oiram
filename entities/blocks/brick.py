@@ -20,14 +20,14 @@ class Brick (BlockEntity):
 	def tick(self, level):
 		if (self.placed):
 			self.dead = True
-			level.setTile(int(self.x/(16*SCALE) + 0.1), int(self.y/(16*SCALE) + 0.1), 0xFFFFFF)
+			level.setTile(int(self.x/16 + 0.1), int(self.y/16 + 0.1), 0xFFFFFF)
 		if (self.broken):
 			self.placed = True
 			yoffset = -1
 
 			for y in range(len(PARTS)):
 				for x in range(len(PARTS[y])):
-					level.addEntity(PARTS[y][x], self.x + OFFSET[y][x]*SCALE, self.y + yoffset*SCALE)
+					level.addEntity(PARTS[y][x], self.x + OFFSET[y][x], self.y + yoffset)
 					fragment = level.getQueuedEntity()
 					fragment.addOrigin(self.breakoriginx, self.breakoriginy)
 				yoffset += 4
@@ -35,5 +35,5 @@ class Brick (BlockEntity):
 	def trigger(self, target):
 		if (target.large):
 			self.broken = True
-			self.breakoriginx = target.x + target.width*SCALE*0.7
+			self.breakoriginx = target.x + target.width*0.7
 			self.breakoriginy = target.y

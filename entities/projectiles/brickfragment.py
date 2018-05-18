@@ -19,15 +19,15 @@ class BrickFragment (Entity):
 		return BrickFragment(self.sheet, self.id, x, y)	
 
 	def tick(self, level):
-		if (self.y > level.height*16*SCALE):
+		if (self.y > level.height*16):
 			self.dead = True
 			return
 
 		self.applyGravity(GLOBAL_GRAVITY, 4)
 		self.vx = self.vx*0.99
 
-		self.y += self.vy*SCALE
-		self.x += self.vx*SCALE
+		self.y += self.vy
+		self.x += self.vx
 
 		self.rotation += self.rotationSpeed
 

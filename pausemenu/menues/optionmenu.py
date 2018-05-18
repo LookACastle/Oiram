@@ -1,18 +1,29 @@
 from pausemenu.menuitem.slideobject import *
+from pausemenu.menuitem.textobject import *
 from constants import *
 
 class OptionMenu:
 	def __init__(self, screen):
 		#slider param
-		#x, y, screen, margin, lowerlimit, upperlimit, initialvalue, title
+		# x, y, screen, margin, lowerlimit, upperlimit, initialvalue, title, dragaction
+		#SlideObject( 20, 40, screen, 2, 20, 120, 60, "tps", speedAction)
 		self.objects = [
-		SlideObject( 20*SCALE, 0, screen, 2, 1, 4, 3, "scale", scaleAction)
+		SlideObject( 20, 20, screen, 2, 1, 4, screen.scale, "scale", scaleAction),
+		SlideObject( 20, 40, screen, 2, 20, 120, 60, "tps", speedAction),
+		SlideObject( 20, 60, screen, 2, 10, 120, 30, "tile x", xdrawAction),
+		SlideObject( 20, 80, screen, 2, 10, 66, 14, "tile y", ydrawAction),
+		TextObject("back", 0, 100, screen, 2, backAction)
 		]
+		self.objects[4].center(200)
 
 	def resetHover(self):
 		for o in self.objects:
 			if (o.isHoverAble):
 				o.hover = False
+
+	def updatefont():
+		for o in self.objects:
+			o.updatefont()
 
 	def getCollision(self, x, y):
 		collided = []
@@ -32,3 +43,17 @@ class OptionMenu:
 
 def scaleAction(main, dragged):
 	main.rescaleDislpay(dragged.value)
+
+def speedAction(main, dragged):
+	main.tps = dragged.value
+
+def xdrawAction(main, dragged):
+	main.levelManager.horizontaltilecount = dragged.value
+	main.resizeDisplay()
+
+def ydrawAction(main, dragged):
+	main.levelManager.verticaltaltilecount = dragged.value
+	main.resizeDisplay()
+
+def backAction(main):
+	main.pausemenu.changeMenu("main")

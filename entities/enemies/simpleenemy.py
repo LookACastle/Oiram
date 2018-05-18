@@ -16,7 +16,7 @@ class Simpleenemy (animatedMob):
 		self.animationtick()
 		self.applyGravity(GLOBAL_GRAVITY, NORMAL_VERTICAL_MAX_SPEED)
 		coly = self.movey(level)
-		if (self.y > level.height*16*SCALE):
+		if (self.y > level.height*16):
 			self.mark = True
 		colx = self.movex(level)
 		if (colx):
@@ -34,8 +34,8 @@ class Simpleenemy (animatedMob):
 				self.wallCollide()
 				return
 			if (victim.invincibleCounter > 0 or victim.vy > 0 and victim.ly != victim.y):
-				cx = victim.x + (victim.width*SCALE)/2
-				if (cx > self.x or cx < self.x + self.width*SCALE):
+				cx = victim.x + (victim.width)/2
+				if (cx > self.x or cx < self.x + self.width):
 					self.kill()
 					self.collision = False
 					if (victim.jump):

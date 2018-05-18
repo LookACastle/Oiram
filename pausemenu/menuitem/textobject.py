@@ -4,11 +4,10 @@ from pausemenu.menuitem.baseobject import *
 class TextObject (BaseObject):
 	def __init__(self, text, x, y, screen, margin, action):
 		BaseObject.__init__(self)
-		self.label = screen.font70.render(text, 1, (255,255,255))
-		self.shadowlabel = screen.font70.render(text, 1, (100,100,100))
+		self.label = screen.fontlarge.render(text, 1, (255,255,255))
 		self.hover = False
-		self.width = self.label.get_width()
-		self.height = self.label.get_height()
+		self.width = self.label.get_width()/screen.scale
+		self.height = self.label.get_height()/screen.scale
 		self.x = x
 		self.y = y
 		self.margin = margin
@@ -32,8 +31,8 @@ class TextObject (BaseObject):
 
 	def render(self, screen, x, y):
 		if (self.hover):
-			screen.display.blit( self.shadowlabel, (self.x + x + 2*SCALE, self.y + y + 4*SCALE))
-		screen.display.blit( self.label, (self.x + x, self.y + y))
+			screen.writeLargeText(self.text,  self.x + x + 2, self.y + y + 4, (100,100,100))
+		screen.writeLargeText(self.text,  self.x + x, self.y + y, (255,255,255))
 		
 
 		

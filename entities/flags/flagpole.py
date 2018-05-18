@@ -5,7 +5,7 @@ class FlagPole (Mob):
 	def __init__(self, sheet, x, y):
 		Mob.__init__(self, sheet, WIN_FLAG_POLE, x, y, True, 0)
 		self.height = 4
-		self.x1 = 8*SCALE
+		self.x1 = 8
 		
 	def clone(self, x, y):
 		return FlagPole(self.sheet, x, y)	

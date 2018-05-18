@@ -11,8 +11,12 @@ class PauseMenu ():
 		"option" : OptionMenu(screen)
 		}
 		self.currentMenu = self.menues["main"]
-		self.x = SCREEN_WIDTH/2 - 100*SCALE
-		self.y = SCREEN_HEIGHT/2 - 80*SCALE
+
+		self.setPostition(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
+
+	def setPostition(self, width, height, screen):
+		self.x = width/2/screen.scale - 100
+		self.y = height/2/screen.scale - 80
 
 	def pressButton(self, pos):
 		return self.currentMenu.getCollision(pos[0]-self.x, pos[1]-self.y)

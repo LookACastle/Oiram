@@ -16,8 +16,15 @@ class LevelManager (Level):
 		self.velocity = [(0)]
 		self.movementTicks = -1
 
+		self.horizontaltilecount = X_TILE_COUNT
+		self.verticaltaltilecount = Y_TILE_COUNT
+
 		self.openLevels = 0
 		self.openlevel(1)
+
+	def updateDrawDistance(screen, x, y):
+		self.horizontaltilecount = x
+		self.verticaltaltilecount = y
 
 	def getCurrentLevel (self):
 		return self.currentlevel
@@ -46,7 +53,6 @@ class LevelManager (Level):
 			self.currentlevel.tick(player)
 
 	def changeLevel (self, player):
-		global SCALE
 		player.done = False
 		player.lockinput = False
 		player.invincibleCounter = 0
@@ -67,7 +73,7 @@ class LevelManager (Level):
 			if (self.currentlevel.cleared and self.currentlevel.type != "e"):
 				self.openlevel(self.currentlevel.name + 1)
 			self.currentlevel = None
-			player.setCheckpoint((1+13+4*self.cpos[0])*16*SCALE, (1+9+4*self.cpos[1])*16*SCALE) 
+			player.setCheckpoint((1+13+4*self.cpos[0])*16, (1+9+4*self.cpos[1])*16) 
 			player.reset()
 			player.speed = 1
 			player.lifeCount = 3
@@ -84,13 +90,13 @@ class LevelManager (Level):
 					if (isinstance(currentlevel, Level)):
 						if (currentlevel.open):
 							if (not currentlevel.cleared):
-								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+13+4*x)*16*SCALE, (1+9+4*y)*16*SCALE, 2)
+								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2)
 							else:
-								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+13+4*x)*16*SCALE, (1+9+4*y)*16*SCALE, 2)
+								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2)
 						else:
-							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+13+4*x)*16*SCALE, (1+9+4*y)*16*SCALE, 2)
+							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2)
 		else:
-			self.currentlevel.drawlevel(screen, px, py)
+			self.currentlevel.drawlevel(screen, px, py, self.horizontaltilecount, self.verticaltaltilecount)
 
 	def loadLevels (self):
 		levels = open("levels/maplevels.txt","r")
@@ -174,28 +180,28 @@ class LevelManager (Level):
 
 		xOffset = 0
 		xTile = 0
-		if (px >= X_TILE_COUNT*8*SCALE-8*SCALE):
-			xOffset = X_TILE_COUNT*8*SCALE-px-8*SCALE
-			xTile = int(-xOffset/(16*SCALE))
-		if (xTile + X_TILE_COUNT >= self.width ):
-			xOffset = X_TILE_COUNT*8*SCALE-(self.width*16 - X_TILE_COUNT*8)*SCALE
-			xTile = self.width - X_TILE_COUNT - 1
+		if (px >= self.horizontaltilecount*8-8):
+			xOffset = self.horizontaltilecount*8-px-8
+			xTile = int(-xOffset/16)
+		if (xTile + self.horizontaltilecount >= self.width ):
+			xOffset = self.horizontaltilecount*8-(self.width*16 - self.horizontaltilecount*8)
+			xTile = self.width - self.horizontaltilecount - 1
 		
 		yOffset = 0
 		yTile = 0
-		if (py > Y_TILE_COUNT*8*SCALE-8*SCALE):
-			yOffset = Y_TILE_COUNT*8*SCALE-py-8*SCALE
-			yTile = int(-yOffset/(16*SCALE))
-		if (yTile + Y_TILE_COUNT >= self.height ):
-			yOffset = Y_TILE_COUNT*8*SCALE-(self.height*16 - Y_TILE_COUNT*8)*SCALE
-			yTile = self.height - Y_TILE_COUNT - 1
+		if (py > self.verticaltaltilecount*8-8):
+			yOffset = self.verticaltaltilecount*8-py-8
+			yTile = int(-yOffset/16)
+		if (yTile + self.verticaltaltilecount >= self.height ):
+			yOffset = self.verticaltaltilecount*8-(self.height*16 - self.verticaltaltilecount*8)
+			yTile = self.height - self.verticaltaltilecount - 1
 
 		screen.setOffset(xOffset, yOffset)
 
-		for x in range(0 , X_TILE_COUNT + 1):
-			for y in range(0,Y_TILE_COUNT + 1):
+		for x in range(0 , self.horizontaltilecount + 1):
+			for y in range(0,self.verticaltaltilecount + 1):
 				tile = self.map[xTile + x + (y+yTile)*self.width]
 				if (tile == None):
-					screen.drawSprite( TEXTURE, POWERUP, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
+					screen.drawSprite( TEXTURE, POWERUP, (x+xTile)*16, (y+yTile)*16)
 				else:
-					tile.render(screen, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
+					tile.render(screen, (x+xTile)*16, (y+yTile)*16)

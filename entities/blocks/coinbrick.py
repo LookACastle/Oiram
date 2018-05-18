@@ -22,7 +22,7 @@ class CoinBrick (Brick):
 	def tick(self, level):
 		if (self.placed):
 			self.dead = True
-			level.setTile(int(self.x/(16*SCALE) + 0.1), int(self.oy/(16*SCALE) + 0.1), 0xFFFFFF)
+			level.setTile(int(self.x/(16) + 0.1), int(self.oy/16 + 0.1), 0xFFFFFF)
 		if (self.hitTime > 0):
 			self.y -= 7
 			self.hitTime -= 1
@@ -31,7 +31,7 @@ class CoinBrick (Brick):
 				self.y = self.oy
 			else:
 				if (self.hit):
-					level.addEntity( 0x01FFFF, self.x, self.oy - 16*SCALE)
+					level.addEntity( 0x01FFFF, self.x, self.oy - 16)
 					self.hit = False
 				self.y += 7
 
@@ -40,7 +40,7 @@ class CoinBrick (Brick):
 			yoffset = -1
 			for y in range(len(PARTS)):
 				for x in range(len(PARTS[y])):
-					level.addEntity(PARTS[y][x], self.x + OFFSET[y][x]*SCALE, self.y + yoffset*SCALE)
+					level.addEntity(PARTS[y][x], self.x + OFFSET[y][x], self.y + yoffset)
 					fragment = level.getQueuedEntity()
 					fragment.addOrigin(self.breakoriginx, self.breakoriginy)
 				yoffset += 4
@@ -53,5 +53,5 @@ class CoinBrick (Brick):
 			self.hitTime = 4
 			if (self.coinCount == -1):
 				self.broken = True
-				self.breakoriginx = target.x + target.width*SCALE*0.7
+				self.breakoriginx = target.x + target.width*0.7
 				self.breakoriginy = target.y

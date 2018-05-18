@@ -9,6 +9,7 @@ class Level:
 		self.tileManager = tileManager
 		self.entityManager = entityManager
 		temp = path.replace(".png", "").split("-")
+		self.backgroundtile = None
 		self.type = temp[0]
 		self.name = int(temp[1])
 		self.map = []
@@ -33,12 +34,13 @@ class Level:
 		self.height = size[1]
 		pixel = pygame.PixelArray(img)
 		tube = False;
+		self.backgroundtile = self.tileManager.getTile(pixel[0][0])
 		for y in range(0,self.height):
 			for x in range(0,self.width):
 				colour = pixel[x][y]
 				if (colour == 0xFF0001):
-					self.spawnx = x*16*SCALE
-					self.spawny = y*16*SCALE
+					self.spawnx = x*16
+					self.spawny = y*16
 				if (tube):
 					tube = False
 					colour = 0x0F0100
@@ -54,7 +56,7 @@ class Level:
 
 				entity = self.entityManager.getEntity(pixel[x][y])
 				if (entity != None):
-					self.loadedEntities.append(entity.clone(x*16*SCALE, y*16*SCALE))
+					self.loadedEntities.append(entity.clone(x*16, y*16))
 		self.map = self.loadedMap[:]
 
 	def reset (self):
@@ -123,7 +125,7 @@ class Level:
 			if (e.solid and e.visible):
 				if (e.rightDirection([target.vx, target.vy])):
 					for w in range(0, e.width):
-						if ((e.x + w*16*SCALE == x) and e.y == y):
+						if ((e.x + w*16 == x) and e.y == y):
 							e.trigger(target)
 
 	def entityCollision (self, target):
@@ -146,38 +148,42 @@ class Level:
 	def collideTile (self, target, x, y):
 		self.getTile(x, y).collision(target, self)
 		
-	def drawlevel(self, screen, px, py):
+	def drawlevel(self, screen, px, py, w, h):
 		
 		xOffset = 0
 		xTile = 0
-		halfScreenWidth = X_TILE_COUNT*8*screen.scale
-		halfTile = 8*SCALE
+		halfScreenWidth = w*8
+		halfTile = 8
 		if (px >= halfScreenWidth - halfTile):
 			xOffset = halfScreenWidth - px - halfTile
-			xTile = int(-xOffset/(16*SCALE))
-		if (xTile + X_TILE_COUNT >= self.width ):
-			xOffset = X_TILE_COUNT*halfTile-(self.width*16 - X_TILE_COUNT*8)*SCALE
-			xTile = self.width - X_TILE_COUNT - 1
+			xTile = int(-xOffset/(16))
+		if (xTile + w >= self.width ):
+			xOffset = w*halfTile-(self.width*16 - w*8)
+			xTile = self.width - w - 1
 
 		yOffset = 0
 		yTile = 0
-		if (py > Y_TILE_COUNT*8*SCALE-8*SCALE):
-			yOffset = Y_TILE_COUNT*8*SCALE-py-8*SCALE
-			yTile = int(-yOffset/(16*SCALE))
-		if (yTile + Y_TILE_COUNT >= self.height ):
-			yOffset = Y_TILE_COUNT*8*SCALE-(self.height*16 - Y_TILE_COUNT*8)*SCALE
-			yTile = self.height - Y_TILE_COUNT - 1
+		if (py > h*8-8):
+			yOffset = h*8-py-8
+			yTile = int(-yOffset/16)
+		if (yTile + h >= self.height ):
+			yOffset = h*8-(self.height*16 - h*8)
+			yTile = self.height - h - 1
 		
 		screen.setOffset(xOffset, yOffset)
+		for x in range(0 , w + 1):
+			for y in range(0,h + 1):
+				index = xTile + x + (y+yTile)*self.width
+				if (index >= 0 and index < len(self.map)-2): 
+					tile = self.map[index]
+					if (tile != None):
+						tile.render(screen, (x+xTile)*16, (y+yTile)*16)
+				else:
+					self.backgroundtile.render(screen, (x+xTile)*16, (y+yTile)*16)
 
-		for x in range(0 , X_TILE_COUNT + 1):
-			for y in range(0,Y_TILE_COUNT + 1):
-				tile = self.map[xTile + x + (y+yTile)*self.width]
-				if (tile != None):
-					tile.render(screen, (x+xTile)*16*SCALE, (y+yTile)*16*SCALE)
 		
 		for e in self.entities:
-			if (e.x + xOffset > 0 and e.x + xOffset<X_TILE_COUNT*16*SCALE or e.x + e.width*16*SCALE + xOffset > 0 and e.x + e.width*16*SCALE + xOffset<X_TILE_COUNT*16*SCALE ):
+			if (e.x + xOffset > 0 and e.x + xOffset<w*16 or e.x + e.width*16 + xOffset > 0 and e.x + e.width*16 + xOffset<w*16 ):
 				e.render(screen)
 				e.visible = True
 			else:

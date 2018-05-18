@@ -9,11 +9,11 @@ class MainMenu:
 		y = 0
 		maxwidth = 0
 		for i in range(0, len(options)):
-			textbox = TextObject(options[i], 45*SCALE, y + 30*SCALE, screen, 30, actions[i])
+			textbox = TextObject(options[i], 45, y + 30, screen, 2, actions[i])
 			if (textbox.width > maxwidth):
 				maxwidth = textbox.width
 			self.objects.append(textbox)
-			y += 40*SCALE
+			y += 40
 
 		for o in self.objects:
 			o.center(maxwidth)

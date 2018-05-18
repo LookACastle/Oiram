@@ -3,7 +3,7 @@ import re
 from constants import *
 
 class SpriteSheet:
-	def __init__(self, path):
+	def __init__(self, path, scale):
 		self.sheet = pygame.image.load("Sprites/"+path).convert_alpha()
 		size = self.sheet.get_rect().size
 
@@ -15,15 +15,15 @@ class SpriteSheet:
 		self.spritewidth = int(parsing[1])
 		self.spriteheight = int(parsing[2])
 
-		self.scalewidth = self.spritewidth*SCALE
-		self.scaleheight = self.spriteheight*SCALE
+		self.scalewidth = self.spritewidth*scale
+		self.scaleheight = self.spriteheight*scale
 
-		self.spritesheet = pygame.transform.scale(self.sheet, (self.width*SCALE, self.height*SCALE))
+		self.spritesheet = pygame.transform.scale(self.sheet, (self.width*scale, self.height*scale))
 
 		self.sprites = []
 		for y in range(0,self.height,self.spriteheight):
 			for x in range(0,self.width,self.spritewidth):
-				self.sprites.append(self.spritesheet.subsurface((x*SCALE, y*SCALE, self.scalewidth, self.scaleheight)))
+				self.sprites.append(self.spritesheet.subsurface((x*scale, y*scale, self.scalewidth, self.scaleheight)))
 	
 	def getSprite(self, index):
 		return self.sprites[index]

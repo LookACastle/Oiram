@@ -12,6 +12,10 @@ class Powerup (animatedMob):
 		self.empty = False
 		self.solid = True
 		self.hit = False;
+		if (self.id == POWERUP):
+			self.animation = True
+		else:
+			self.animation = False
 
 	def clone(self, x, y):
 		return Powerup(self.sheet, self.id, self.length, x, y, self.addPause, self.animationSpeed, self.content, self.usedid)	
@@ -22,22 +26,22 @@ class Powerup (animatedMob):
 		return False
 
 	def tick(self, level):
-		if (not self.empty):
+		if (not self.empty and self.animation):
 			self.animationtick()
 		
-		if (self.hitTime > 0):
-			self.y -= 5
+		if (self.hitTime > 1):
+			self.y -= 2
 			self.hitTime -= 1
 		else:
 			if (self.y >= self.oy):
 				self.y = self.oy
 			else:
 				if (self.content != None):
-					level.addEntity(self.content, self.x, self.oy - 16*SCALE)
+					level.addEntity(self.content, self.x, self.oy - 16)
 					self.content = None
 				if (self.id != self.usedid):
 						self.id = self.usedid
-				self.y += 5
+				self.y += 2
 
 		if(self.mark):
 			self.dead = True

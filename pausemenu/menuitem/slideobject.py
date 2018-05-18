@@ -4,13 +4,15 @@ from pausemenu.menuitem.baseobject import *
 class SlideObject(BaseObject):
 	def __init__(self, x, y, screen, margin, lowerlimit, upperlimit, initialvalue, title, dragaction):
 		BaseObject.__init__(self)
-		self.label = screen.font30.render(str(initialvalue), 1, (255,255,255))
-		self.title = screen.font30.render(title, 1, (255,255,255))
-		self.theight = self.title.get_height()/2
-		self.twidth = self.title.get_width() + 20*SCALE
-		self.lheight = self.label.get_height()/3
-		self.width = 88*SCALE
-		self.height = 12*SCALE
+		self.screen = screen
+		self.titletxt = title
+		self.label = screen.fontsmall.render(str(initialvalue), 1, (255,255,255))
+		self.title = screen.fontsmall.render(self.titletxt, 1, (255,255,255))
+		self.theight = self.title.get_height()/2/screen.scale
+		self.twidth = self.title.get_width()/screen.scale + 20
+		self.lheight = self.label.get_height()/3/screen.scale
+		self.width = 88
+		self.height = 12
 		self.x = x
 		self.y = y
 		self.margin = margin
@@ -18,8 +20,7 @@ class SlideObject(BaseObject):
 		self.lower = lowerlimit
 		self.valuewidth = self.upper - self.lower
 		self.value = initialvalue
-		self.mx = self.x
-		self.setMarker(initialvalue)
+		self.mx = self.twidth + (self.value-self.lower)*(self.width/self.valuewidth)
 		self.dragaction = dragaction
 
 	def checkCollision(self, x, y):
@@ -28,20 +29,22 @@ class SlideObject(BaseObject):
 		return False
 
 	def drag(self, x, y):
-		value = int((((x - self.twidth)/self.width)+0.1)*(self.valuewidth))
-		self.value = value + self.lower
-		self.setMarker(value)
+		value = int(((x-self.twidth-self.x)/self.width + 1/self.valuewidth/2)*self.valuewidth)
+		newvalue = value + self.lower
+		if (newvalue != self.value):
+			self.value = newvalue
+			self.setMarker(value)
 
 	def setMarker(self, value):
-		self.mx = ((value)/self.valuewidth)*self.width - self.lower*SCALE
+		self.mx = ((value)/self.valuewidth)*self.width
 		if (self.mx < 0):
-			self.mx = self.twidth + self.x
+			self.mx = self.twidth
 			self.value = self.lower
 		elif (self.mx > self.width):
-			self.mx = self.width - self.lower*SCALE + self.twidth + self.x
+			self.mx = self.width + self.twidth
 			self.value = self.upper
 		else:
-			self.mx +=  self.twidth + self.x
+			self.mx +=  self.twidth
 
 	def isPressAble(self):
 		return True
@@ -50,14 +53,17 @@ class SlideObject(BaseObject):
 		return True
 
 	def render(self, screen, x, y):
-		self.label = screen.font30.render(str(self.value), 1, (255,255,255))
-		self.lheight = self.label.get_height()/3
+		self.label = screen.fontsmall.render(str(self.value), 1, (255,255,255))
+		self.title = screen.fontsmall.render(self.titletxt, 1, (255,255,255))
+		self.theight = self.title.get_height()/2/screen.scale
+		self.twidth = self.title.get_width()/screen.scale + 20
+		self.lheight = self.label.get_height()/3/screen.scale
 		cx = self.x + x
 		cy = self.y + y
-		screen.display.blit( self.title, (cx + 4*SCALE, cy ))
-		screen.display.blit( self.label, (cx + self.width + 5*SCALE + self.twidth, cy - self.lheight + self.theight - 4*SCALE ))
-		screen.drawGUISprite(MENU_SLIDE, MENU_ITEM, cx + self.twidth, cy + self.theight - 4*SCALE)
-		screen.drawGUISprite(MENU_BUTTON, MENU_ITEM, x + self.mx - 3.5*SCALE, cy - 6*SCALE + self.theight - 4*SCALE)
+		screen.display.blit( self.title, ((cx + 4)*screen.scale, cy*screen.scale ))
+		screen.display.blit( self.label, ((cx + self.width + 5 + self.twidth)*screen.scale, (cy - self.lheight + self.theight - 4)*screen.scale ))
+		screen.drawGUISprite(MENU_SLIDE, MENU_ITEM, cx + self.twidth, cy + self.theight - 4)
+		screen.drawGUISprite(MENU_BUTTON, MENU_ITEM, cx + self.mx - 2, cy - 6 + self.theight - 4)
 		
 
 		

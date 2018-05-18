@@ -56,7 +56,7 @@ class Oiram (Mob):
 		# walk - 3
 		self.animationhandling.addAnimation(0, 3, 4)
 
-		self.y1 = 4*SCALE
+		self.y1 = 4
 
 		self.animationpause = 0
 		self.previousform = 0
@@ -78,6 +78,8 @@ class Oiram (Mob):
 	def reset (self):
 		self.x = self.checkpointx
 		self.y = self.checkpointy
+		if (self.large):
+			self.y-=1
 		self.vx = 0
 		self.vy = 0
 		self.dead = False
@@ -86,8 +88,8 @@ class Oiram (Mob):
 	def deadMovement(self, level):
 		self.animationhandling.toggleAnimation(0)
 		self.applyGravity(GLOBAL_GRAVITY ,ORIAM_VERTICAL_MAX_SPEED*2)
-		self.yOffset += self.vy*SCALE*self.speed
-		if (self.yOffset + self.y > level.height*16*SCALE):
+		self.yOffset += self.vy*self.speed
+		if (self.yOffset + self.y > level.height*16):
 			level.endFlag = True
 
 	def mapMovement(self, level):
@@ -110,14 +112,14 @@ class Oiram (Mob):
 			self.animationpause -= 1
 			if (self.animationpause == 0):
 				self.large = True
-				self.y += self.heightdifferens*16*SCALE
+				self.y += self.heightdifferens*16
 				self.sheet = self.newform
 				return
 			if (self.animationpause % 8 == 0):
 				if (self.large):
-					self.y += self.heightdifferens*16*SCALE
+					self.y += self.heightdifferens*16
 				else:
-					self.y -= self.heightdifferens*16*SCALE
+					self.y -= self.heightdifferens*16
 				self.large = not self.large
 			if (self.large):
 				self.sheet = self.previousform
@@ -163,14 +165,14 @@ class Oiram (Mob):
 			self.jump = False
 
 		if (col and lvy < 0):
-			level.triggerBlock(int((self.x + self.width*8*SCALE)/(16*SCALE))*SCALE*16,int((self.y/(16*SCALE)))*SCALE*16, self)
+			level.triggerBlock(int((self.x + self.width*8)/(16))*16,int((self.y/(16)))*16, self)
 			self.vy = 0
 
 		if (col and self.done):
 			self.vx = 1
 			level.cleared = True
 
-		if (self.y > level.height*16*SCALE):
+		if (self.y > level.height*16):
 			self.kill(True)
 
 		if (self.jump and (self.ly != self.y or not col)):
@@ -197,7 +199,7 @@ class Oiram (Mob):
 			if (self.flip):
 				level.addProjectile(0x060000, self.x, self.y, self.vx, self.vy)
 			else:
-				level.addProjectile(0x060001, self.x + 9*SCALE, self.y + 2*SCALE, self.vx, self.vy)
+				level.addProjectile(0x060001, self.x + 9, self.y + 2, self.vx, self.vy)
 
 	def victory(self):
 		self.done = True
@@ -219,7 +221,7 @@ class Oiram (Mob):
 			if (self.previousform == OIRAM):
 				self.animationpause = 60
 				self.heightdifferens = -1
-				self.y -= 1*16*SCALE
+				self.y -= 1*16
 			else:
 				self.heightdifferens = 0
 			
@@ -267,7 +269,7 @@ class Oiram (Mob):
 			screen.drawColouredFlippedSprite(OIRAM, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)	
 		else:
 			screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
-		screen.writeText("X" + str(self.lifeCount), 18*SCALE, 2.5*SCALE)
-		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1*SCALE, 1*SCALE)
-		screen.writeText("X" + str(self.coinCount),  50*SCALE + 18*SCALE, 2.5*SCALE)
-		screen.drawGUISprite(TEXTURE, COIN_FLIP_ANIMATION, 50*SCALE + 1*SCALE, 1*SCALE)
+		screen.writeLargeText("X" + str(self.lifeCount), 18, 2.5)
+		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1, 1)
+		screen.writeLargeText("X" + str(self.coinCount),  50 + 18, 2.5)
+		screen.drawGUISprite(TEXTURE, COIN_FLIP_ANIMATION, 50 + 1, 1)

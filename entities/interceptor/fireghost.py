@@ -23,9 +23,9 @@ class FireGhost (Mob):
 		self.offset = 0
 		self.dir = False
 
-		self.y2 = 2*SCALE
-		self.x1 = 2*SCALE
-		self.x2 = 2*SCALE
+		self.y2 = 2
+		self.x1 = 2
+		self.x2 = 2
 
 	def clone(self, x, y):
 		return FireGhost(self.sheet, self.id, x, y)	
@@ -76,11 +76,11 @@ class FireGhost (Mob):
 			self.sleepTimer = 60
 			self.upTimer = self.travelTime
 
-		self.y += self.vy*self.speed*SCALE
+		self.y += self.vy*self.speed
 
 		if (not self.travelTimeSet):
 			self.travelTime += 1
-			if (self.y >= level.height*16*SCALE):
+			if (self.y >= level.height*16):
 				self.downTimer = 0
 				self.travelTimeSet = True
 

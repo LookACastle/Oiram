@@ -11,5 +11,6 @@ class BaseObject:
 
 	def isDragAble(self):
 		return False
+	
 
 		

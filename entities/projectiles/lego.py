@@ -12,10 +12,10 @@ class Lego (animatedMob):
 			self.vx = -random.randint(10, 30)/10
 		else:
 			self.vx = random.randint(10, 30)/10
-		self.y2 = 3*SCALE
-		self.y1 = 3*SCALE
-		self.x2 = 3*SCALE
-		self.x1 = 3*SCALE
+		self.y2 = 3
+		self.y1 = 3
+		self.x2 = 3
+		self.x1 = 3
 
 	def clone(self, x, y):
 		return Lego(self.sheet, self.id, self.length, x, y, self.pause, self.animationSpeed, self.collision, self.flip)	
@@ -26,7 +26,7 @@ class Lego (animatedMob):
 		colx = self.movex(level)
 		self.applyGravity(GLOBAL_GRAVITY, LEGO_VERTICAL_MAX_SPEED)
 		coly = self.movey(level)
-		if (coly or self.y > level.height*16*SCALE):
+		if (coly or self.y > level.height*16):
 			self.dead = True
 
 	def collide(self, victim):

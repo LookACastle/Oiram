@@ -2,7 +2,7 @@ from levels.level import *
 from constants import *
 
 class LevelManager (Level):
-	def __init__(self, tileManager, entityManager):
+	def __init__(self, tileManager, entityManager, configManager):
 		Level.__init__(self, MAP, tileManager, entityManager)
 		self.currentlevel = None
 		self.mapwidth = MAP_WIDTH
@@ -11,13 +11,12 @@ class LevelManager (Level):
 		self.levels = [None]*self.mapwidth*self.mapheight
 		self.loadLevels()
 
-		self.playerv = (0,0)
 		self.cpos = [0,4]
 		self.velocity = [(0)]
 		self.movementTicks = -1
 
-		self.horizontaltilecount = X_TILE_COUNT
-		self.verticaltaltilecount = Y_TILE_COUNT
+		self.horizontaltilecount = configManager.getLevelInt("x_tile_count")
+		self.verticaltaltilecount = configManager.getLevelInt("y_tile_count")
 
 		self.openLevels = 0
 		self.openlevel(1)

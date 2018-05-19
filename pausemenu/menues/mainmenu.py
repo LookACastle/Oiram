@@ -3,7 +3,7 @@ from constants import *
 
 class MainMenu:
 	def __init__(self, screen):
-		options = ["Resume", "Options", "Quit"]
+		options = ["Resume", "Options", "Exit"]
 		actions = [resumeAction, optionAction, quitAction]
 		self.objects = []
 		y = 0
@@ -40,8 +40,12 @@ class MainMenu:
 			o.render(screen, x, y)
 
 def quitAction(main):
-	main.levelManager.changeLevel(main.player)
-	main.pausemenu.active = False
+	if (main.player.onMap):
+		main.stop()
+	else:
+		main.saveConfig()
+		main.levelManager.changeLevel(main.player)
+		main.pausemenu.active = False
 
 def resumeAction(main):
 	main.pausemenu.active = False

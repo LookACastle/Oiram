@@ -1,4 +1,3 @@
-from constants import TPS
 class GraphicObject():
 	def __init__(self, sheet, id, x, y, width, height, fixed, scale):
 		self.id = id
@@ -14,7 +13,7 @@ class GraphicObject():
 		self.dead = False
 		self.width = width
 		self.height = height
-		self.lifetime = TPS*2
+		self.lifetime = 120
 
 	def clone(self, x, y):
 		return GraphicObject(self.sheet, self.id, x, y, self.width, self.height, self.fixed, self.scale)

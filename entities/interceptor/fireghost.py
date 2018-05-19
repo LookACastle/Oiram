@@ -80,7 +80,7 @@ class FireGhost (Mob):
 
 		if (not self.travelTimeSet):
 			self.travelTime += 1
-			if (self.y >= level.height*16):
+			if (self.y >= level.height*16 + 16):
 				self.downTimer = 0
 				self.travelTimeSet = True
 

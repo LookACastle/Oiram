@@ -112,6 +112,9 @@ class Level:
 	def addEntity(self, c, x, y):
 		self.entityQueue.append(self.entityManager.getEntity(c).clone(x, y))
 
+	def placeEntity(self, e):
+		self.entityQueue.append(e)
+	
 	def getQueuedEntity (self):
 		return self.entityQueue[len(self.entityQueue)-1]
 
@@ -143,6 +146,17 @@ class Level:
 				col = e.entityCollision(target)
 				if (col):
 					collided.append(e)
+		return collided
+
+	def pickupEntity(self, target):
+		collided = None
+		for i in range(0, len(self.entities)):
+			e = self.entities[i]
+			if (e.collision and e.held):
+				col = e.entityCollision(target)
+				if (col):
+					collided = self.entities.pop(i)
+					break
 		return collided
 
 	def collideTile (self, target, x, y):

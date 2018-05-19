@@ -11,6 +11,7 @@ class Entity:
 		self.vy = 1
 		self.speed = 0
 		self.collision = False
+		self.held = False
 		self.solid = False
 		self.width = 1
 		self.height = 1

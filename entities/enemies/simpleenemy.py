@@ -1,5 +1,4 @@
 from entities.animatedmob import *
-from constants import SCALE
 
 class Simpleenemy (animatedMob):
 	def __init__(self, sheet, id, length, x, y, pause, speed, animationSpeed, vx):
@@ -38,7 +37,7 @@ class Simpleenemy (animatedMob):
 				if (cx > self.x or cx < self.x + self.width):
 					self.kill()
 					self.collision = False
-					if (victim.jump):
-						victim.ay = -5
+					victim.ay = -5
+					victim.jump = True
 					return
 			victim.kill(False)

@@ -3,17 +3,17 @@ from constants import *
 from gfx.spritesheet import SpriteSheet
 
 class Screen:
-	def __init__(self, display):
+	def __init__(self, display, width, height, scale):
 		self.display = display
 
 		self.sheets = []
 		self.xOffset = 0
 		self.yOffset = 0
 
-		self.scale = SCALE
+		self.scale = scale
 
-		self.width = 16*SCALE*X_TILE_COUNT*self.scale
-		self.height = 16*SCALE*Y_TILE_COUNT*self.scale
+		self.width = width
+		self.height = height
 
 		#self.font = pygame.font.SysFont("monospace", 15)
 		self.fontlarge = pygame.font.Font("gfx/DefaultFont.ttf", 20*self.scale)

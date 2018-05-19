@@ -1,0 +1,10 @@
+[PLAYER]
+coincount = 0
+lifecount = 3
+
+[LEVEL]
+mapposition = [1, 3]
+mapvelocity = (0, -1)
+cleared = False,False,False,False,False,False,False,False,False,False
+open = True,True,True,True,True,True,True,True,True,True
+

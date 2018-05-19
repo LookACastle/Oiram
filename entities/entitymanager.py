@@ -30,6 +30,7 @@ from entities.pickup.fireflower import *
 from entities.pickup.star import *
 from entities.pickup.coin import *
 from entities.pickup.coindrop import *
+from entities.pickup.spring import *
 
 #interceptors
 from entities.interceptor.fireghost import *
@@ -74,6 +75,9 @@ class EntityManager:
 		#Enlargen shroom
 		self.entities[0x020000] = Shroom(TEXTURE, SHROOM, 2, 0, 0, 3, 0.08, True)
 		self.entities[0x020001] = LifeShroom(TEXTURE, SHROOM_HP, 2, 0, 0, 3, 0.08, True)
+
+		#Spring
+		self.entities[0x290CFF] = Spring(ENEMIES, SPRING, 5, 0, 0, 0.25)
 
 		#Legobro
 		self.entities[0x030000] = Legobro(LARGENEMIES, LEGOBRO, 4, 0, 0, 20, 0.08, False)

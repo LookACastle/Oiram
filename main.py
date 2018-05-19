@@ -8,21 +8,24 @@ from entities.entitymanager import *
 from entities.oiram import *
 from inputhandle.inputhandler import *
 from pausemenu.pausemenu import *
+from configmanager import *
+from pathlib import Path
 import os
 import configparser
+import sys
 
 class Game:
     def __init__ (self):
         self.running = True
         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (0, SCREEN_RES_HEIGHT*0.1)
-        self.loadConfig()
+        self.configManager = ConfigManager(self.loadFile(CONFIG_URL))
         pygame.init()
-        dis = pygame.display.Info()
-        self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
-        self.screen = Screen(self.display)
-        self.player = Oiram(14*16, 6*4*16 + 2*16)
-        self.pausemenu = PauseMenu(self.screen)
-        self.tps = TPS
+        scale = self.configManager.getGraphicInt("scale")
+        screen_width = scale*16*self.configManager.getLevelInt("x_tile_count")
+        screen_height = scale*16*self.configManager.getLevelInt("y_tile_count")
+        self.display = pygame.display.set_mode([screen_width, screen_height])
+        self.screen = Screen(self.display, screen_width, screen_height, scale)
+        self.tps = self.configManager.getGraphicInt("tps")
         self.log = ""
     
     def rescaleDislpay(self, newscale):
@@ -38,22 +41,97 @@ class Game:
         self.pausemenu.setPostition(SCREEN_WIDTH, SCREEN_HEIGHT, self.screen)
         self.display = pygame.display.set_mode([SCREEN_WIDTH, SCREEN_HEIGHT])
 
-    def loadConfig(self):
-        self.config = configparser.ConfigParser()
-        self.config.read(CONFIG_URL)
-        graphicsettings = self.config["GRAPHICS"]
-        print (graphicsettings["SCALE"])
+    def loadFile(self, scr):
+        if (Path(scr).is_file()):
+            file = configparser.ConfigParser()
+            file.read(scr)
+        else:
+            return None
+        return file
+
+    def saveConfig(self):
+        self.configManager.save(self, CONFIG_URL)
 
     def start(self):
         self.run()
         self.stop()
 
     def init(self):
+        self.player = Oiram(14*16, 6*4*16 + 2*16)
+        self.pausemenu = PauseMenu(self.screen, self.configManager)
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
-        self.levelManager = LevelManager(self.tileManager, self.entityManager)
+        self.levelManager = LevelManager(self.tileManager, self.entityManager, self.configManager)
+        saveName = SAVE_URL + "save1.txt"
+        save = self.loadFile(saveName)
+        if (save == None):
+            self.createSaveFile(saveName)
+            save = self.loadFile(saveName)
+        self.loadSaveFile(save)
         self.inputHandler = InputHandler()
 
+    def createSaveFile(self, src):
+        save = configparser.ConfigParser()
+        save.add_section("PLAYER")
+        save["PLAYER"] = {
+            "coincount" : str(self.player.coinCount),
+            "lifecount" : str(self.player.lifeCount)
+        }
+        
+        clearedList = ""
+        openList = ""
+        for level in self.levelManager.levels:
+            if (isinstance(level, Level)):
+                clearedList += str(level.cleared) + ","
+                openList += str(level.open) + ","
+        clearedList = clearedList[:-1]
+        openList = openList[:-1]
+
+        save.add_section("LEVEL")
+        save["LEVEL"] = {
+            "mapPosition" : str(self.levelManager.cpos),
+            "mapVelocity" : str(self.levelManager.playerv),
+            "cleared" : clearedList,
+            "open" : openList
+        }
+
+        with open(src, "w") as savefile:
+            save.write(savefile)
+
+    def stringToBool(self, val):
+        if (val == "True"):
+            return True
+        else:
+            return False
+
+    def loadSaveFile(self, save):
+        playerSettings = save["PLAYER"]
+        self.player.coinCount = int(playerSettings["coincount"])
+        self.player.lifeCount = int(playerSettings["lifecount"])
+
+        levelSettings = save["LEVEL"]
+        clearedList = levelSettings["cleared"].split(",")
+        openList = levelSettings["open"].split(",")
+        i = 0
+        for level in self.levelManager.levels:
+            if (isinstance(level, Level)):
+                level.cleared = self.stringToBool(clearedList[i])
+                level.open = self.stringToBool(openList[i])
+                i += 1
+        
+        mapPos = levelSettings["mapPosition"]
+        x = mapPos[mapPos.index('[')+1: mapPos.index(',')]
+        y = mapPos[mapPos.index(',')+1: mapPos.index(']')]
+        self.levelManager.cpos  = [int(x), int(y)]
+
+        mapVel = levelSettings["mapVelocity"]
+        vx = mapVel[mapVel.index('(')+1: mapVel.index(',')]
+        vy = mapVel[mapVel.index(',')+1: mapVel.index(')')]
+        self.levelManager.playerv  = (int(vx), int(vy))
+
+        self.player.x = int(x)*4*16 + 14*16
+        self.player.y = int(y)*4*16 + 10*16
+        14*16, 6*4*16 + 2*16
     def run(self):
         last = pygame.time.get_ticks()
         deltaMs = 0;
@@ -101,9 +179,10 @@ class Game:
         if (mousepress[0] != self.inputHandler.MOUSE.pressed):
             self.inputHandler.toggleMouse(0)
 
-        if (self.inputHandler.ESC.isNewPress() and self.player.dead == False and self.player.onMap == False):
+        if (self.inputHandler.ESC.isNewPress() and self.player.dead == False):
             if (self.pausemenu.active):
                 self.pausemenu.active = False
+                self.saveConfig()
             else:
                 self.screen.renderOverlay()
                 self.pausemenu.open()
@@ -139,8 +218,6 @@ class Game:
                         self.player.ax = ORIAM_ACCELERATION
                     else:
                         self.player.ax = 0
-
-
                     if (self.inputHandler.W.isNewPress()):
                         if (not self.player.jump):
                             self.player.vy = -ORIAM_JUMP_FORCE
@@ -148,8 +225,19 @@ class Game:
                             self.player.gravity = 0.2
                         if(self.player.vy > 0):
                             self.player.gravity = 0.3
+                        if (self.player.boosttimer > 0):
+                            self.player.vy -= 2.5
+                            self.player.boosttimer = 0
                     else:
                         self.player.gravity = 0.3
+                    if (self.inputHandler.F.isNewPress() and self.player.dead == False):
+                        if (self.player.helditem == None):
+                            col = currentlevel.pickupEntity(self.player)
+                            self.player.helditem = col
+                        else:
+                            self.player.helditem.align(self.player.flip, self.levelManager.currentlevel)
+                            self.levelManager.currentlevel.placeEntity(self.player.helditem)
+                            self.player.helditem = None
 
                     if (self.inputHandler.ENTER.isPressed()):
                         if (self.player.fire):
@@ -192,5 +280,6 @@ class Game:
 
     def stop(self):
         pygame.quit()
+        sys.exit("Error message")
 
 Game().start()

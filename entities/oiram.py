@@ -63,6 +63,9 @@ class Oiram (Mob):
 		self.newform = 0
 		self.heightdifferens = 0
 
+		self.helditem = None
+		self.boosttimer = 0
+
 	def tick(self, level):
 		self.animationhandling.clearState()
 		self.movementTypes[(int(self.onMap)<<1) + int(self.dead)](level)
@@ -147,6 +150,16 @@ class Oiram (Mob):
 			if (self.vx != 0):
 				self.horizontalmovement(level)
 				self.animationhandling.toggleAnimation(3)
+
+			if (self.boosttimer > 0):
+				self.boosttimer -= 1
+
+		if (self.helditem != None):
+			if (not self.flip):
+				self.helditem.x = self.x + 9
+			else:
+				self.helditem.x = self.x - 9
+			self.helditem.y = self.y + self.height*16 - 18
 
 		if (self.invincibleCounter != 0):
 			self.overlayStrength = 0.6
@@ -244,6 +257,7 @@ class Oiram (Mob):
 				if (not self.dead):
 					if (not self.large or overwrite):
 						self.dead = True
+						self.helditem = None
 						self.large = False
 						self.fire = False
 						self.sheet = OIRAM
@@ -269,6 +283,8 @@ class Oiram (Mob):
 			screen.drawColouredFlippedSprite(OIRAM, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)	
 		else:
 			screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
+			if (self.helditem != None):
+				self.helditem.render(screen)
 		screen.writeLargeText("X" + str(self.lifeCount), 18, 2.5)
 		screen.drawGUISprite(TEXTURE, SHROOM_HP, 1, 1)
 		screen.writeLargeText("X" + str(self.coinCount),  50 + 18, 2.5)

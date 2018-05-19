@@ -8,6 +8,7 @@ class InputHandler:
 		self.D = Key()
 		self.W = Key()
 		self.S = Key()
+		self.F = Key()
 		self.ENTER = Key()
 		self.ESC = Key()
 		self.MOUSE = Mouse()
@@ -21,6 +22,8 @@ class InputHandler:
 			self.W.toggle()
 		if (key == pygame.K_DOWN or key == pygame.K_s):
 			self.S.toggle()
+		if (key == pygame.K_f or key == pygame.K_LSHIFT):
+			self.F.toggle()
 		if (key == pygame.K_RETURN or key == pygame.K_SPACE):
 			self.ENTER.toggle()
 		if (key == pygame.K_ESCAPE):

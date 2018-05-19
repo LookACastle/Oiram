@@ -1,5 +1,8 @@
 [GRAPHICS]
-SCALE = 3
-TPS = 60
-X_TILE_COUNT = 30
-Y_TILE_COUNT = 14
+scale = 3
+tps = 60
+
+[LEVEL]
+x_tile_count = 32
+y_tile_count = 14
+

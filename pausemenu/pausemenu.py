@@ -3,16 +3,16 @@ from pausemenu.menues.mainmenu import *
 from pausemenu.menues.optionmenu import *
 
 class PauseMenu ():
-	def __init__(self, screen):
+	def __init__(self, screen, configManager):
 		self.active = False
 		self.pause = 0
 		self.menues = {
 		"main" : MainMenu(screen),
-		"option" : OptionMenu(screen)
+		"option" : OptionMenu(screen, configManager)
 		}
 		self.currentMenu = self.menues["main"]
 
-		self.setPostition(SCREEN_WIDTH, SCREEN_HEIGHT, screen)
+		self.setPostition(screen.width, screen.height, screen)
 
 	def setPostition(self, width, height, screen):
 		self.x = width/2/screen.scale - 100

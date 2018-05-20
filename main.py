@@ -62,11 +62,10 @@ class Game:
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
         self.levelManager = LevelManager(self.tileManager, self.entityManager, self.configManager)
-        saveName = SAVE_URL + "save1.txt"
-        save = self.loadFile(saveName)
+        save = self.loadFile(SAVE_URL + "save1.txt")
         if (save == None):
-            self.createSaveFile(saveName)
-            save = self.loadFile(saveName)
+            self.createSaveFile(SAVE_URL + "save1.txt")
+            save = self.loadFile(SAVE_URL + "save1.txt")
         self.loadSaveFile(save)
         self.inputHandler = InputHandler()
 
@@ -75,22 +74,29 @@ class Game:
         save.add_section("PLAYER")
         save["PLAYER"] = {
             "coincount" : str(self.player.coinCount),
-            "lifecount" : str(self.player.lifeCount)
+            "lifecount" : str(self.player.lifeCount),
+            "pos" : str((self.player.x, self.player.y)),
+            "large" : str(self.player.large),
+            "fire" : str(self.player.fire)
         }
         
         clearedList = ""
         openList = ""
+        dirList = ""
         for level in self.levelManager.levels:
             if (isinstance(level, Level)):
                 clearedList += str(level.cleared) + ","
                 openList += str(level.open) + ","
+            elif(level != None):
+                dirList += str(level) + ","
         clearedList = clearedList[:-1]
         openList = openList[:-1]
+        dirList = dirList[:-1]
 
         save.add_section("LEVEL")
         save["LEVEL"] = {
             "mapPosition" : str(self.levelManager.cpos),
-            "mapVelocity" : str(self.levelManager.playerv),
+            "mapDirection" : dirList,
             "cleared" : clearedList,
             "open" : openList
         }
@@ -112,26 +118,35 @@ class Game:
         levelSettings = save["LEVEL"]
         clearedList = levelSettings["cleared"].split(",")
         openList = levelSettings["open"].split(",")
+        openList = levelSettings["open"].split(",")
+        dirList = levelSettings["mapDirection"].split(",")
+        l = 0
+        t = 0
         i = 0
         for level in self.levelManager.levels:
             if (isinstance(level, Level)):
-                level.cleared = self.stringToBool(clearedList[i])
-                level.open = self.stringToBool(openList[i])
-                i += 1
-        
+                level.cleared = self.stringToBool(clearedList[l])
+                level.open = self.stringToBool(openList[l])
+                l += 1
+            elif (level != None):
+                self.levelManager.levels[i] = (int(dirList[t][1:]), int(dirList[t+1][:-1]))
+                t += 2
+            i += 1
+
         mapPos = levelSettings["mapPosition"]
         x = mapPos[mapPos.index('[')+1: mapPos.index(',')]
         y = mapPos[mapPos.index(',')+1: mapPos.index(']')]
         self.levelManager.cpos  = [int(x), int(y)]
+        self.levelManager.currentlevel = None
+        self.player.setCheckpoint(int(x)*4*16 + 14*16, int(y)*4*16 + 10*16) 
+        self.player.reset()
+        self.player.speed = 1
 
-        mapVel = levelSettings["mapVelocity"]
-        vx = mapVel[mapVel.index('(')+1: mapVel.index(',')]
-        vy = mapVel[mapVel.index(',')+1: mapVel.index(')')]
-        self.levelManager.playerv  = (int(vx), int(vy))
+    def stringToTuble(self, txt):
+        x = txt[txt.index('(')+1: txt.index(',')]
+        y = txt[txt.index(',')+1: txt.index(')')]
+        return (int(x, y))
 
-        self.player.x = int(x)*4*16 + 14*16
-        self.player.y = int(y)*4*16 + 10*16
-        14*16, 6*4*16 + 2*16
     def run(self):
         last = pygame.time.get_ticks()
         deltaMs = 0;
@@ -179,7 +194,7 @@ class Game:
         if (mousepress[0] != self.inputHandler.MOUSE.pressed):
             self.inputHandler.toggleMouse(0)
 
-        if (self.inputHandler.ESC.isNewPress() and self.player.dead == False):
+        if (self.inputHandler.ESC.isNewPress() and (self.player.dead == False or self.player.onMap == True)):
             if (self.pausemenu.active):
                 self.pausemenu.active = False
                 self.saveConfig()

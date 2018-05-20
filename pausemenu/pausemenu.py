@@ -1,6 +1,7 @@
 from constants import *
 from pausemenu.menues.mainmenu import *
 from pausemenu.menues.optionmenu import *
+from pausemenu.menues.savemenu import *
 
 class PauseMenu ():
 	def __init__(self, screen, configManager):
@@ -8,7 +9,8 @@ class PauseMenu ():
 		self.pause = 0
 		self.menues = {
 		"main" : MainMenu(screen),
-		"option" : OptionMenu(screen, configManager)
+		"option" : OptionMenu(screen, configManager),
+		"save" : SaveMenu(screen)
 		}
 		self.currentMenu = self.menues["main"]
 

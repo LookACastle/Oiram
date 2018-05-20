@@ -1,19 +1,19 @@
-from pausemenu.menuitem.textobject import *
+from pausemenu.menuitem.button import *
 from constants import *
 
 class MainMenu:
 	def __init__(self, screen):
-		options = ["Resume", "Options", "Exit"]
-		actions = [resumeAction, optionAction, quitAction]
+		options = ["Resume", "Options", "Save", "Exit"]
+		actions = [resumeAction, optionAction, saveAction, quitAction]
 		self.objects = []
 		y = 0
 		maxwidth = 0
 		for i in range(0, len(options)):
-			textbox = TextObject(options[i], 45, y + 30, screen, 2, actions[i])
-			if (textbox.width > maxwidth):
-				maxwidth = textbox.width
-			self.objects.append(textbox)
-			y += 40
+			button = Button(options[i], 45, y + 30, screen, 2, actions[i], 0)
+			if (button.width > maxwidth):
+				maxwidth = button.width
+			self.objects.append(button)
+			y += 30
 
 		for o in self.objects:
 			o.center(maxwidth)
@@ -52,3 +52,6 @@ def resumeAction(main):
 
 def optionAction(main):
 	main.pausemenu.changeMenu("option")
+
+def saveAction(main):
+	main.pausemenu.changeMenu("save")

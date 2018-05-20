@@ -1,5 +1,5 @@
 from pausemenu.menuitem.slideobject import *
-from pausemenu.menuitem.textobject import *
+from pausemenu.menuitem.button import *
 from constants import *
 
 class OptionMenu:
@@ -12,7 +12,7 @@ class OptionMenu:
 		SlideObject( 20, 40, screen, 2, 20, 120, configManager.getGraphicInt("tps"), "tps", speedAction),
 		SlideObject( 20, 60, screen, 2, 10, 120, configManager.getLevelInt("x_tile_count"), "tile x", xdrawAction),
 		SlideObject( 20, 80, screen, 2, 10, 66, configManager.getLevelInt("y_tile_count"), "tile y", ydrawAction),
-		TextObject("back", 0, 100, screen, 2, backAction)
+		Button("back", 0, 120, screen, 2, backAction, 0)
 		]
 		self.objects[4].center(200)
 

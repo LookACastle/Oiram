@@ -1,10 +1,14 @@
 from constants import *
 from pausemenu.menuitem.baseobject import *
 
-class TextObject (BaseObject):
-	def __init__(self, text, x, y, screen, margin, action):
+class Button (BaseObject):
+	def __init__(self, text, x, y, screen, margin, action, size):
 		BaseObject.__init__(self)
-		self.label = screen.fontlarge.render(text, 1, (255,255,255))
+		if(size == 0):
+			self.label = screen.fontlarge.render(text, 1, (255,255,255))
+		if (size == 1):
+			self.label = screen.fontsmall.render(text, 1, (255,255,255))
+		self.size = size
 		self.hover = False
 		self.width = self.label.get_width()/screen.scale
 		self.height = self.label.get_height()/screen.scale
@@ -31,8 +35,14 @@ class TextObject (BaseObject):
 
 	def render(self, screen, x, y):
 		if (self.hover):
-			screen.writeLargeText(self.text,  self.x + x + 2, self.y + y + 4, (100,100,100))
-		screen.writeLargeText(self.text,  self.x + x, self.y + y, (255,255,255))
+			if (self.size == 0):
+				screen.writeLargeText(self.text,  self.x + x + 2, self.y + y + 4, (100,100,100))
+			if (self.size == 1):
+				screen.writeSmallText(self.text,  self.x + x + 2, self.y + y + 4, (100,100,100))
+		if (self.size == 0):
+			screen.writeLargeText(self.text,  self.x + x, self.y + y, (255,255,255))
+		if (self.size == 1):
+			screen.writeSmallText(self.text,  self.x + x, self.y + y, (255,255,255))
 		
 
 		

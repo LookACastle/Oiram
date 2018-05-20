@@ -1,8 +1,11 @@
+[META]
+last_save = None
+
 [GRAPHICS]
 scale = 3
 tps = 60
 
 [LEVEL]
-x_tile_count = 32
+x_tile_count = 30
 y_tile_count = 14
 

@@ -17,11 +17,13 @@ from entities.flags.flagtop import *
 from entities.enemies.balumba import *
 from entities.enemies.legobro import *
 from entities.enemies.spikey import *
+from entities.enemies.shelly import *
 
 #projectile entities
 from entities.projectiles.lego import *
 from entities.projectiles.waterball import *
 from entities.projectiles.brickfragment import *
+from entities.projectiles.shell import *
 
 #items to pick up
 from entities.pickup.shroom import *
@@ -76,9 +78,6 @@ class EntityManager:
 		self.entities[0x020000] = Shroom(TEXTURE, SHROOM, 2, 0, 0, 3, 0.08, True)
 		self.entities[0x020001] = LifeShroom(TEXTURE, SHROOM_HP, 2, 0, 0, 3, 0.08, True)
 
-		#Spring
-		self.entities[0x290CFF] = Spring(ENEMIES, SPRING, 5, 0, 0, 0.25)
-
 		#Legobro
 		self.entities[0x030000] = Legobro(LARGENEMIES, LEGOBRO, 4, 0, 0, 20, 0.08, False)
 		self.entities[0x030001] = Legobro(LARGENEMIES, LEGOBRO, 4, 0, 0, 20, 0.08, True)
@@ -101,12 +100,20 @@ class EntityManager:
 		#fire ghost
 		self.entities[0x080000] = FireGhost(ENEMIES, FIRE_GHOST, 0, 0)
 
+		#Pickups
+		self.entities[0x290CFF] = Spring(ENEMIES, SPRING, 5, 0, 0, 0.25)
+		self.entities[0x539631] = Shell(ENEMIES, GREEN_SHELL, 1, 0, 10, 1, 1)
+
 		#brick fragments
 		self.entities[0x090000] = BrickFragment(FRAGMENTS, FULL, 0, 0)
 		self.entities[0x090001] = BrickFragment(FRAGMENTS, LEFT_TOP, 0, 0)
 		self.entities[0x090002] = BrickFragment(FRAGMENTS, TOP, 0, 0)
 		self.entities[0x090003] = BrickFragment(FRAGMENTS, HALF, 0, 0)
 		self.entities[0x090004] = BrickFragment(FRAGMENTS, HALF_WIDE, 0, 0)
+
+		#Shelly
+		self.entities[0x0A0000] = Shelly(LARGENEMIES, GREEN_SHELLY, 2, 0, 0, 1, 0.1, 1, 0x539631)
+		self.entities[0x0A0001] = Shelly(LARGENEMIES, GREEN_SHELLY, 2, 0, 0, 1, 0.1, -1, 0x539631)
 
 		#Graphics
 		self.entities[0xFF00FF] = GraphicObject(ONEUP, ONEUP_TEXT, 0, 0, 2.9, 0.5, False, 2)

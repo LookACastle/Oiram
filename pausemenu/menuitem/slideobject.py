@@ -20,16 +20,16 @@ class SlideObject(BaseObject):
 		self.lower = lowerlimit
 		self.valuewidth = self.upper - self.lower
 		self.value = initialvalue
-		self.mx = self.twidth + (self.value-self.lower)*(self.width/self.valuewidth)
+		self.mx =(self.value-self.lower)*(self.width/self.valuewidth)
 		self.dragaction = dragaction
 
 	def checkCollision(self, x, y):
-		if (x + self.margin + self.twidth > self.x and x < self.x+self.width + self.margin + self.twidth and y + self.margin > self.y - self.margin/2 and y - self.margin/2 < self.y+self.height+self.margin): 
+		if (x + self.margin> self.x and x < self.x+self.width + self.margin and y + self.margin > self.y - self.margin/2 and y - self.margin/2 < self.y+self.height+self.margin): 
 			return True
 		return False
 
 	def drag(self, x, y):
-		value = int(((x-self.twidth-self.x)/self.width + 1/self.valuewidth/2)*self.valuewidth)
+		value = int(((x-71)/self.width + 1/self.valuewidth/2)*self.valuewidth)
 		newvalue = value + self.lower
 		if (newvalue != self.value):
 			self.value = newvalue
@@ -38,13 +38,11 @@ class SlideObject(BaseObject):
 	def setMarker(self, value):
 		self.mx = ((value)/self.valuewidth)*self.width
 		if (self.mx < 0):
-			self.mx = self.twidth
+			self.mx = 0
 			self.value = self.lower
 		elif (self.mx > self.width):
-			self.mx = self.width + self.twidth
+			self.mx = self.width
 			self.value = self.upper
-		else:
-			self.mx +=  self.twidth
 
 	def isPressAble(self):
 		return True
@@ -61,9 +59,9 @@ class SlideObject(BaseObject):
 		cx = self.x + x
 		cy = self.y + y
 		screen.display.blit( self.title, ((cx + 4)*screen.scale, cy*screen.scale ))
-		screen.display.blit( self.label, ((cx + self.width + 5 + self.twidth)*screen.scale, (cy - self.lheight + self.theight - 4)*screen.scale ))
-		screen.drawGUISprite(MENU_SLIDE, MENU_ITEM, cx + self.twidth, cy + self.theight - 4)
-		screen.drawGUISprite(MENU_BUTTON, MENU_ITEM, cx + self.mx - 2, cy - 6 + self.theight - 4)
+		screen.display.blit( self.label, ((x + self.width + 76)*screen.scale, (cy - self.lheight + self.theight - 4)*screen.scale ))
+		screen.drawGUISprite(MENU_SLIDE, MENU_ITEM, x + 70, cy + self.theight - 4)
+		screen.drawGUISprite(MENU_BUTTON, MENU_ITEM, x + 70 + self.mx - 2, cy - 6 + self.theight - 4)
 		
 
 		

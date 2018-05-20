@@ -1,6 +1,7 @@
 class ConfigManager(object):
 	def __init__(self, configuration):
 		self.configurations = configuration
+		self.metasettings = configuration["META"]
 		self.graphicsettings = configuration["GRAPHICS"]
 		self.levelsettings = configuration["LEVEL"]
 

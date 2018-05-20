@@ -13,6 +13,7 @@ from pathlib import Path
 import os
 import configparser
 import sys
+import datetime
 
 class Game:
     def __init__ (self):
@@ -62,15 +63,23 @@ class Game:
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
         self.levelManager = LevelManager(self.tileManager, self.entityManager, self.configManager)
-        save = self.loadFile(SAVE_URL + "save1.txt")
-        if (save == None):
-            self.createSaveFile(SAVE_URL + "save1.txt")
-            save = self.loadFile(SAVE_URL + "save1.txt")
-        self.loadSaveFile(save)
+        lastsave = self.configManager.metasettings["last_save"]
+        if(lastsave != "None"):
+            save = self.loadFile(SAVE_URL + lastsave)
+            if (save != None):
+                self.loadSaveFile(save)
+            else:
+                self.configManager.metasettings["last_save"] = "None"
         self.inputHandler = InputHandler()
 
     def createSaveFile(self, src):
         save = configparser.ConfigParser()
+        save.add_section("META")
+        now = datetime.datetime.now()
+        save["META"] = {
+            "date" : now.strftime("%Y-%m-%d")[2:]
+        }
+
         save.add_section("PLAYER")
         save["PLAYER"] = {
             "coincount" : str(self.player.coinCount),
@@ -138,6 +147,8 @@ class Game:
         y = mapPos[mapPos.index(',')+1: mapPos.index(']')]
         self.levelManager.cpos  = [int(x), int(y)]
         self.levelManager.currentlevel = None
+        self.levelManager.movementTicks = 0
+        self.levelManager.velocity = []    
         self.player.setCheckpoint(int(x)*4*16 + 14*16, int(y)*4*16 + 10*16) 
         self.player.reset()
         self.player.speed = 1

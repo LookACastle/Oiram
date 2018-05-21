@@ -8,6 +8,9 @@ class ConfigManager(object):
 	def getLevelInt(self, name):
 		return int(self.levelsettings[name])
 	
+	def getMetaInt(self, name):
+		return int(self.metasettings[name])
+
 	def getGraphicInt(self, name):
 		return int(self.graphicsettings[name])
 

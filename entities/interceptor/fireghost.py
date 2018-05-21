@@ -27,11 +27,10 @@ class FireGhost (Mob):
 		self.x1 = 2
 		self.x2 = 2
 
+		self.killable = False
+
 	def clone(self, x, y):
 		return FireGhost(self.sheet, self.id, x, y)	
-
-	def kill(self):
-		pass
 
 	def collide(self, victim):
 		if (victim.invincibleCounter <= 0):

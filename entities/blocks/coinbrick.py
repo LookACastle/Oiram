@@ -24,7 +24,7 @@ class CoinBrick (Brick):
 			self.dead = True
 			level.setTile(int(self.x/(16) + 0.1), int(self.oy/16 + 0.1), 0xFFFFFF)
 		if (self.hitTime > 0):
-			self.y -= 7
+			self.y -= 2
 			self.hitTime -= 1
 		else:
 			if (self.y >= self.oy):
@@ -33,7 +33,7 @@ class CoinBrick (Brick):
 				if (self.hit):
 					level.addEntity( 0x01FFFF, self.x, self.oy - 16)
 					self.hit = False
-				self.y += 7
+				self.y += 2
 
 		if (self.broken):
 			self.placed = True

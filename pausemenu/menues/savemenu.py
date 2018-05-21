@@ -112,7 +112,6 @@ def save3Action(main):
 
 def load1Action(main):
 	save = main.loadFile(SAVE_URL + "save1.txt")
-	print("loading")
 	if (save != None):
 		main.loadSaveFile(save)
 		main.configManager.metasettings["last_save"] = "save1.txt"

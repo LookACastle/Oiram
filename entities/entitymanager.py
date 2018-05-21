@@ -36,6 +36,7 @@ from entities.pickup.spring import *
 
 #interceptors
 from entities.interceptor.fireghost import *
+from entities.interceptor.carnivorousplant import *
 
 #graphics
 from entities.graphic.graphicobject import *
@@ -114,6 +115,8 @@ class EntityManager:
 		#Shelly
 		self.entities[0x0A0000] = Shelly(LARGENEMIES, GREEN_SHELLY, 2, 0, 0, 1, 0.1, 1, 0x539631)
 		self.entities[0x0A0001] = Shelly(LARGENEMIES, GREEN_SHELLY, 2, 0, 0, 1, 0.1, -1, 0x539631)
+
+		self.entities[0x0B0000] = CarnivorousPlant(LARGENEMIES, PIRANA, 2,0,0, 0, 0.1)
 
 		#Graphics
 		self.entities[0xFF00FF] = GraphicObject(ONEUP, ONEUP_TEXT, 0, 0, 2.9, 0.5, False, 2)

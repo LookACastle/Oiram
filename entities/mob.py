@@ -6,6 +6,7 @@ class Mob (Entity):
 		Entity.__init__(self, sheet, id, x, y)
 		self.speed = speed
 		self.collision = collision
+		self.mobcontrol = False
 		self.flip = False
 
 	def clone(self, x, y):
@@ -13,6 +14,3 @@ class Mob (Entity):
 
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y)
-	
-	def kill(self):
-		self.dead = True

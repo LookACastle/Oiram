@@ -11,6 +11,7 @@ class Entity:
 		self.vy = 1
 		self.speed = 0
 		self.collision = False
+		self.entitycollision = False
 		self.held = False
 		self.solid = False
 		self.width = 1
@@ -22,7 +23,7 @@ class Entity:
 		self.y1 = 0
 		self.y2 = 0
 		self.killable = True
-		self.mobControl = False
+		self.mobcontrol = False
 		self.visible = True
 
 	def clone(self, x, y):
@@ -120,6 +121,10 @@ class Entity:
 
 	def collide(self, victim):
 		pass
+
+	def kill(self, overwrite):
+		if (self.killable or overwrite):
+			self.dead = True
 
 	def tick(self, level):
 		pass

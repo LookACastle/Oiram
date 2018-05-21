@@ -24,7 +24,7 @@ class SlideObject(BaseObject):
 		self.dragaction = dragaction
 
 	def checkCollision(self, x, y):
-		if (x + self.margin> self.x and x < self.x+self.width + self.margin and y + self.margin > self.y - self.margin/2 and y - self.margin/2 < self.y+self.height+self.margin): 
+		if (x + self.margin > self.x + 48 and x < self.x + self.width + self.margin + 52 and y + self.margin > self.y - self.margin/2 and y - self.margin/2 < self.y+self.height+self.margin): 
 			return True
 		return False
 

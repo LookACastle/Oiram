@@ -17,7 +17,7 @@ class Shelly(Balumba):
 			return
 		self.simpleMovement(level)
 
-	def kill (self):
+	def kill (self, overwrite):
 		self.mark = True
 	
 	def wallCollide(self):

@@ -5,9 +5,10 @@ from constants import *
 import importlib
 
 class Level:
-	def __init__(self, path, tileManager, entityManager):
+	def __init__(self, path, tileManager, entityManager, threadManager):
 		self.tileManager = tileManager
 		self.entityManager = entityManager
+		self.threadManager = threadManager
 		temp = path.replace(".png", "").split("-")
 		self.backgroundtile = None
 		self.type = temp[0]
@@ -34,6 +35,7 @@ class Level:
 		self.height = size[1]
 		pixel = pygame.PixelArray(img)
 		tube = False;
+		delayedentities = []
 		self.backgroundtile = self.tileManager.getTile(pixel[0][0])
 		for y in range(0,self.height):
 			for x in range(0,self.width):
@@ -53,7 +55,6 @@ class Level:
 					self.loadedMap.append(tile)
 				else:
 					self.loadedMap.append(self.tileManager.getTile(0xFFFFFF))
-
 				entity = self.entityManager.getEntity(pixel[x][y])
 				if (entity != None):
 					self.loadedEntities.append(entity.clone(x*16, y*16))
@@ -100,6 +101,8 @@ class Level:
 				e = self.entities[i - iOffset]
 				if(e.visible):
 					e.tick(self)
+					if (e.collision and e.entitycollision):
+						self.entityCollision(e, True)
 				if (e.dead):
 					del(self.entities[i- iOffset])
 					iOffset +=1
@@ -131,12 +134,15 @@ class Level:
 						if ((e.x + w*16 == x) and e.y == y):
 							e.trigger(target)
 
-	def entityCollision (self, target):
+	def entityCollision (self, target, flip):
 		for e in self.entities:
 			if (e.collision):
 				col = e.entityCollision(target)
 				if (col):
-					e.collide(target)
+					if (flip):
+						target.collide(e)
+					else:
+						e.collide(target)
 		return None
 
 	def collideEntity (self, target):
@@ -185,13 +191,14 @@ class Level:
 			yTile = self.height - h - 1
 		
 		screen.setOffset(xOffset, yOffset)
+
 		for x in range(0 , w + 1):
 			for y in range(0,h + 1):
 				index = xTile + x + (y+yTile)*self.width
 				if (index >= 0 and index < len(self.map)-2): 
 					tile = self.map[index]
 					if (tile != None):
-						tile.render(screen, (x+xTile)*16, (y+yTile)*16)
+						self.threadManager.queueWork((3, tile.render, screen, (x+xTile)*16, (y+yTile)*16))
 				else:
 					self.backgroundtile.render(screen, (x+xTile)*16, (y+yTile)*16)
 

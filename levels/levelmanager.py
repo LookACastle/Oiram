@@ -1,9 +1,11 @@
 from levels.level import *
 from constants import *
+from multithreadening.threadhandler import *
+from multithreadening.renderpackage import *
 
 class LevelManager (Level):
-	def __init__(self, tileManager, entityManager, configManager):
-		Level.__init__(self, MAP, tileManager, entityManager)
+	def __init__(self, tileManager, entityManager, configManager, threadManager):
+		Level.__init__(self, MAP, tileManager, entityManager, threadManager)
 		self.currentlevel = None
 		self.mapwidth = MAP_WIDTH
 		self.mapheight = MAP_HEIGHT
@@ -20,6 +22,7 @@ class LevelManager (Level):
 
 		self.openLevels = 0
 		self.openlevel(1)
+		self.threadManager = threadManager
 
 	def updateDrawDistance(screen, x, y):
 		self.horizontaltilecount = x
@@ -89,11 +92,11 @@ class LevelManager (Level):
 					if (isinstance(currentlevel, Level)):
 						if (currentlevel.open):
 							if (not currentlevel.cleared):
-								screen.drawScaledSprite( OVERWORLDMAP, OPEN_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2)
+								self.threadManager.queueWork((5, screen.drawScaledSprite, OVERWORLDMAP, OPEN_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2))
 							else:
-								screen.drawScaledSprite( OVERWORLDMAP, COMPLETE_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2)
+								self.threadManager.queueWork((5, screen.drawScaledSprite, OVERWORLDMAP, COMPLETE_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2))
 						else:
-							screen.drawScaledSprite( OVERWORLDMAP, CLOSED_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2)
+							self.threadManager.queueWork((5, screen.drawScaledSprite, OVERWORLDMAP, CLOSED_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2))
 		else:
 			self.currentlevel.drawlevel(screen, px, py, self.horizontaltilecount, self.verticaltaltilecount)
 
@@ -110,7 +113,7 @@ class LevelManager (Level):
 							t = s.replace('/',"").replace(" ","").split(",")
 							self.levels[x + y*self.mapwidth] = (int(t[0]), int(t[1]))
 						else:
-							self.levels[x + y*self.mapwidth] = Level(s, self.tileManager, self.entityManager)
+							self.levels[x + y*self.mapwidth] = Level(s, self.tileManager, self.entityManager, self.threadManager)
 				x += 1
 			x = 0
 			y += 1
@@ -203,4 +206,4 @@ class LevelManager (Level):
 				if (tile == None):
 					screen.drawSprite( TEXTURE, POWERUP, (x+xTile)*16, (y+yTile)*16)
 				else:
-					tile.render(screen, (x+xTile)*16, (y+yTile)*16)
+					self.threadManager.queueWork((3, tile.render, screen, (x+xTile)*16, (y+yTile)*16))

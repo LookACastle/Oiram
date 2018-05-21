@@ -22,6 +22,8 @@ class Screen:
 		for path in SPRITE_LIST:
 			self.sheets.append(SpriteSheet(path, self.scale))
 
+		self.buffer = None
+
 	def rescale(self, newscale):
 		self.scale = newscale
 		self.fontlarge = pygame.font.Font("gfx/DefaultFont.ttf", 20*self.scale)
@@ -35,6 +37,28 @@ class Screen:
 
 	def drawSprite(self, id, tileId, x, y):
 		self.display.blit(self.sheets[id].getSprite(tileId), ((x+self.xOffset)*self.scale, (y+self.yOffset)*self.scale))
+
+	def bufferColouredFlippedSprite(self, id, tileId, flip, overlay, strength):
+		self.buffer = pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False)
+		pxarray = pygame.PixelArray(self.buffer)
+		if (strength > 0):
+			for px in range(0, int(self.buffer.get_width()/self.scale)):
+				for py in range(0,int(self.buffer.get_height()/self.scale)):
+					color = self.buffer.unmap_rgb(pxarray[px*self.scale, py*self.scale])
+					if (color[3]  == 0xFF):
+						cstrength = 1-strength
+						r = color[0]*cstrength + overlay[0]*strength
+						g = color[1]*cstrength + overlay[1]*strength
+						b = color[2]*cstrength + overlay[2]*strength
+						for sx in range(px*self.scale, px*self.scale + self.scale):
+							for sy in range(py*self.scale, py*self.scale + self.scale):
+								pxarray[sx, sy] = (r, g, b)
+		#ns = pxarray.make_surface()
+		del pxarray
+
+	def drawBuffer(self, x, y):
+		self.display.blit(self.buffer , ((x+self.xOffset)*self.scale,(y+self.yOffset)*self.scale))
+		self.buffer = None
 
 	def drawColouredFlippedSprite(self, id, tileId, x, y, flip, overlay, strength):
 		sprite = pygame.transform.flip(self.sheets[id].getSprite(tileId), flip, False)

@@ -7,15 +7,13 @@ class FlagTop (Mob):
 		self.height = 4
 		self.x1 = 7
 		self.y1 = 10
+		self.killable = False
 		
 	def clone(self, x, y):
 		return FlagTop(self.sheet, x, y)	
 
 	def collide(self, victim):
 		victim.victory()
-
-	def kill(self):
-		pass
 		
 	def render (self, screen):
 		screen.drawSprite( self.sheet, self.id, self.x, self.y)

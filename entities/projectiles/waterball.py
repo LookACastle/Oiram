@@ -38,15 +38,16 @@ class Waterball (Mob):
 		else:
 			self.vy -= 1.5
 
-	def kill(self):
-		self.scale = 1.2
-		self.y -= 1.5
-		if (self.vx > 0):
-			self.x += 2.5
-		else:
-			self.x -= 6
+	def kill(self, overwrite):
+		if (overwrite):
+			self.scale = 1.2
+			self.y -= 1.5
+			if (self.vx > 0):
+				self.x += 2.5
+			else:
+				self.x -= 6
 
-		self.deadTime = 6*3
+			self.deadTime = 6*3
 
 	def tick(self, level):
 		self.animationhandling.clearState()
@@ -62,7 +63,7 @@ class Waterball (Mob):
 		colx = self.movex(level)
 
 		if (colx):
-			self.kill()
+			self.kill(True)
 			return
 
 		self.vy = self.vy + 0.1
@@ -86,7 +87,7 @@ class Waterball (Mob):
 				self.animationhandling.toggleAnimation(0)
 				self.vy = -2
 			else:
-				self.kill()
+				self.kill(True)
 
 
 		collidedentities = level.collideEntity(self)
@@ -94,11 +95,11 @@ class Waterball (Mob):
 		kills = 0
 		for e in collidedentities:
 			if (e.killable):
-				e.kill()
+				e.kill(False)
 				kills += 1
 
 		if (self.deadTime == -1 and len(collidedentities) > 0 and kills > 0):
-			self.kill()
+			self.kill(True)
 
 		self.id = self.animationhandling.getAnimation()
 

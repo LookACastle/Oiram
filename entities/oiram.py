@@ -81,6 +81,7 @@ class Oiram (Mob):
 	def reset (self):
 		self.x = self.checkpointx
 		self.y = self.checkpointy
+		self.ay = 0
 		if (self.large):
 			self.y-=1
 		self.vx = 0
@@ -280,9 +281,9 @@ class Oiram (Mob):
 
 	def render (self, screen):
 		if (self.onMap):
-			screen.drawColouredFlippedSprite(OIRAM, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)	
+			screen.drawBuffer(self.x, self.y + self.yOffset)	
 		else:
-			screen.drawColouredFlippedSprite( self.sheet, self.id, self.x, self.y + self.yOffset, self.flip, self.overlay, self.overlayStrength)
+			screen.drawBuffer(self.x, self.y + self.yOffset)
 			if (self.helditem != None):
 				self.helditem.render(screen)
 		screen.writeLargeText("X" + str(self.lifeCount), 18, 2.5)

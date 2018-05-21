@@ -52,6 +52,5 @@ class PauseMenu ():
 		self.active = True
 
 	def render (self, screen):
-		screen.drawOverlay()
 		screen.drawGUISprite(MENU_SHEET,MENU_ITEM, self.x, self.y)
 		self.currentMenu.render(screen, self.x, self.y)

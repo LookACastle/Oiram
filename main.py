@@ -58,11 +58,12 @@ class Game:
         self.stop()
 
     def init(self):
+        self.threadHandler = ThreadHandler(self.configManager.getMetaInt("thread_count"))
         self.player = Oiram(14*16, 6*4*16 + 2*16)
         self.pausemenu = PauseMenu(self.screen, self.configManager)
         self.tileManager = TileManager()
         self.entityManager = EntityManager()
-        self.levelManager = LevelManager(self.tileManager, self.entityManager, self.configManager)
+        self.levelManager = LevelManager(self.tileManager, self.entityManager, self.configManager, self.threadHandler)
         lastsave = self.configManager.metasettings["last_save"]
         if(lastsave != "None"):
             save = self.loadFile(SAVE_URL + lastsave)
@@ -294,14 +295,23 @@ class Game:
             self.player.onMap = False
             self.player.tick(currentlevel)
             #check collision between player and objects
-            currentlevel.entityCollision(self.player)
+            currentlevel.entityCollision(self.player, False)
 
     def render (self, dt):
+        if (self.player.onMap):
+            package = self.threadHandler.queueWork((5 , self.screen.bufferColouredFlippedSprite, OIRAM, self.player.id, self.player.flip, self.player.overlay, self.player.overlayStrength))
+        else:
+            package = self.threadHandler.queueWork((5 , self.screen.bufferColouredFlippedSprite, self.player.sheet, self.player.id, self.player.flip, self.player.overlay, self.player.overlayStrength)) 
+        self.threadHandler.wakeThreads()
         self.levelManager.drawCurrentlevel(self.screen, self.player.x, self.player.y)
+        self.threadHandler.Join()
         self.player.render(self.screen)
+        self.screen.writeSmallText(self.log,  0, 20)
+        if (self.pausemenu.active):
+            self.screen.drawOverlay()
+            #self.threadHandler.queueWork((0, self.screen.drawOverlay))
         if(self.pausemenu.active):
             self.pausemenu.render(self.screen)
-        self.screen.writeSmallText(self.log,  0, 20)
         pygame.display.update()
 
     def stop(self):

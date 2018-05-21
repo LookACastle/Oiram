@@ -5,6 +5,7 @@ class Spikey (Simpleenemy):
 	def __init__(self, sheet, id, length, x, y, speed, animationSpeed, vx):
 		Simpleenemy.__init__(self, sheet, id, length, x, y, 0, speed, animationSpeed, vx)
 		self.vy = 3
+		self.killable = False
 
 	def clone(self, x, y):
 		return Balumba(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed, self.vx)	
@@ -19,9 +20,6 @@ class Spikey (Simpleenemy):
 			self.id = BALUMBA_DEAD
 			self.deadTime -= 1
 			self.mark = True
-
-	def kill (self):
-		pass
 
 	def wallCollide(self):
 		self.vx = -self.vx

@@ -116,14 +116,14 @@ class Oiram (Mob):
 			self.animationpause -= 1
 			if (self.animationpause == 0):
 				self.large = True
-				self.y += self.heightdifferens*16
+				self.yOffset = 0
 				self.sheet = self.newform
 				return
 			if (self.animationpause % 8 == 0):
 				if (self.large):
-					self.y += self.heightdifferens*16
+					self.yOffset += self.heightdifferens*16
 				else:
-					self.y -= self.heightdifferens*16
+					self.yOffset -= self.heightdifferens*16
 				self.large = not self.large
 			if (self.large):
 				self.sheet = self.previousform
@@ -171,7 +171,7 @@ class Oiram (Mob):
 			self.overlayStrength = 0
 
 	def verticalmovement(self, level):
-		self.applyGravity(GLOBAL_GRAVITY, ORIAM_VERTICAL_MAX_SPEED)
+		self.applyGravity(self.gravity, ORIAM_VERTICAL_MAX_SPEED)
 		self.ly = self.y
 		lvy = self.vy
 		col = self.movey(level)
@@ -253,7 +253,7 @@ class Oiram (Mob):
 			self.addLife()
 
 	def kill (self, overwrite):
-		if (not self.mark):
+		if (not self.mark and not self.dead):
 			if (self.invincibleCounter <= 0 or overwrite):
 				if (not self.dead):
 					if (not self.large or overwrite):

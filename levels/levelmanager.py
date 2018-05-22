@@ -99,6 +99,8 @@ class LevelManager (Level):
 							self.threadManager.queueWork((5, screen.drawScaledSprite, OVERWORLDMAP, CLOSED_DOOR, (1+13+4*x)*16, (1+9+4*y)*16, 2))
 		else:
 			self.currentlevel.drawlevel(screen, px, py, self.horizontaltilecount, self.verticaltaltilecount)
+			self.threadManager.Join()
+			self.currentlevel.drawentities(screen, self.horizontaltilecount, self.verticaltaltilecount)
 
 	def loadLevels (self):
 		levels = open("levels/maplevels.txt","r")

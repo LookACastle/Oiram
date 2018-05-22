@@ -249,14 +249,14 @@ class Game:
                         if (not self.player.jump):
                             self.player.vy = -ORIAM_JUMP_FORCE
                             self.player.jump = True
-                            self.player.gravity = 0.2
+                            self.player.gravity = GLOBAL_GRAVITY/2
                         if(self.player.vy > 0):
                             self.player.gravity = 0.3
                         if (self.player.boosttimer > 0):
                             self.player.vy -= 2.5
                             self.player.boosttimer = 0
                     else:
-                        self.player.gravity = 0.3
+                        self.player.gravity = GLOBAL_GRAVITY
                     if (self.inputHandler.F.isNewPress() and self.player.dead == False):
                         if (self.player.helditem == None):
                             col = currentlevel.pickupEntity(self.player)
@@ -304,7 +304,6 @@ class Game:
             package = self.threadHandler.queueWork((5 , self.screen.bufferColouredFlippedSprite, self.player.sheet, self.player.id, self.player.flip, self.player.overlay, self.player.overlayStrength)) 
         self.threadHandler.wakeThreads()
         self.levelManager.drawCurrentlevel(self.screen, self.player.x, self.player.y)
-        self.threadHandler.Join()
         self.player.render(self.screen)
         self.screen.writeSmallText(self.log,  0, 20)
         if (self.pausemenu.active):

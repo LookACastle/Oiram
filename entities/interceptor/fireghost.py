@@ -22,11 +22,6 @@ class FireGhost (Mob):
 		self.flip = False
 		self.offset = 0
 		self.dir = False
-
-		self.y2 = 2
-		self.x1 = 2
-		self.x2 = 2
-
 		self.killable = False
 
 	def clone(self, x, y):
@@ -50,8 +45,10 @@ class FireGhost (Mob):
 
 			if (self.dir):
 				self.offset += 0.4
+				self.y += 0.4
 			else:
 				self.offset -= 0.4
+				self.y -= 0.4
 
 		else:
 			self.animationhandling.toggleAnimation(0)
@@ -86,4 +83,4 @@ class FireGhost (Mob):
 		self.id = self.animationhandling.getAnimation()
 
 	def render(self, screen):
-		screen.drawFlippedSprite( self.sheet, self.id, self.x, self.y + self.offset, False, self.flip)
+		screen.drawFlippedSprite( self.sheet, self.id, self.x, self.y, False, self.flip)

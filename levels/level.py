@@ -202,9 +202,9 @@ class Level:
 				else:
 					self.backgroundtile.render(screen, (x+xTile)*16, (y+yTile)*16)
 
-		
+	def drawentities(self, screen, w, h):
 		for e in self.entities:
-			if (e.x + xOffset > 0 and e.x + xOffset<w*16 or e.x + e.width*16 + xOffset > 0 and e.x + e.width*16 + xOffset<w*16 ):
+			if (e.x + screen.xOffset > 0 and e.x + screen.xOffset<w*16 or e.x + e.width*16 + screen.xOffset > 0 and e.x + e.width*16 + screen.xOffset<w*16 ):
 				e.render(screen)
 				e.visible = True
 			else:

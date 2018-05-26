@@ -5,6 +5,8 @@ class Spring (animatedMob):
 	def __init__(self, sheet, id, length, x, y, animationSpeed):
 		animatedMob.__init__(self, sheet, id, length, x, y, 0, animationSpeed, True)
 		self.hitTime = 0
+		self.initialid = id
+		self.changedid = False
 		self.held = True
 		self.killable = False
 
@@ -17,6 +19,9 @@ class Spring (animatedMob):
 		if (self.hitTime > 0):
 			self.animationtick()
 			self.hitTime -= 1
+		elif (self.changedid == True):
+			self.idOffset = self.initialid
+			self.animationTick = 0
 
 	def align(self, direction, level):
 		cy = (self.y + self.y1)/16 + 0.1
@@ -45,8 +50,11 @@ class Spring (animatedMob):
 
 	def collide(self, victim):
 		if (victim.vy > 0 and (self.y + 16 != victim.y + victim.height*16 and victim.jump == True)):
+			if (victim.dead):
+				return
 			victim.vy = -2.5
 			self.vy = -0.2
 			victim.jump = True
 			victim.boosttimer = 10
 			self.hitTime = 22
+			self.changedid = True

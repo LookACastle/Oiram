@@ -12,6 +12,7 @@ class Shell (Simpleenemy):
 		self.speed = 1.5
 		self.lifespan = 600
 		self.entitycollision = True
+		self.gravity = 0.1
 
 	def clone(self, x, y):
 		return Shell(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed)	

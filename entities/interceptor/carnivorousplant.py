@@ -53,9 +53,8 @@ class CarnivorousPlant (animatedMob):
 			self.hitTime = 6
 
 	def collide(self, victim):
-		if (victim.invincibleCounter > 0 and self.upTimer < ):
+		if (victim.invincibleCounter > 0):
 			self.kill(False)
 			return
-		if (victim.mobcontrol):
-			victim.kill(False)
+		victim.kill(False)
 

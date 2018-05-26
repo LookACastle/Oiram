@@ -25,6 +25,7 @@ class Entity:
 		self.killable = True
 		self.mobcontrol = False
 		self.visible = True
+		self.gravity = GLOBAL_GRAVITY
 
 	def clone(self, x, y):
 		return Entity(self.sheet, self.id, x, y)
@@ -79,6 +80,7 @@ class Entity:
 				col2 = level.isSolidTile(int(cx),ny)
 				if (col1 or col2):
 					self.y = int(cy + tileoffset)*16 + self.y2
+					self.vy = 0.1
 					return True
 		else:
 			tileMovement = math.floor(movement/16)

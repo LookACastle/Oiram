@@ -1,12 +1,12 @@
 [META]
 last_save = save1.txt
-thread_count = 2
+thread_count = 10
 
 [GRAPHICS]
-scale = 2
+scale = 3
 tps = 60
 
 [LEVEL]
-x_tile_count = 49
-y_tile_count = 21
+x_tile_count = 25
+y_tile_count = 16
 

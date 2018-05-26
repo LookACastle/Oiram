@@ -17,6 +17,7 @@ class Shell (Simpleenemy):
 		return Shell(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed)	
 
 	def align(self, direction, level):
+		self.vy = 0
 		self.realeaseTimer = 10
 		cy = (self.y + self.y1)/16 + 0.1
 		cyh = (self.y - self.y2)/16 + self.height - 0.2
@@ -59,8 +60,8 @@ class Shell (Simpleenemy):
 
 	def collide(self, victim):
 		if (self.vx != 0):
-			print(self.vx)
-			victim.kill(False)
+			if (self.realeaseTimer <= 0):
+				victim.kill(False)
 		else:
 			if (victim.y + victim.height*16 < self.y + 16 and victim.vy >= 0 and victim.mobcontrol == False):
 				self.realeaseTimer = 10

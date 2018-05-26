@@ -7,13 +7,13 @@ class Simpleenemy (animatedMob):
 		self.deadTime = 0
 		self.mark = False
 		self.speed = speed
-
+		
 	def clone(self, x, y):
 		return Simpleenemy(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed, self.vx)	
 	
 	def simpleMovement(self, level):
 		self.animationtick()
-		self.applyGravity(GLOBAL_GRAVITY, NORMAL_VERTICAL_MAX_SPEED)
+		self.applyGravity(self.gravity, NORMAL_VERTICAL_MAX_SPEED)
 		coly = self.movey(level)
 		if (self.y > level.height*16):
 			self.mark = True
@@ -26,9 +26,6 @@ class Simpleenemy (animatedMob):
 
 	def collide(self, victim):
 		if (self.deadTime <= 0):
-			if (victim.mobcontrol):
-				print(victim)
-				return
 			if (victim.invincibleCounter > 0 or victim.vy > 0 and victim.ly != victim.y):
 				cx = victim.x + (victim.width)/2
 				if (cx > self.x or cx < self.x + self.width):
@@ -37,4 +34,5 @@ class Simpleenemy (animatedMob):
 					victim.ay = -5
 					victim.jump = True
 					return
-			victim.kill(False)
+			else:
+				victim.kill(False)

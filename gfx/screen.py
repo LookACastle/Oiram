@@ -24,6 +24,7 @@ class Screen:
 
 		self.buffer = None
 
+
 	def rescale(self, newscale):
 		self.scale = newscale
 		self.fontlarge = pygame.font.Font("gfx/DefaultFont.ttf", 20*self.scale)

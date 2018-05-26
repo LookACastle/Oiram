@@ -30,6 +30,7 @@ class TileManager:
 		self.tiles[0x0499FF] = Tile(TEXTURE, CASTLE_4, False)
 		self.tiles[0x0599FF] = Tile(TEXTURE, CASTLE_5, False)
 		self.tiles[0X358CB7] = Tile(TEXTURE, CASTLE_6, False)
+		
 
 
 		self.tiles[0x139932] = LayeredTile(TEXTURE, SKY, GRASS)

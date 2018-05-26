@@ -16,7 +16,7 @@ the changes are done by changing the colours of the image, here is a overview of
 
 ┌──────────────────────────────────────────────────────────┐
 │                                                          │
-│                0x0100FF = Player spawn                   │
+│                  0100FF = Player spawn                   │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────┐
@@ -35,35 +35,35 @@ the changes are done by changing the colours of the image, here is a overview of
 │           ┌──────────────────────────────────┐           │
 │           │       Default level Tiles        │           │
 │           └──────────────────────────────────┘           │
-│                  0xFFFFFF = SKY                          │
-│                  0x965C10 = DIRT                         │
-│                  0x0FFF0F = GRASSDIRT                    │
-│                  0xAF9A0C = BLOCK_PUSH                   │
-│                  0xDBDBDB = STONE                        │
-│                  0x329913 = GRASS                        │
-│                  0x00FFFF = STONE_UNDERWORLD             │
-│                  0xFFC549 = Bridge                       │
-│                  0xFFC548 = Burned bridge                │
+│                    FFFFFF = SKY                          │
+│                    965C10 = DIRT                         │
+│                    0FFF0F = GRASSDIRT                    │
+│                    AF9A0C = BLOCK_PUSH                   │
+│                    DBDBDB = STONE                        │
+│                    329913 = GRASS                        │
+│                    00FFFF = STONE_UNDERWORLD             │
+│                    FFC549 = Bridge                       │
+│                    FFC548 = Burned bridge                │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Castle               │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x0099FF = Castle brick                 │
-│                  0x0199FF = CASTLE_1                     │
-│                  0x0299FF = CASTLE_2                     │
-│                  0x0399FF = CASTLE_3                     │
-│                  0x0499FF = CASTLE_4                     │
-│                  0x0599FF = CASTLE_5                     │
-│                  0x0699FF = CASTLE_6                     │
+│                    FF9900 = castle brick                 │
+│                    FF9901 = castle 1                     │
+│                    FF9902 = castle 2                     │
+│                    FF9903 = castle 3                     │
+│                    FF9904 = castle 4                     │
+│                    FF9905 = castle 5                     │
+│                    B78C35 = castle 6                     │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │            Map tiles             │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x47B529 = BG                           │
-│                  0xB7B7B7 = H_ROAD                       │
-│                  0xB8B8B8 = V_ROAD                       │
+│                    47B529 = BG                           │
+│                    B7B7B7 = H_ROAD                       │
+│                    B8B8B8 = V_ROAD                       │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 
@@ -85,27 +85,28 @@ the changes are done by changing the colours of the image, here is a overview of
 │           │             Blocks               │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x00000F = Powerup - Shroom             │
-│                  0x02000F = Powerup - flower             │
-│                  0x03000F = Powerup - empty              │
-│                  0x04000F = Powerup - Star               │
-│                  0x05000F = Sky - Shroom life +          │
-│                  0x06000F = Sky- empty                   │
-│                  0x00010F = Brick - breakable            │
-│                  0x00020F = Brick - coin                 │
-│                  0x006834 = Tube top                     │
-│                  0x80D010 = Tube base                    │
+│                    00000F = Powerup - Shroom             │
+│                    02000F = Powerup - flower             │
+│                    03000F = Powerup - empty              │
+│                    04000F = Powerup - Star               │
+│                    05000F = Sky - Shroom life +          │
+│                    06000F = Sky- empty                   │
+│                    00010F = Brick - breakable            │
+│                    00020F = Brick - coin                 │
+│                    006834 = Tube top                     │
+│                    80D010 = Tube base                    │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Pickups              │           │
 │           └──────────────────────────────────┘           │
 │                                                          │
-│                  0x0200FF = Checkpoint                   │
-│                  0xFFC700 = Star                         │
-│                  0x000002 = Shroom                       │
-│                  0x010002 = Shroom life+                 │
-│                  0xFFFF00 = Coin                         │
-│                  0x000005 = flower                       │
+│                    0200FF = Checkpoint                   │
+│                    FFC700 = Star                         │
+│                    000002 = Shroom                       │
+│                    010002 = Shroom life+                 │
+│                    FFFF00 = Coin                         │
+│                    000005 = flower                       │
+│                    FF0C29 = Spring                       │
 │                                                          │
 │           ┌──────────────────────────────────┐           │
 │           │             Enemies              │           │
@@ -113,20 +114,25 @@ the changes are done by changing the colours of the image, here is a overview of
 │                   ┌────────────────┐                     │
 │                   │   left going   │                     │
 │                   └────────────────┘                     │
-│                  0x000001 = Balumba                      │
-│                  0x000003 = Legobro                      │
+│                    000001 = Balumba                      │
+│                    000003 = Legobro                      │
+│                    00000A = Shelly                       │
+│                    00000C = Flying Shelly                │
 │                                                          │
 │                   ┌────────────────┐                     │
 │                   │  right going   │                     │
 │                   └────────────────┘                     │
-│                  0x010001 = Balumba                      │
-│                  0x010003 = Legobro                      │
+│                    010001 = Balumba                      │
+│                    010003 = Legobro                      │
+│                    01000A = Shelly                       │
+│                    01000C = Flying Shelly                │
 │                                                          │
 │                   ┌────────────────┐                     │
 │                   │  interceptors  │                     │
 │                   └────────────────┘                     │
 │                                                          │
-│                  0x000008 = Fire ghost                   │
+│                    000008 = Fire ghost                   │
+│                    00000B = Plant                        │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 ┌──────────────────────────────────────────────────────────┐

@@ -18,6 +18,7 @@ from entities.enemies.balumba import *
 from entities.enemies.legobro import *
 from entities.enemies.spikey import *
 from entities.enemies.shelly import *
+from entities.enemies.flyingshelly import *
 
 #projectile entities
 from entities.projectiles.lego import *
@@ -117,6 +118,9 @@ class EntityManager:
 		self.entities[0x0A0001] = Shelly(LARGENEMIES, GREEN_SHELLY, 2, 0, 0, 1, 0.1, -1, 0x539631)
 
 		self.entities[0x0B0000] = CarnivorousPlant(LARGENEMIES, PIRANA, 2,0,0, 0, 0.1)
+
+		self.entities[0x0C0000] = FlyingShelly(LARGENEMIES, FLYINGSHELLY, 2, 0, 0, 1, 0.1, 1, 0x539631)
+		self.entities[0x0C0001] = FlyingShelly(LARGENEMIES, FLYINGSHELLY, 2, 0, 0, 1, 0.1, -1, 0x539631)
 
 		#Graphics
 		self.entities[0xFF00FF] = GraphicObject(ONEUP, ONEUP_TEXT, 0, 0, 2.9, 0.5, False, 2)

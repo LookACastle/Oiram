@@ -8,6 +8,7 @@ class Shell (Simpleenemy):
 		self.held = True
 		self.killable = False
 		self.realeaseTimer = 0
+		self.mobcontrol = True
 		self.speed = 1.5
 		self.lifespan = 600
 		self.entitycollision = True
@@ -58,10 +59,10 @@ class Shell (Simpleenemy):
 
 	def collide(self, victim):
 		if (self.vx != 0):
-			if (victim.mobcontrol):
-				victim.kill(False)
+			print(self.vx)
+			victim.kill(False)
 		else:
-			if (victim.y + victim.height*16 < self.y + 16 and victim.vy > 0 and victim.mobcontrol == False):
+			if (victim.y + victim.height*16 < self.y + 16 and victim.vy >= 0 and victim.mobcontrol == False):
 				self.realeaseTimer = 10
 				victim.vy = -ORIAM_VERTICAL_MAX_SPEED
 				victim.jump = True

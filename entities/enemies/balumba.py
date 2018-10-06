@@ -12,6 +12,9 @@ class Balumba (Simpleenemy):
 		return Balumba(self.sheet, self.id, self.length, x, y, self.speed, self.animationSpeed, self.vx)	
 
 	def tick (self, level):
+		if (not level.isSolidTile(int((self.x)/16 + self.vx), int((self.y + 16 + 8)/16))):
+			self.wallCollide()
+			print("outside")
 		if(self.deadTime <= 0):
 			if (self.mark):
 				self.dead = True

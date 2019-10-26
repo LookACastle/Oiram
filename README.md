@@ -1,4 +1,5 @@
 ﻿# Oiram
+```
 Totally not a clone of Mario
 
 fell like making a level you self?
@@ -15,7 +16,7 @@ these are the factors that can be controlled:
 the changes are done by changing the colours of the image, here is a overview of what the colour codes means and list of schematics
 
 ┌──────────────────────────────────────────────────────────┐
-│                                                          │
+│                                                          │
 │                  0100FF = Player spawn                   │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
@@ -166,4 +167,4 @@ the changes are done by changing the colours of the image, here is a overview of
 │ └──────────────────────────────────────────────────────┘ │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
-
+```
